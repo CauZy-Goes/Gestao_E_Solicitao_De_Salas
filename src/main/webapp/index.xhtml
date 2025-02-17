@@ -7,33 +7,61 @@
 
 <ui:define name="corpo">
 
-    <!-- Form Cargo -->
+    <p:tabView id="tabview_auth">
+        <!--    Tab Cadastro     -->
+        <p:tab title="Cadastro" id="tab_cadastro">
+            <!-- Form Cadastro          -->
+            <h:form id="form_cadastro">
+                <h1>Cadastro de Cargos</h1>"
+                <p:messages autoUpdate="true"   id="message_cadastro"/>
 
-    <h:form id="form_cargo">
-        <h1>Cadastro de Cargos</h1>"
-        <p:messages autoUpdate="true"   id="message_cargo"/>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Nome Completo"/>
+                    <p:inputText value="#{usuarioMB.usuarioDTO.nomeUsuario}" required="True"/>
 
-        <p:panelGrid columns="2">
-            <p:outputLabel value="Nome Cargo"/>
-            <p:inputText value="#{cargoMB.cargoDTO.nomeCargo}"/>
+                    <p:outputLabel value="Email"/>
+                    <p:inputText value="#{usuarioMB.usuarioDTO.email}" required="True"/>
 
-            <p:outputLabel/>
-            <p:commandButton value="Cadastrar" action="#{cargoMB.adicionar()}" update="message_cargo tabela_cargo" styleClass="custom-button"/>
-        </p:panelGrid>
+                    <p:outputLabel value="Senha"/>
+                    <p:password value="#{usuarioMB.usuarioDTO.senha}" Required="True"/>
 
-        <p:dataTable value="#{cargoMB.cargosList}" var="c" id="tabela_cargo" paginator="true" paginatorPosition="bottom" rows="5">
+                    <p:outputLabel value="Laboratório" />
+                    <p:selectOneMenu value="#{usuarioMB.usuarioDTO.idCargo}" required="true" label="Qual é o seu cargo ?" >
+                        <f:selectItem itemLabel="Selecione o Cargo" noSelectionOption="true"/>
+                        <f:selectItems value="#{cargoMB.cargosList}" var="cargo" itemLabel="#{cargo.nomeCargo}" itemValue="#{cargo.idCargo}"/>
+                    </p:selectOneMenu>
 
-            <p:column headerText="Id">
-                <p:outputLabel value="#{c.idCargo}"/>
-            </p:column>
+                    <p:outputLabel/>
+                    <p:commandButton value="Cadastrar" action="#{usuarioMB.adicionar()}" update="message_cadastro tabela_cadastro"/>
+                </p:panelGrid>
 
-            <p:column headerText="Nome Cargo">
-                <p:outputLabel value="#{c.nomeCargo}"/>
-            </p:column>
+                <p:dataTable value="#{usuarioMB.usuariosList}" var="usuario" id="tabela_cadastro" paginator="true" paginatorPosition="bottom" rows="5">
 
-        </p:dataTable>
+                    <p:column headerText="Id">
+                        <p:outputLabel value="#{usuario.idUsuario}"/>
+                    </p:column>
 
-    </h:form>
+                    <p:column headerText="Nome">
+                        <p:outputLabel value="#{usuario.nomeUsuario}"/>
+                    </p:column>
+
+                    <p:column headerText="Email">
+                        <p:outputLabel value="#{usuario.email}"/>
+                    </p:column>
+
+                    <p:column headerText="senha">
+                        <p:outputLabel value="#{usuario.senha}"/>
+                    </p:column>
+
+                    <p:column headerText="senha">
+                        <p:outputLabel value="#{usuario.idCargo}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+        </p:tab>
+    </p:tabView>
 
 </ui:define>
 </ui:composition>

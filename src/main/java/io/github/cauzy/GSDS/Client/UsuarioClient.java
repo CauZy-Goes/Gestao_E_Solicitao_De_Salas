@@ -21,7 +21,7 @@ public class UsuarioClient {
     @Inject
     private Client client; // Client injetado pelo CDI
 
-    private static final String API_URL = "http://localhost:8080/api/usuarios";
+    private static final String API_URL = "http://localhost:8081/api/usuarios";
 
     public List<UsuarioDTO> listarUsuarios() throws EntityNotFoundException {
         WebTarget target = client.target(API_URL);

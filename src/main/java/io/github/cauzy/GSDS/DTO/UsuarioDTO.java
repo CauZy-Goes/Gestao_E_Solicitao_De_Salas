@@ -5,6 +5,7 @@ public class UsuarioDTO {
     private Integer idUsuario;
     private String nomeUsuario;
     private String email;
+    private String senha;
     private Integer idCargo;
 
     public Integer getIdUsuario() {
@@ -39,8 +40,22 @@ public class UsuarioDTO {
         this.idCargo = idCargo;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     @Override
     public String toString() {
-        return "UsuarioDTO [idUsuario=" + idUsuario + ", nomeUsuario=" + nomeUsuario + ", email=" + email + ", idCargo=" + idCargo + "]";
+        return "UsuarioDTO{" +
+                "idUsuario=" + idUsuario +
+                ", nomeUsuario='" + nomeUsuario + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", idCargo=" + idCargo +
+                '}';
     }
 }

@@ -21,7 +21,7 @@ public class CargoClient {
     @Inject
     private Client client; // Client injetado pelo CDI
 
-    private static final String API_URL = "http://localhost:8080/api/cargos";
+    private static final String API_URL = "http://localhost:8081/api/cargos";
 
     public List<CargoDTO> listarCargos() throws EntityNotFoundException {
         WebTarget target = client.target(API_URL);

@@ -1,0 +1,39 @@
+<ui:composition template="/WEB-INF/template/TemplateGenerico.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+<ui:define name="corpo">
+
+    <!-- Form Cargo -->
+
+    <h:form id="form_cargo">
+        <h1>Cadastro de Cargos</h1>"
+        <p:messages autoUpdate="true"   id="message_cargo"/>
+
+        <p:panelGrid columns="2">
+            <p:outputLabel value="Nome Cargo"/>
+            <p:inputText value="#{cargoMB.cargoDTO.nomeCargo}"/>
+
+            <p:outputLabel/>
+            <p:commandButton value="Cadastrar" action="#{cargoMB.adicionar()}" update="message_cargo tabela_cargo" styleClass="custom-button"/>
+        </p:panelGrid>
+
+        <p:dataTable value="#{cargoMB.cargosList}" var="c" id="tabela_cargo" paginator="true" paginatorPosition="bottom" rows="5">
+
+            <p:column headerText="Id">
+                <p:outputLabel value="#{c.idCargo}"/>
+            </p:column>
+
+            <p:column headerText="Nome Cargo">
+                <p:outputLabel value="#{c.nomeCargo}"/>
+            </p:column>
+
+        </p:dataTable>
+
+    </h:form>
+
+</ui:define>
+</ui:composition>

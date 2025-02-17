@@ -25,8 +25,12 @@ public class UsuarioMB implements Serializable {
     private List<UsuarioDTO> usuariosList ;
 
     @PostConstruct
-    public void init() throws EntityNotFoundException {
-      usuariosList = usuarioClient.listarUsuarios();
+    public void init()  {
+        try {
+            usuariosList = usuarioClient.listarUsuarios();
+        } catch (EntityNotFoundException e) {
+            Message.erro("Erro ao carregar usuários: " + e.getMessage());
+        }
     }
 
     public void adicionar() {
@@ -35,12 +39,20 @@ public class UsuarioMB implements Serializable {
             init();
             usuarioDTO = new UsuarioDTO();
             Message.info("Salvo Com Sucesso");
-        } catch (EntityCreationException | EntityNotFoundException e) {
+        } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
         }
     }
 
     public List<UsuarioDTO> getUsuariosList() {
         return usuariosList;
+    }
+
+    public UsuarioDTO getUsuarioDTO() {
+        return usuarioDTO;
+    }
+
+    public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
+        this.usuarioDTO = usuarioDTO;
     }
 }

@@ -25,8 +25,12 @@ public class CargoMB implements Serializable {
     private List<CargoDTO> cargosList;
 
     @PostConstruct
-    public void init() throws EntityNotFoundException {
-        cargosList = cargoClient.listarCargos();
+    public void init()  {
+        try {
+            cargosList = cargoClient.listarCargos();
+        } catch (EntityNotFoundException e) {
+            Message.erro("Erro ao carregar usuários: " + e.getMessage());
+        }
     }
 
     public void adicionar() {
@@ -35,12 +39,20 @@ public class CargoMB implements Serializable {
             init();
             cargoDTO = new CargoDTO();
             Message.info("Salvo com sucesso");
-        } catch (EntityCreationException | EntityNotFoundException e) {
+        } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
         }
     }
 
     public List<CargoDTO> getCargosList() {
         return cargosList;
+    }
+
+    public CargoDTO getCargoDTO() {
+        return cargoDTO;
+    }
+
+    public void setCargoDTO(CargoDTO cargoDTO) {
+        this.cargoDTO = cargoDTO;
     }
 }

@@ -47,6 +47,18 @@ public class UsuarioClient {
         }
     }
 
+    public UsuarioDTO getUsuarioByEmail(String email) throws EntityNotFoundException {
+        WebTarget target = client.target(API_URL + "/email/" + email);
+
+        Response response = target.request(MediaType.APPLICATION_JSON).get();
+
+        if (response.getStatus() == 200) {
+            return response.readEntity(UsuarioDTO.class);
+        } else {
+            throw new EntityNotFoundException("Erro ao encontrar usuário pelo email: " + response.getStatus());
+        }
+    }
+
     public UsuarioDTO createUsuario(UsuarioDTO usuarioDTO) throws EntityCreationException {
         WebTarget target = client.target(API_URL);
 

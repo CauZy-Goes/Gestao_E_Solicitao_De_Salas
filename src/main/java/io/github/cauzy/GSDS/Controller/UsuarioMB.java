@@ -12,6 +12,7 @@ import jakarta.inject.Named;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Named
 @ViewScoped
@@ -37,10 +38,23 @@ public class UsuarioMB implements Serializable {
         try {
             usuarioClient.createUsuario(usuarioDTO);
             init();
+            login();
             usuarioDTO = new UsuarioDTO();
-            Message.info("Salvo Com Sucesso");
         } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
+        }
+    }
+
+    public void login() {
+        try {
+            UsuarioDTO usuarioLogin = usuarioClient.getUsuarioByEmail(usuarioDTO.getEmail());
+            if(Objects.equals(usuarioDTO.getSenha(), usuarioLogin.getSenha())) {
+                Message.info("Login com sucesso");
+            } else {
+                Message.erro("Senha incorreta");
+                }
+        } catch (EntityNotFoundException e){
+            Message.erro("Esse email não esta cadastrado");
         }
     }
 

@@ -21,4 +21,14 @@
     <welcome-file>index.xhtml</welcome-file>
   </welcome-file-list>
 
+  <filter>
+    <filter-name>gestorFilter</filter-name>
+    <filter-class>io.github.cauzy.GSDS.Utility.filters.gestorFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>gestorFilter</filter-name>
+    <url-pattern>/gestor/*</url-pattern>
+  </filter-mapping>
+
+
 </web-app>

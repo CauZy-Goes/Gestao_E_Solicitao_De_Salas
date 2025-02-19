@@ -13,6 +13,7 @@ import jakarta.faces.view.ViewScoped;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -57,10 +58,15 @@ public class UsuarioMB implements Serializable {
 
                 // Redirecinar para a pagina
                 ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                HttpSession session = (HttpSession) externalContext.getSession(true);
 
-                String dashboardURL = (usuarioLogin.getIdCargo() == 1) ? "/pages/gestor/dashboardGestor.xhtml" : "/pages/professor/dashboardProfessor.xhtml";
+                Boolean userIsGestor = (usuarioLogin.getIdCargo() == 1);
 
-                Message.info(dashboardURL);
+                String dashboardURL = userIsGestor ? "/pages/gestor/dashboardGestor.xhtml" : "/pages/professor/dashboardProfessor.xhtml";
+                String usuarioCargo = userIsGestor ? "gestor" : "professor";
+
+                session.setAttribute(usuarioCargo, usuarioLogin);
+
 
                 externalContext.redirect(externalContext.getRequestContextPath() + dashboardURL);
             } else {
@@ -73,6 +79,19 @@ public class UsuarioMB implements Serializable {
             Message.erro("Erro ao redirecionar");
         }
     }
+
+    public void logout() throws IOException {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        HttpSession session = (HttpSession) externalContext.getSession(false);
+
+        if (session != null) {
+            session.invalidate(); // Encerra a sessão
+        }
+
+        externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml"); // Redireciona para o login
+    }
+
 
     public List<UsuarioDTO> getUsuariosList() {
         return usuariosList;

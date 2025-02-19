@@ -48,6 +48,8 @@ public class UsuarioDTO {
         this.senha = senha;
     }
 
+
+
     @Override
     public String toString() {
         return "UsuarioDTO{" +

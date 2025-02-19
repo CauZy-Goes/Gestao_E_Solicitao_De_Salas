@@ -7,10 +7,12 @@ import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
 import io.github.cauzy.GSDS.Utility.Message;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
-import jakarta.faces.view.ViewScoped;
 
+
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpSession;
@@ -58,6 +60,7 @@ public class UsuarioMB implements Serializable {
 
                 // Redirecinar para a pagina
                 ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+
                 HttpSession session = (HttpSession) externalContext.getSession(true);
 
                 Boolean userIsGestor = (usuarioLogin.getIdCargo() == 1);
@@ -80,18 +83,45 @@ public class UsuarioMB implements Serializable {
         }
     }
 
-    public void logout() throws IOException {
+
+    public void logout() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
         HttpSession session = (HttpSession) externalContext.getSession(false);
 
         if (session != null) {
-            session.invalidate(); // Encerra a sessão
+            session.invalidate();
         }
 
-        externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml"); // Redireciona para o login
+        try {
+            externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+
+    public UsuarioDTO getUsuarioLogado() {
+        HttpSession session = getCurrentSession();
+
+        if (session != null) {
+            UsuarioDTO usuarioGestor = (UsuarioDTO) session.getAttribute("gestor");
+            UsuarioDTO usuarioProfessor = (UsuarioDTO) session.getAttribute("professor");
+
+            if (usuarioGestor != null) {
+                return usuarioGestor; // Retorna o usuário gestor
+            } else if (usuarioProfessor != null) {
+                return usuarioProfessor; // Retorna o usuário professor
+            }
+        }
+        return null; // Retorna null se não houver usuário logado
+    }
+
+    private HttpSession getCurrentSession() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        return (HttpSession) externalContext.getSession(false);
+    }
 
     public List<UsuarioDTO> getUsuariosList() {
         return usuariosList;

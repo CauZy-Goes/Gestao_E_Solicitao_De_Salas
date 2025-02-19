@@ -12,7 +12,7 @@
         <p:tab title="Cadastro" id="tab_cadastro">
             <!-- Form Cadastro          -->
             <h:form id="form_cadastro">
-                <h1>Cadastro de Cargos</h1>"
+                <h1>Cadastro</h1>"
                 <p:messages autoUpdate="true"   id="message_cadastro"/>
 
                 <p:panelGrid columns="2">
@@ -32,33 +32,28 @@
                     </p:selectOneMenu>
 
                     <p:outputLabel/>
-                    <p:commandButton value="Cadastrar" action="#{usuarioMB.adicionar()}" update="message_cadastro tabela_cadastro"/>
+                    <p:commandButton value="Cadastrar" action="#{usuarioMB.adicionar()}" update="message_cadastro"/>
                 </p:panelGrid>
+            </h:form>
+        </p:tab>
 
-                <p:dataTable value="#{usuarioMB.usuariosList}" var="usuario" id="tabela_cadastro" paginator="true" paginatorPosition="bottom" rows="5">
+        <!--    Tab Login     -->
+        <p:tab title="login" id="tab_login">
+            <!-- Form Cadastro          -->
+            <h:form id="form_login">
+                <h1>Login</h1>"
+                <p:messages autoUpdate="true"   id="message_login"/>
 
-                    <p:column headerText="Id">
-                        <p:outputLabel value="#{usuario.idUsuario}"/>
-                    </p:column>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Email"/>
+                    <p:inputText value="#{usuarioMB.usuarioDTO.email}" required="True"/>
 
-                    <p:column headerText="Nome">
-                        <p:outputLabel value="#{usuario.nomeUsuario}"/>
-                    </p:column>
+                    <p:outputLabel value="Senha"/>
+                    <p:password value="#{usuarioMB.usuarioDTO.senha}" Required="True"/>
 
-                    <p:column headerText="Email">
-                        <p:outputLabel value="#{usuario.email}"/>
-                    </p:column>
-
-                    <p:column headerText="senha">
-                        <p:outputLabel value="#{usuario.senha}"/>
-                    </p:column>
-
-                    <p:column headerText="senha">
-                        <p:outputLabel value="#{usuario.idCargo}"/>
-                    </p:column>
-
-                </p:dataTable>
-
+                    <p:outputLabel/>
+                    <p:commandButton value="Cadastrar" action="#{usuarioMB.login()}" update="message_login"/>
+                </p:panelGrid>
             </h:form>
         </p:tab>
     </p:tabView>

@@ -40,22 +40,21 @@ public class UsuarioMB implements Serializable {
             init();
             login();
             usuarioDTO = new UsuarioDTO();
-            Message.info("Salvo Com Sucesso");
-        } catch (EntityCreationException | EntityNotFoundException e) {
+        } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
         }
     }
 
-    public void login() throws EntityNotFoundException {
-        UsuarioDTO usuarioLogin = usuarioClient.getUsuarioByEmail(usuarioDTO.getEmail());
-        if (usuarioLogin != null) {
-            if(Objects.equals(usuarioDTO.getEmail(), usuarioLogin.getEmail())) {
+    public void login() {
+        try {
+            UsuarioDTO usuarioLogin = usuarioClient.getUsuarioByEmail(usuarioDTO.getEmail());
+            if(Objects.equals(usuarioDTO.getSenha(), usuarioLogin.getSenha())) {
                 Message.info("Login com sucesso");
             } else {
-                Message.erro("Login ou Senha incorretos");
-            }
-        } else {
-            throw new EntityNotFoundException(usuarioDTO.getEmail());
+                Message.erro("Senha incorreta");
+                }
+        } catch (EntityNotFoundException e){
+            Message.erro("Esse email não esta cadastrado");
         }
     }
 

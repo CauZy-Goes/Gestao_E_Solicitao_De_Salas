@@ -5,11 +5,16 @@ import io.github.cauzy.GSDS.DTO.UsuarioDTO;
 import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
 import io.github.cauzy.GSDS.Utility.Message;
+
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
+
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -49,12 +54,23 @@ public class UsuarioMB implements Serializable {
         try {
             UsuarioDTO usuarioLogin = usuarioClient.getUsuarioByEmail(usuarioDTO.getEmail());
             if(Objects.equals(usuarioDTO.getSenha(), usuarioLogin.getSenha())) {
-                Message.info("Login com sucesso");
+
+                // Redirecinar para a pagina
+                ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+
+                String dashboardURL = (usuarioLogin.getIdCargo() == 1) ? "/pages/gestor/dashboardGestor.xhtml" : "/pages/professor/dashboardProfessor.xhtml";
+
+                Message.info(dashboardURL);
+
+                externalContext.redirect(externalContext.getRequestContextPath() + dashboardURL);
             } else {
                 Message.erro("Senha incorreta");
                 }
-        } catch (EntityNotFoundException e){
-            Message.erro("Esse email não esta cadastrado");
+        } catch (EntityNotFoundException e) {
+            Message.erro("Esse email não está cadastrado");
+        }
+        catch (IOException e) {
+            Message.erro("Erro ao redirecionar");
         }
     }
 

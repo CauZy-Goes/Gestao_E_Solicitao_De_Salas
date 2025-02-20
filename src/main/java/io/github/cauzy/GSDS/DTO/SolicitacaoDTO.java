@@ -2,7 +2,7 @@ package io.github.cauzy.GSDS.DTO;
 
 import java.time.LocalDateTime;
 
-public class SolicitacoesDTO {
+public class SolicitacaoDTO {
     private Integer idSolicitacoes;
     private LocalDateTime dataHoraSolicitacao;
     private LocalDateTime dataHoraAprovacao;

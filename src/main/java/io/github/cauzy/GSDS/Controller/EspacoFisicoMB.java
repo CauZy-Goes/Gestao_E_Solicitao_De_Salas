@@ -19,9 +19,9 @@ public class EspacoFisicoMB implements Serializable {
     @Inject
     private EspacoFisicoClient espacoFisicoClient;
 
-    public EspacoFisicoDTO espacoFisicoDTO = new EspacoFisicoDTO();
+    private EspacoFisicoDTO espacoFisicoDTO = new EspacoFisicoDTO();
 
-    List<EspacoFisicoDTO> espacoFisicoDTOList;
+    private List<EspacoFisicoDTO> espacoFisicoDTOList;
 
     @PostConstruct
     public void init()  {

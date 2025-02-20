@@ -19,9 +19,9 @@ public class TipoSalaMB implements Serializable {
     @Inject
     private TipoSalaClient tipoSalaClient;
 
-    public TipoSalaDTO tipoSalaDTO = new TipoSalaDTO();
+    private TipoSalaDTO tipoSalaDTO = new TipoSalaDTO();
 
-    List<TipoSalaDTO> tipoSalaDTOList;
+    private List<TipoSalaDTO> tipoSalaDTOList;
 
     @PostConstruct
     public void init()  {

@@ -19,9 +19,9 @@ public class StatusMB implements Serializable {
     @Inject
     private StatusClient statusClient;
 
-    public StatusDTO statusDTO = new StatusDTO();
+    private StatusDTO statusDTO = new StatusDTO();
 
-    List<StatusDTO> statusDTOList;
+    private List<StatusDTO> statusDTOList;
 
     @PostConstruct
     public void init()  {

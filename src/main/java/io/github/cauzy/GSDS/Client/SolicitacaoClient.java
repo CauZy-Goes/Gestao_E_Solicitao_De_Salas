@@ -43,12 +43,12 @@ public class SolicitacaoClient {
             throw new EntityNotFoundException("Erro ao encontrar Solicitação pelo ID: " + response.getStatus());
         }
     }
-    public SolicitacaoDTO getSolicitacaoByIdSolicitante(Integer idSolicitante) throws EntityNotFoundException {
+    public List<SolicitacaoDTO> getSolicitacaoByIdSolicitante(Integer idSolicitante) throws EntityNotFoundException {
         WebTarget target = client.target(API_URL + "/solicitante/" + idSolicitante);
         Response response = target.request(MediaType.APPLICATION_JSON).get();
 
         if (response.getStatus() == 200) {
-            return response.readEntity(SolicitacaoDTO.class);
+            return response.readEntity(new GenericType<List<SolicitacaoDTO>>() {});
         } else {
             throw new EntityNotFoundException("Erro ao encontrar Solicitação pelo ID do solicitante: " + response.getStatus());
         }

@@ -1,4 +1,4 @@
-<ui:composition template="/WEB-INF/template/TemplateGenerico.xhtml"
+<ui:composition template="/WEB-INF/template/TemplateUsuarios.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -7,13 +7,5 @@
 
     <ui:define name="corpo">
 
-        <h1>DashBoard Gestor</h1>
-        <h1>Bem-vindo, #{usuarioMB.usuarioLogado.nomeUsuario}!</h1>
-        <p>Email: #{usuarioMB.usuarioLogado.email}</p>
-        <p>Cargo: #{usuarioMB.usuarioLogado.idCargo}</p>
-
-        <h:form>
-            <p:commandButton value="Logout" action="#{usuarioMB.logout()}"/>
-        </h:form>
     </ui:define>
 </ui:composition>

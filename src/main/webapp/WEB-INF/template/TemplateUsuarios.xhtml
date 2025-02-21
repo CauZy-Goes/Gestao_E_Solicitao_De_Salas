@@ -55,7 +55,7 @@
                 </h:panelGrid>
             </p:dialog>
 
-            <p:commandButton value="Logout" action="#{usuarioMB.logout()}"/>
+            <p:commandButton value="Logout" action="#{usuarioMB.logout()}" update="@form" process="@this"/>
         </h:form>
     </header>
 

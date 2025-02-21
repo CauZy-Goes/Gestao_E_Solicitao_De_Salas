@@ -17,6 +17,11 @@ public class professorFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+
+        res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+        res.setHeader("Pragma", "no-cache"); // HTTP 1.0
+        res.setHeader("Expires", "0"); // Proxies
+
         HttpSession session = req.getSession(false);
 
 

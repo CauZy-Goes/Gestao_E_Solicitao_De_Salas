@@ -56,6 +56,13 @@ public class UsuarioMB implements Serializable {
     public void updateUser(){
         try {
             usuarioClient.updateUsuario(usuarioDTO.getIdUsuario(), usuarioDTO);
+
+            HttpSession session = getCurrentSession();
+            Boolean userIsGestor = (usuarioDTO.getIdCargo() == 1);
+
+            String usuarioCargo = userIsGestor ? "gestor" : "professor";
+
+            session.setAttribute(usuarioCargo, usuarioDTO);
             Message.info("Usuario atualizado com sucesso!");
         } catch (EntityCreationException e) {
             Message.erro(e.getMessage());

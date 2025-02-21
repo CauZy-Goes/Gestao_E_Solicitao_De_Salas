@@ -53,6 +53,15 @@ public class UsuarioMB implements Serializable {
         }
     }
 
+    public void updateUser(){
+        try {
+            usuarioClient.updateUsuario(usuarioDTO.getIdUsuario(), usuarioDTO);
+            Message.info("Usuario atualizado com sucesso!");
+        } catch (EntityCreationException e) {
+            Message.erro(e.getMessage());
+        }
+    }
+
     public void login() {
         try {
             UsuarioDTO usuarioLogin = usuarioClient.getUsuarioByEmail(usuarioDTO.getEmail());
@@ -60,7 +69,6 @@ public class UsuarioMB implements Serializable {
 
                 // Redirecinar para a pagina
                 ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-
                 HttpSession session = (HttpSession) externalContext.getSession(true);
 
                 Boolean userIsGestor = (usuarioLogin.getIdCargo() == 1);
@@ -69,7 +77,6 @@ public class UsuarioMB implements Serializable {
                 String usuarioCargo = userIsGestor ? "gestor" : "professor";
 
                 session.setAttribute(usuarioCargo, usuarioLogin);
-
 
                 externalContext.redirect(externalContext.getRequestContextPath() + dashboardURL);
             } else {
@@ -100,6 +107,9 @@ public class UsuarioMB implements Serializable {
         }
     }
 
+    public void prepararEdicao() {
+        usuarioDTO = getUsuarioLogado();
+    }
 
     public UsuarioDTO getUsuarioLogado() {
         HttpSession session = getCurrentSession();

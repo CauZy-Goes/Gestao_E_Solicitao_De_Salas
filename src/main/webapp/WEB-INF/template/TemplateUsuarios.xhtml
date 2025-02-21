@@ -17,7 +17,6 @@
             align-items: center;
             gap: 90px;
         }
-
     </style>
 </h:head>
 
@@ -29,8 +28,35 @@
 
         <a>Solicitacoes</a>
 
-        <p:commandButton value="UpdateUser"/>
-        <p:commandButton value="Logout" action="#{usuarioMB.logout()}"/>
+        <h:form id="form_update">
+            <!-- Botão que abre o modal -->
+            <p:commandButton value="Perfil" icon="pi pi-plus" actionListener="#{usuarioMB.prepararEdicao()}"
+                             oncomplete="PF('popupUpdate').show()" update="popupUpdate @form" process="@this"/>
+
+            <!-- Dialog que serve como popup -->
+            <p:dialog id="popupUpdate" widgetVar="popupUpdate" header="Update Perfil"
+                      modal="true" resizable="false" width="400">
+
+                <h:panelGrid columns="2" cellpadding="5">
+
+                    <p:outputLabel for="nome" value="Nome:" />
+                    <p:inputText id="nome" value="#{usuarioMB.usuarioDTO.nomeUsuario}" required="true"/>
+
+                    <p:outputLabel for="email" value="E-mail:" />
+                    <p:inputText id="email" value="#{usuarioMB.usuarioDTO.email}" required="true"/>
+
+                    <p:outputLabel for="senha" value="Senha :"/>
+                    <p:inputText id="senha" value="#{usuarioMB.usuarioDTO.senha}"  required="true"/>
+
+
+                    <p:messages autoUpdate="true" id="message_update"/>
+                    <p:commandButton value="Salvar" icon="pi pi-check" actionListener="#{usuarioMB.updateUser}"
+                                     oncomplete="PF('popupUpdate').show()" update="form_update message_update"/>
+                </h:panelGrid>
+            </p:dialog>
+
+            <p:commandButton value="Logout" action="#{usuarioMB.logout()}"/>
+        </h:form>
     </header>
 
     <ui:insert name="corpo"/>

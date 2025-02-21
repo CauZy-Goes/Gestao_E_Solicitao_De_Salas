@@ -14,15 +14,39 @@
 
                 <p:outputLabel value="Qual sala você deseja solicitar ?" />
 
-                <p:selectOneMenu value="#{solicitacoesMB.solicitacaoDTO.idEspacoFisico}" required="true" label="Numero Da Sala" >
+                <p:selectOneMenu value="#{solicitacoesSolicitanteMB.solicitacaoDTO.idEspacoFisico}" required="true" label="Numero Da Sala" >
                     <f:selectItem itemLabel="Selecione o número da sala" noSelectionOption="true"/>
                     <f:selectItems value="#{espacoFisicoMB.espacoFisicoDTOList}" var="sala" itemLabel="#{sala.numero}" itemValue="#{sala.idEspacoFisico}"/>
                 </p:selectOneMenu>
 
 
                 <p:outputLabel/>
-                <p:commandButton value="Cadastrar" action="#{solicitacoesMB.adicionar()}" update="frm_solicitacao message_solicitacao"/>
+                <p:commandButton value="Cadastrar" action="#{solicitacoesSolicitanteMB.adicionar()}" update="frm_solicitacao message_solicitacao tabela_solicitacao"/>
             </p:panelGrid>
+
+            <p:dataTable value="#{solicitacoesSolicitanteMB.solicitacaoDTOList}" var="solicitacao" id="tabela_solicitacao" paginator="true" paginatorPosition="bottom" rows="5">
+
+                <p:column headerText="ID">
+                    <p:outputLabel value="#{solicitacao.idSolicitacoes}"/>
+                </p:column>
+
+                <p:column headerText="Número Do Espaço Fisico">
+                    <p:outputLabel value="#{espacoFisicoMB.getNumeroEspacoFisicos(solicitacao.idEspacoFisico)}"/>
+                </p:column>
+
+                <p:column headerText="Tipo Da Sala">
+                    <p:outputLabel value="#{tipoSalaMB.getNomeSala(espacoFisicoMB.getIdTipoSala(solicitacao.idEspacoFisico))}"/>
+                </p:column>
+
+                <p:column headerText="Status">
+                    <p:outputLabel value="#{statusMB.getStatusById(solicitacao.idStatus)}"/>
+                </p:column>
+
+                <p:column headerText="Agendamento">
+                    <p:outputLabel value="#{solicitacoesSolicitanteMB.dataHoraFormatada(solicitacao.dataHoraLocacao)}"/>
+                </p:column>
+
+            </p:dataTable>
         </h:form>
     </ui:define>
 </ui:composition>

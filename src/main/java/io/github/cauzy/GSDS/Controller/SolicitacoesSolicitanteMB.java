@@ -16,12 +16,12 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Named
 @ViewScoped
-public class SolicitacoesMB implements Serializable {
+public class SolicitacoesSolicitanteMB implements Serializable {
 
     @Inject
     private SolicitacaoClient solicitacaoClient;
@@ -35,8 +35,9 @@ public class SolicitacoesMB implements Serializable {
     @PostConstruct
     public void init()  {
         try {
-            solicitacaoDTOList = solicitacaoClient.listarSolicitacoes();
-//            solicitacoesDoSolicitanteDTOList = solicitacaoClient.getSolicitacaoByIdSolicitante()
+            Integer idProfessor = getSolicitanteId();
+
+            solicitacaoDTOList = solicitacaoClient.getSolicitacaoByIdSolicitante(idProfessor);
         } catch (EntityNotFoundException e) {
             Message.erro("Erro ao carregar solicitacao: " + e.getMessage());
         }
@@ -44,14 +45,13 @@ public class SolicitacoesMB implements Serializable {
 
     public void adicionar() {
         try {
+//            Preenchimento Default
             solicitacaoDTO.setDataHoraSolicitacao(LocalDateTime.now());
             solicitacaoDTO.setDataHoraLocacao(LocalDateTime.now());
-
-            UsuarioDTO professor = (UsuarioDTO) getSession().getAttribute("professor");
-
-            Integer idProfessor = professor.getIdUsuario();
+            Integer idProfessor = getSolicitanteId();
             solicitacaoDTO.setIdUsuarioSolicitante(idProfessor);
 
+//            Salva no banco de dados
             solicitacaoClient.createSolicitacao(solicitacaoDTO);
             init();
             solicitacaoDTO = new SolicitacaoDTO();
@@ -59,6 +59,11 @@ public class SolicitacoesMB implements Serializable {
         } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
         }
+    }
+
+    public Integer getSolicitanteId(){
+        UsuarioDTO professor = (UsuarioDTO) getSession().getAttribute("professor");
+        return  professor.getIdUsuario();
     }
 
     public HttpSession getSession(){
@@ -78,5 +83,13 @@ public class SolicitacoesMB implements Serializable {
 
     public List<SolicitacaoDTO> getSolicitacaoDTOList() {
         return solicitacaoDTOList;
+    }
+
+    public String dataHoraFormatada(LocalDateTime dataHora){
+        if (dataHora == null) {
+            return "";
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm  dd/MM/yyyy");
+        return dataHora.format(formatter);
     }
 }

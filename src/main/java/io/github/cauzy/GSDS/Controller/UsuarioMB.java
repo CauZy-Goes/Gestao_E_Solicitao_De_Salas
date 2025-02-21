@@ -127,6 +127,10 @@ public class UsuarioMB implements Serializable {
         return usuariosList;
     }
 
+    public String getNomeUsuarioById(Integer id) throws EntityNotFoundException {
+        return usuarioClient.getUsuarioById(id).getNomeUsuario();
+    }
+
     public UsuarioDTO getUsuarioDTO() {
         return usuarioDTO;
     }

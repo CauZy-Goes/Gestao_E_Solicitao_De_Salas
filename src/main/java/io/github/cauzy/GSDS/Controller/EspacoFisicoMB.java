@@ -32,6 +32,14 @@ public class EspacoFisicoMB implements Serializable {
         }
     }
 
+    public Integer getNumeroEspacoFisicos(Integer id) throws EntityNotFoundException {
+        return espacoFisicoClient.getEspacoFisicoById(id).getNumero();
+    }
+
+    public Integer getIdTipoSala(Integer id) throws EntityNotFoundException {
+        return espacoFisicoClient.getEspacoFisicoById(id).getIdTipoSala();
+    }
+
     public EspacoFisicoDTO getEspacoFisicoDTO() {
         return espacoFisicoDTO;
     }

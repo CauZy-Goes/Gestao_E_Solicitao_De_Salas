@@ -32,6 +32,10 @@ public class StatusMB implements Serializable {
         }
     }
 
+    public String getStatusById(Integer id) throws EntityNotFoundException {
+        return statusClient.getStatusById(id).getNomeStatus();
+    }
+
     public StatusDTO getStatusDTO() {
         return statusDTO;
     }

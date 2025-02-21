@@ -49,10 +49,10 @@
                     <p:inputText value="#{usuarioMB.usuarioDTO.email}" required="True"/>
 
                     <p:outputLabel value="Senha"/>
-                    <p:password value="#{usuarioMB.usuarioDTO.senha}" Required="True"/>
+                    <p:password value="#{usuarioMB.usuarioDTO.senha}" Required="True" toggleMask="true"/>
 
                     <p:outputLabel/>
-                    <p:commandButton value="Cadastrar" action="#{usuarioMB.login()}" update="message_login"/>
+                    <p:commandButton value="Entrar" action="#{usuarioMB.login()}" update="message_login"/>
                 </p:panelGrid>
             </h:form>
         </p:tab>

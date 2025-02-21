@@ -72,4 +72,17 @@ public class UsuarioClient {
         }
     }
 
+    public UsuarioDTO updateUsuario(Integer id, UsuarioDTO usuarioDTO) throws EntityCreationException {
+        WebTarget target = client.target(API_URL + "/" + id);
+
+        Response response = target.request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(usuarioDTO, MediaType.APPLICATION_JSON));
+
+        if (response.getStatus() == 200) {
+            return response.readEntity(UsuarioDTO.class);
+        } else {
+            throw new EntityCreationException("Erro ao fazer update do usuario usuário: " + response.getStatus());
+        }
+    }
+
 }

@@ -55,4 +55,28 @@ public class TipoSalaClient {
             throw new EntityCreationException("Erro ao criar Tipo de Sala: " + response.getStatus());
         }
     }
+
+    public TipoSalaDTO updateTipoSala(TipoSalaDTO tipoSalaDTO) throws EntityCreationException {
+        WebTarget target = client.target(API_URL + "/" + tipoSalaDTO.getIdTipoSala());
+
+        Response response = target.request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(tipoSalaDTO, MediaType.APPLICATION_JSON));
+
+        if (response.getStatus() == 200) {
+            return response.readEntity(TipoSalaDTO.class);
+        } else {
+            throw new EntityCreationException("Erro ao atualizar Tipo de Sala: " + response.getStatus());
+        }
+    }
+
+    public void deleteTipoSala(Integer id) throws EntityNotFoundException {
+        WebTarget target = client.target(API_URL + "/" + id);
+
+        Response response = target.request(MediaType.APPLICATION_JSON).delete();
+
+        if (response.getStatus() != 204) { // 204 significa No Content, esperado ao deletar
+            throw new EntityNotFoundException("Erro ao deletar Tipo de Sala: " + response.getStatus());
+        }
+    }
+
 }

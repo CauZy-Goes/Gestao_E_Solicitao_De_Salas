@@ -7,5 +7,43 @@
 
     <ui:define name="corpo">
 
+        <p:dataTable value="#{solicitacoesAvaliadorMB.solicitacaoDTOList}" var="solicitacao" id="tabela_solicitacao" paginator="true" paginatorPosition="bottom" rows="20"
+                     widgetVar="customersTable" filteredValue="#{solicitacoesAvaliadorMB.solicitacaoDTOList}">
+
+            <p:column headerText="ID">
+                <p:outputLabel value="#{solicitacao.idSolicitacoes}"/>
+            </p:column>
+
+            <p:column headerText="Número Do Espaço Fisico">
+                <p:outputLabel value="#{espacoFisicoMB.getNumeroEspacoFisicos(solicitacao.idEspacoFisico)}"/>
+            </p:column>
+
+            <p:column headerText="Tipo Da Sala">
+                <p:outputLabel value="#{tipoSalaMB.getNomeSala(espacoFisicoMB.getIdTipoSala(solicitacao.idEspacoFisico))}"/>
+            </p:column>
+
+
+            <p:column headerText="Status"  sortBy="#{solicitacao.idStatus}">
+                <p:outputLabel value="#{statusMB.getStatusById(solicitacao.idStatus)}"/>
+            </p:column>
+
+
+            <p:column headerText="Agendamento">
+                <p:outputLabel value="#{solicitacoesAvaliadorMB.dataHoraFormatada(solicitacao.dataHoraLocacao)}"/>
+            </p:column>
+
+            <p:column headerText="Data/Hora Solicitação" sortBy="#{solicitacao.dataHoraSolicitacao}">>
+                <p:outputLabel value="#{solicitacoesAvaliadorMB.dataHoraFormatada(solicitacao.dataHoraSolicitacao)}"/>
+            </p:column>
+
+            <p:column styleClass="col-bt">
+                <p:commandButton value="Aceitar" action="#{solicitacoesAvaliadorMB.aceitarSolicitacao(solicitacao)}"
+                                 icon="pi pi-pencil" update="tabela_solicitacao" process="@this"/>
+
+                <p:commandButton value="Rejeitar" action="#{solicitacoesAvaliadorMB.rejeitarSolicitacao(solicitacao)}"
+                                 icon="pi pi-trash" update="tabela_solicitacao" process="@this"/>
+            </p:column>
+        </p:dataTable>
+
     </ui:define>
 </ui:composition>

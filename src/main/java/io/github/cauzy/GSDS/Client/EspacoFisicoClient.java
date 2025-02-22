@@ -59,4 +59,27 @@ public class EspacoFisicoClient {
             throw new EntityCreationException("Erro ao criar Espaco FIsico:  " + response.getStatus());
         }
     }
+
+    public EspacoFisicoDTO updateEspacoFisico(EspacoFisicoDTO espacoFisicoDTO) throws EntityCreationException {
+        WebTarget target = client.target(API_URL + "/" + espacoFisicoDTO.getIdEspacoFisico());
+
+        Response response = target.request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(espacoFisicoDTO, MediaType.APPLICATION_JSON));
+
+        if (response.getStatus() == 200) {
+            return response.readEntity(EspacoFisicoDTO.class);
+        } else {
+            throw new EntityCreationException("Erro ao fazer update do espaco fisico Espaco FIsico:  " + response.getStatus());
+        }
+    }
+
+    public void deleteEspacoFisico(Integer id) throws EntityNotFoundException {
+        WebTarget target = client.target(API_URL + "/" + id);
+
+        Response response = target.request(MediaType.APPLICATION_JSON).delete();
+
+        if (response.getStatus() != 204) { // 204 significa No Content, que é o esperado ao deletar
+            throw new EntityNotFoundException("Erro ao deletar Espaco Fisico: " + response.getStatus());
+        }
+    }
 }

@@ -31,10 +31,15 @@
 
         <p:commandButton value="Minhas Solicitações"
                          rendered="#{usuarioMB.usuarioLogado.idCargo == 2}"/>
+        <h:form>
+            <p:commandButton value="Salas"
+                             rendered="#{usuarioMB.usuarioLogado.idCargo == 1}"
+                             action="/pages/gestor/salas.xhtml?faces-redirect=true" />
 
-        <p:commandButton value="Solicitacoes"
-                         rendered="#{usuarioMB.usuarioLogado.idCargo == 1}"/>
-
+            <p:commandButton value="Dashboard"
+                             rendered="#{usuarioMB.usuarioLogado.idCargo == 1}"
+                             action="/pages/gestor/dashboardGestor.xhtml?faces-redirect=true" />
+        </h:form>
 
         <h:form id="form_update">
             <!-- Botão que abre o modal -->

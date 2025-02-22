@@ -2,6 +2,8 @@ package io.github.cauzy.GSDS.Controller;
 
 import io.github.cauzy.GSDS.Client.EspacoFisicoClient;
 import io.github.cauzy.GSDS.DTO.EspacoFisicoDTO;
+import io.github.cauzy.GSDS.DTO.UsuarioDTO;
+import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
 import io.github.cauzy.GSDS.Utility.Message;
 import jakarta.annotation.PostConstruct;
@@ -30,6 +32,24 @@ public class EspacoFisicoMB implements Serializable {
         } catch (EntityNotFoundException e) {
             Message.erro("Erro ao carregar EspacoFisico: " + e.getMessage());
         }
+    }
+
+    public void adicionar() {
+        try {
+            espacoFisicoClient.createEspacoFisico(espacoFisicoDTO);
+            init();
+            espacoFisicoDTO = new EspacoFisicoDTO();
+            Message.info("Salvo Com Sucesso");
+        } catch (EntityCreationException e) {
+            Message.erro(e.getMessage());
+        }
+    }
+
+    public void excluir() throws EntityNotFoundException {
+        espacoFisicoClient.deleteEspacoFisico(espacoFisicoDTO.getIdEspacoFisico());
+        espacoFisicoDTO = new EspacoFisicoDTO();
+        init();
+        Message.erro( "A Sala foi removida");
     }
 
     public Integer getNumeroEspacoFisicos(Integer id) throws EntityNotFoundException {

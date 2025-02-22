@@ -53,6 +53,7 @@ public class UsuarioMB implements Serializable {
         }
     }
 
+    //    1 = gestor, 2 = Prefessor
     public void updateUser(){
         try {
             usuarioClient.updateUsuario(usuarioDTO.getIdUsuario(), usuarioDTO);

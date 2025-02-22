@@ -30,8 +30,6 @@ public class SolicitacoesSolicitanteMB implements Serializable {
 
     private List<SolicitacaoDTO> solicitacaoDTOList;
 
-//    List<SolicitacaoDTO> solicitacoesDoSolicitanteDTOList;
-
     @PostConstruct
     public void init()  {
         try {
@@ -47,7 +45,6 @@ public class SolicitacoesSolicitanteMB implements Serializable {
         try {
 //            Preenchimento Default
             solicitacaoDTO.setDataHoraSolicitacao(LocalDateTime.now());
-            solicitacaoDTO.setDataHoraLocacao(LocalDateTime.now());
             Integer idProfessor = getSolicitanteId();
             solicitacaoDTO.setIdUsuarioSolicitante(idProfessor);
 

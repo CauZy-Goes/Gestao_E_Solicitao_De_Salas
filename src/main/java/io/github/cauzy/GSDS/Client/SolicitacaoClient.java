@@ -65,4 +65,17 @@ public class SolicitacaoClient {
             throw new EntityCreationException("Erro ao criar Solicitação: " + response.getStatus());
         }
     }
+
+    public SolicitacaoDTO updateSolicitacao(SolicitacaoDTO solicitacaoDTO, Integer id) throws EntityCreationException {
+        WebTarget target = client.target(API_URL + "/" + id);
+
+        Response response = target.request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(solicitacaoDTO, MediaType.APPLICATION_JSON));
+
+        if (response.getStatus() == 200) {
+            return response.readEntity(SolicitacaoDTO.class);
+        } else {
+            throw new EntityCreationException("Erro ao dar update Solicitação: " + response.getStatus());
+        }
+    }
 }

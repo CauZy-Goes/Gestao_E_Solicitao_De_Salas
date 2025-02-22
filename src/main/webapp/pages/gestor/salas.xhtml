@@ -1,0 +1,76 @@
+<ui:composition template="/WEB-INF/template/TemplateUsuarios.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="corpo">
+
+        <p:tabView id="tabview_salas">
+            <!--    Tab Salas     -->
+            <p:tab title="Salas" id="tab_salas">
+                <!-- Form Salas          -->
+                <h:form id="form_salas">
+                    <h1>Salas</h1>"
+                    <p:messages autoUpdate="true"   id="message_Salas"/>
+
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Número Da Salas"/>
+                        <p:inputText value="#{espacoFisicoMB.espacoFisicoDTO.numero}" required="True"/>
+
+                        <p:outputLabel value="Tipo De Sala" />
+                        <p:selectOneMenu value="#{tipoSalaMB.tipoSalaDTO.idTipoSala}" required="true" label="Qual é o tipo da sala ?" >
+                            <f:selectItem itemLabel="Selecione A Sala" noSelectionOption="true"/>
+                            <f:selectItems value="#{tipoSalaMB.tipoSalaDTOList}" var="sala" itemLabel="#{sala.nomeSala}" itemValue="#{sala.idTipoSala}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel/>
+                        <p:commandButton value="Cadastrar" action="#{}" update="message_cadastro"/>
+                    </p:panelGrid>
+                </h:form>
+            </p:tab>
+
+            <!--    Tab Login     -->
+            <p:tab title="login" id="tab_login">
+                <!-- Form Cadastro          -->
+                <h:form id="form_login">
+                    <h1>Login</h1>"
+                    <p:messages autoUpdate="true"   id="message_login"/>
+
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Email"/>
+                        <p:inputText value="#{usuarioMB.usuarioDTO.email}" required="True"/>
+
+                        <p:outputLabel value="Senha"/>
+                        <p:password value="#{usuarioMB.usuarioDTO.senha}" Required="True" toggleMask="true"/>
+
+                        <p:outputLabel/>
+                        <p:commandButton value="Entrar" action="#{usuarioMB.login()}" update="message_login"/>
+                    </p:panelGrid>
+                </h:form>
+            </p:tab>
+
+            <!--    Tab Login     -->
+            <p:tab title="login" id="tab_login">
+                <!-- Form Cadastro          -->
+                <h:form id="form_login">
+                    <h1>Login</h1>"
+                    <p:messages autoUpdate="true"   id="message_login"/>
+
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Email"/>
+                        <p:inputText value="#{usuarioMB.usuarioDTO.email}" required="True"/>
+
+                        <p:outputLabel value="Senha"/>
+                        <p:password value="#{usuarioMB.usuarioDTO.senha}" Required="True" toggleMask="true"/>
+
+                        <p:outputLabel/>
+                        <p:commandButton value="Entrar" action="#{usuarioMB.login()}" update="message_login"/>
+                    </p:panelGrid>
+                </h:form>
+            </p:tab>
+        </p:tabView>
+
+    </ui:define>
+</ui:composition>

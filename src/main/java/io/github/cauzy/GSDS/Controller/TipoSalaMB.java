@@ -2,6 +2,7 @@ package io.github.cauzy.GSDS.Controller;
 
 import io.github.cauzy.GSDS.Client.TipoSalaClient;
 import io.github.cauzy.GSDS.DTO.TipoSalaDTO;
+import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
 import io.github.cauzy.GSDS.Utility.Message;
 import jakarta.annotation.PostConstruct;
@@ -31,6 +32,25 @@ public class TipoSalaMB implements Serializable {
             Message.erro("Erro ao carregar tipoSala: " + e.getMessage());
         }
     }
+
+    public void adicionar() {
+        try {
+            tipoSalaClient.createTipoSala(tipoSalaDTO);
+            init();
+            tipoSalaDTO = new TipoSalaDTO();
+            Message.info("Tipo de Sala salvo com sucesso!");
+        } catch (EntityCreationException e) {
+            Message.erro(e.getMessage());
+        }
+    }
+
+    public void excluir() throws EntityNotFoundException {
+        tipoSalaClient.deleteTipoSala(tipoSalaDTO.getIdTipoSala());
+        tipoSalaDTO = new TipoSalaDTO();
+        init();
+        Message.info("O Tipo de Sala foi removido com sucesso!");
+    }
+
 
     public String getNomeSala(Integer id) throws EntityNotFoundException {
         return tipoSalaClient.getTipoSalaById(id).getNomeSala();

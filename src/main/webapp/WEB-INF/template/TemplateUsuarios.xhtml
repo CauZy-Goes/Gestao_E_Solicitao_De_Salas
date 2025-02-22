@@ -22,11 +22,19 @@
 
 <h:body>
 
-    <header class="header">
-        <h1>DashBoard Professor</h1>
-        <h1>Bem-vindo, #{usuarioMB.usuarioLogado.nomeUsuario}!</h1>
+    <header id="header" class="header">
 
-        <a>Solicitacoes</a>
+        <h1>DashBoard Do #{cargoMB.getNomeCargoById(usuarioMB.usuarioLogado.idCargo)}</h1>
+        <h:panelGroup id="userInfo">
+            <h1>Bem-vindo, #{usuarioMB.usuarioLogado.nomeUsuario}!</h1>
+        </h:panelGroup>
+
+        <p:commandButton value="Minhas Solicitações"
+                         rendered="#{usuarioMB.usuarioLogado.idCargo == 2}"/>
+
+        <p:commandButton value="Solicitacoes"
+                         rendered="#{usuarioMB.usuarioLogado.idCargo == 1}"/>
+
 
         <h:form id="form_update">
             <!-- Botão que abre o modal -->
@@ -51,7 +59,7 @@
 
                     <p:messages autoUpdate="true" id="message_update"/>
                     <p:commandButton value="Salvar" icon="pi pi-check" actionListener="#{usuarioMB.updateUser}"
-                                     oncomplete="PF('popupUpdate').show()" update="form_update message_update"/>
+                                     oncomplete="PF('popupUpdate').show()" update="userInfo message_update"/>
                 </h:panelGrid>
             </p:dialog>
 

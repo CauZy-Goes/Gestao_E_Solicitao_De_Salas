@@ -44,6 +44,10 @@ public class CargoMB implements Serializable {
         }
     }
 
+    public String getNomeCargoById(Integer id) throws EntityNotFoundException {
+        return cargoClient.getCargoById(id).getNomeCargo();
+    }
+
     public List<CargoDTO> getCargosList() {
         return cargosList;
     }

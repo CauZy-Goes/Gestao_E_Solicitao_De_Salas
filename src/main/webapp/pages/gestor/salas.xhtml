@@ -7,67 +7,90 @@
 
     <ui:define name="corpo">
 
-        <p:tabView id="tabview_salas">
+        <p:tabView id="tabview_salas"  dynamic="true" cache="false">
             <!--    Tab Salas     -->
             <p:tab title="Salas" id="tab_salas">
                 <!-- Form Salas          -->
                 <h:form id="form_salas">
                     <h1>Salas</h1>"
-                    <p:messages autoUpdate="true"   id="message_Salas"/>
+                    <p:messages autoUpdate="true"   id="message_salas"/>
 
                     <p:panelGrid columns="2">
                         <p:outputLabel value="Número Da Salas"/>
                         <p:inputText value="#{espacoFisicoMB.espacoFisicoDTO.numero}" required="True"/>
 
                         <p:outputLabel value="Tipo De Sala" />
-                        <p:selectOneMenu value="#{tipoSalaMB.tipoSalaDTO.idTipoSala}" required="true" label="Qual é o tipo da sala ?" >
+                        <p:selectOneMenu value="#{espacoFisicoMB.espacoFisicoDTO.idTipoSala}" required="true" label="Qual é o tipo da sala ?" >
                             <f:selectItem itemLabel="Selecione A Sala" noSelectionOption="true"/>
                             <f:selectItems value="#{tipoSalaMB.tipoSalaDTOList}" var="sala" itemLabel="#{sala.nomeSala}" itemValue="#{sala.idTipoSala}"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel/>
-                        <p:commandButton value="Cadastrar" action="#{}" update="message_cadastro"/>
+                        <p:commandButton value="Cadastrar" action="#{espacoFisicoMB.adicionar()}" update="message_salas form_salas tabela_salas"/>
                     </p:panelGrid>
+
+                    <p:dataTable value="#{espacoFisicoMB.espacoFisicoDTOList}" var="s" id="tabela_salas" paginator="true" paginatorPosition="bottom" rows="5">
+
+                        <p:column headerText="Id">
+                            <p:outputLabel value="#{s.idEspacoFisico}"/>
+                        </p:column>
+
+                        <p:column headerText="Numero">
+                            <p:outputLabel value="#{s.numero}"/>
+                        </p:column>
+
+                        <p:column headerText="Tipo De Sala">
+                            <p:outputLabel value="#{tipoSalaMB.getNomeSala(s.idTipoSala)}"/>
+                        </p:column>
+
+                        <p:column>
+                            <p:commandButton icon="pi pi-pencil" update="@form" process="@this">
+                                <f:setPropertyActionListener value="#{s}" target="#{espacoFisicoMB.espacoFisicoDTO}"/>
+                            </p:commandButton>
+
+                            <p:commandButton action="#{espacoFisicoMB.excluir()}" icon="pi pi-trash" update="@form" process="@this">
+                                <f:setPropertyActionListener value="#{s}" target="#{espacoFisicoMB.espacoFisicoDTO}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
                 </h:form>
             </p:tab>
 
-            <!--    Tab Login     -->
-            <p:tab title="login" id="tab_login">
-                <!-- Form Cadastro          -->
-                <h:form id="form_login">
-                    <h1>Login</h1>"
-                    <p:messages autoUpdate="true"   id="message_login"/>
+            <!--    Tab Tipo Sala     -->
+            <p:tab title="Tipo Salas" id="tab_tsalas">
+                <!-- Form Salas          -->
+                <h:form id="form_tsalas">
+                    <h1>Tipo Salas</h1>"
+                    <p:messages autoUpdate="true"   id="message_tsalas"/>
 
                     <p:panelGrid columns="2">
-                        <p:outputLabel value="Email"/>
-                        <p:inputText value="#{usuarioMB.usuarioDTO.email}" required="True"/>
-
-                        <p:outputLabel value="Senha"/>
-                        <p:password value="#{usuarioMB.usuarioDTO.senha}" Required="True" toggleMask="true"/>
+                        <p:outputLabel value="Nome Do Tipo Da Sala"/>
+                        <p:inputText value="#{tipoSalaMB.tipoSalaDTO.nomeSala}" required="True"/>
 
                         <p:outputLabel/>
-                        <p:commandButton value="Entrar" action="#{usuarioMB.login()}" update="message_login"/>
+                        <p:commandButton value="Cadastrar" action="#{tipoSalaMB.adicionar()}" update="message_tsalas form_tsalas tabela_tsalas"/>
                     </p:panelGrid>
-                </h:form>
-            </p:tab>
 
-            <!--    Tab Login     -->
-            <p:tab title="login" id="tab_login">
-                <!-- Form Cadastro          -->
-                <h:form id="form_login">
-                    <h1>Login</h1>"
-                    <p:messages autoUpdate="true"   id="message_login"/>
+                    <p:dataTable value="#{tipoSalaMB.tipoSalaDTOList}" var="ts" id="tabela_tsalas" paginator="true" paginatorPosition="bottom" rows="5">
 
-                    <p:panelGrid columns="2">
-                        <p:outputLabel value="Email"/>
-                        <p:inputText value="#{usuarioMB.usuarioDTO.email}" required="True"/>
+                        <p:column headerText="Id">
+                            <p:outputLabel value="#{ts.idTipoSala}}"/>
+                        </p:column>
 
-                        <p:outputLabel value="Senha"/>
-                        <p:password value="#{usuarioMB.usuarioDTO.senha}" Required="True" toggleMask="true"/>
+                        <p:column headerText="Nome">
+                            <p:outputLabel value="#{ts.nomeSala}"/>
+                        </p:column>
 
-                        <p:outputLabel/>
-                        <p:commandButton value="Entrar" action="#{usuarioMB.login()}" update="message_login"/>
-                    </p:panelGrid>
+                        <p:column>
+                            <p:commandButton icon="pi pi-pencil" update="@form" process="@this">
+                                <f:setPropertyActionListener value="#{ts}" target="#{tipoSalaMB.tipoSalaDTO}"/>
+                            </p:commandButton>
+
+                            <p:commandButton action="#{tipoSalaMB.excluir()}" icon="pi pi-trash" update="@form" process="@this">
+                                <f:setPropertyActionListener value="#{ts}" target="#{tipoSalaMB.tipoSalaDTO}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
                 </h:form>
             </p:tab>
         </p:tabView>

@@ -34,7 +34,6 @@ public class SolicitacoesSolicitanteMB implements Serializable {
     public void init()  {
         try {
             Integer idProfessor = getSolicitanteId();
-
             solicitacaoDTOList = solicitacaoClient.getSolicitacaoByIdSolicitante(idProfessor);
         } catch (EntityNotFoundException e) {
             Message.erro("Erro ao carregar solicitacao: " + e.getMessage());
@@ -68,7 +67,6 @@ public class SolicitacoesSolicitanteMB implements Serializable {
         ExternalContext externalContext = facesContext.getExternalContext();
         return  (HttpSession) externalContext.getSession(false);
     }
-
 
     public SolicitacaoDTO getSolicitacaoDTO() {
         return solicitacaoDTO;

@@ -31,10 +31,6 @@ public class SolicitacoesAvaliadorMB implements Serializable {
 
     List<SolicitacaoDTO> solicitacaoDTOList;
 
-
-//    1 = pendente, 2 = Aceita, 3 = Rejeitada
-    Integer status;
-
     @PostConstruct
     public void init() {
         try {
@@ -46,18 +42,18 @@ public class SolicitacoesAvaliadorMB implements Serializable {
 
     //    1 = pendente, 2 = Aceita, 3 = Rejeitada
 
-    public void aceitarSolicitacao(Integer id) throws EntityCreationException {
+    public void aceitarSolicitacao(SolicitacaoDTO solicitacaoDTO) throws EntityCreationException {
         solicitacaoDTO.setIdStatus(2);
         solicitacaoDTO.setDataHoraAprovacao(LocalDateTime.now());
         solicitacaoDTO.setIdUsuarioAvaliador(getAvaliadorId());
-        solicitacaoClient.updateSolicitacao(solicitacaoDTO, id);
+        solicitacaoClient.updateSolicitacao(solicitacaoDTO, solicitacaoDTO.getIdSolicitacoes() );
     }
 
-    public void rejeitarSolicitacao(Integer id) throws EntityCreationException {
+    public void rejeitarSolicitacao(SolicitacaoDTO solicitacaoDTO) throws EntityCreationException {
         solicitacaoDTO.setIdStatus(3);
         solicitacaoDTO.setDataHoraAprovacao(LocalDateTime.now());
         solicitacaoDTO.setIdUsuarioAvaliador(getAvaliadorId());
-        solicitacaoClient.updateSolicitacao(solicitacaoDTO, id);
+        solicitacaoClient.updateSolicitacao(solicitacaoDTO, solicitacaoDTO.getIdSolicitacoes());
     }
 
     public Integer getAvaliadorId(){
@@ -79,16 +75,6 @@ public class SolicitacoesAvaliadorMB implements Serializable {
         return dataHora.format(formatter);
     }
 
-    private Integer selectedStatus;
-
-    public void filterSolicitacoes() {
-        if (selectedStatus != null) {
-            solicitacaoDTOList = solicitacaoDTOList.stream()
-                    .filter(s -> s.getIdStatus().equals(selectedStatus))
-                    .collect(Collectors.toList());
-        }
-    }
-
     public SolicitacaoClient getSolicitacaoClient() {
         return solicitacaoClient;
     }
@@ -105,11 +91,4 @@ public class SolicitacoesAvaliadorMB implements Serializable {
         return solicitacaoDTOList;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 }

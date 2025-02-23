@@ -41,7 +41,7 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            width: 60%;
+            width: 65%;
       }
 
         .header-apresentacao h1 {
@@ -51,10 +51,9 @@
 
         .header-links{
             display: flex;
-            justify-content: flex-start;
-            gap: 20px;
+            justify-content: space-around;
             align-items: center ;
-            width: 20%;
+            width: 25%;
         }
 
         .header-links .ui-button {
@@ -72,7 +71,32 @@
             color: black !important;
         }
 
+        .header-utils{
+            width: 10%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            align-items: center ;
+        }
 
+        .header-utils .bt-settings {
+            background-color: gray;
+        }
+
+        .header-utils .bt-settings:hover {
+            background-color: yellow;
+            color: black;
+        }
+
+        .header-utils .bt-log-out{
+            background-color: rgba(255, 0, 0, 0.44);
+            color: black;
+        }
+
+        .header-utils .bt-log-out:hover {
+            background-color: black;
+            color: white;
+        }
     </style>
 </h:head>
 
@@ -93,7 +117,7 @@
 <!--        <p:commandButton value="Minhas Solicitações"-->
 <!--                         rendered="#{usuarioMB.usuarioLogado.idCargo == 2}"/>-->
 
-        <h:form class="header-links">
+        <h:form styleClass="header-links">
                 <div>
                     <p:commandButton value="Dashboard"
                                      icon="pi pi-home"
@@ -110,9 +134,9 @@
         </h:form>
 
 
-        <h:form id="form_update">
+        <h:form id="form_update" styleClass="header-utils">
             <!-- Botão que abre o modal -->
-            <p:commandButton icon="pi pi-wrench" actionListener="#{usuarioMB.prepararEdicao()}"
+            <p:commandButton icon="pi pi-wrench" actionListener="#{usuarioMB.prepararEdicao()}" styleClass="bt-settings"
                              oncomplete="PF('popupUpdate').show()" update="popupUpdate @form" process="@this"/>
 
             <!-- Dialog que serve como popup -->
@@ -133,11 +157,12 @@
 
                     <p:messages autoUpdate="true" id="message_update"/>
                     <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{usuarioMB.updateUser}"
-                                     oncomplete="PF('popupUpdate').show()" update="user-info message_update"/>
+                                     oncomplete="PF('popupUpdate').show()" update="user-info message_update"
+                                     styleClass="bt-settings"/>
                 </h:panelGrid>
             </p:dialog>
 
-            <p:commandButton icon="pi pi-sign-out" action="#{usuarioMB.logout()}" update="@form" process="@this"/>
+            <p:commandButton icon="pi pi-sign-out" action="#{usuarioMB.logout()}" styleClass="bt-log-out" update="@form" process="@this"/>
         </h:form>
     </header>
 

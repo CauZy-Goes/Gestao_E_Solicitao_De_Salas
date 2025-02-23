@@ -9,48 +9,198 @@
     <title>Gestão De Salas</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        body{
+            font-family: "Trebuchet MS", sans-serif;
+            height: 100vh;
+        }
+
         /*headder*/
-        .header {
+        header {
+            background-color: darkblue;
             width: 100%;
+            height: 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-apresentacao {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 65%;
+      }
+
+        .header-apresentacao h1 {
+            color: darkgrey;
+            font-size: 35px;
+        }
+
+        .header-links{
+            display: flex;
+            justify-content: space-around;
+            align-items: center ;
+            width: 25%;
+        }
+
+        .header-links .ui-button {
+            background-color: white !important;
+            color: darkblue !important;
+            font-weight: bold !important;
+            font-size: 20px !important;
+            box-shadow: 0 0 5px dodgerblue!important;
+            border-radius: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .header-links .ui-button:hover {
+            background-color: rgba(18, 159, 218, 0.89) !important;
+            color: black !important;
+        }
+
+        .header-utils{
+            width: 10%;
             display: flex;
             justify-content: center;
-            align-items: center;
-            gap: 90px;
+            gap: 10px;
+            align-items: center ;
+        }
+
+        .header-utils .bt-settings {
+            background-color: gray;
+        }
+
+        .header-utils .bt-settings:hover {
+            background-color: yellow;
+            color: black;
+        }
+
+        .header-utils .bt-log-out{
+            background-color: rgba(255, 0, 0, 0.68);
+            color: black;
+        }
+
+        .header-utils .bt-log-out:hover {
+            background-color: black;
+            color: white;
+        }
+
+        /*    pop pup*/
+        .header-settings {
+            width: 450px;
+            padding: 20px;
+            border-radius: 10px; /* Borda arredondada */
+        }
+
+        .ui-dialog .ui-dialog-title{
+            width: 100%;
+            text-align: center;
+            font-size: 25px;
+            font-weight: bold;
+            color: black;
+        }
+
+        .header-settings-panel {
+            width: 400px;
+        }
+
+        .header-settings-panel .ui-outputlabel {
+            font-size: 23px; !important;
+            font-weight: bold;
+        }
+
+        .header-settings-panel .form-panel input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid rgba(18, 159, 218, 0.89);
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .header-settings-panel .form-panel input:focus {
+            border-color: darkblue !important;
+            box-shadow: 0 0 5px dodgerblue !important;
+        }
+
+        .header-settings-panel input:hover {
+            border-color: darkblue !important;
+            box-shadow: 0 0 5px dodgerblue !important;
+        }
+
+        .header-settings-panel .ui-button{
+            background-color: darkblue;
+            font-size: 23px; !important;
+            font-weight: bold;
+            margin: 20px 0 0;
+            cursor: pointer;
+        }
+
+        .header-settings-panel .ui-button:hover{
+            background-color: white;
+            color: darkblue;
+            font-size: 23px; !important;
+            font-weight: bold;
         }
     </style>
 </h:head>
 
 <h:body>
 
-    <header id="header" class="header">
+    <header id="header">
 
-        <h1>DashBoard Do #{cargoMB.getNomeCargoById(usuarioMB.usuarioLogado.idCargo)}</h1>
-        <h:panelGroup id="userInfo">
-            <h1>Bem-vindo, #{usuarioMB.usuarioLogado.nomeUsuario}!</h1>
-        </h:panelGroup>
+        <div class="header-apresentacao">
+            <div>
+                <h1>DashBoard Do <span style="color: white; font-size: 40px;">#{cargoMB.getNomeCargoById(usuarioMB.usuarioLogado.idCargo)}</span></h1>
+            </div>
 
-        <p:commandButton value="Minhas Solicitações"
-                         rendered="#{usuarioMB.usuarioLogado.idCargo == 2}"/>
-        <h:form>
-            <p:commandButton value="Salas"
-                             rendered="#{usuarioMB.usuarioLogado.idCargo == 1}"
-                             action="/pages/gestor/salas.xhtml?faces-redirect=true" />
+            <h:panelGroup id="user-info">
+                <h1>Bem-vindo, <span style="color: white; font-size: 40px;"> #{usuarioMB.usuarioLogado.nomeUsuario} !</span></h1>
+            </h:panelGroup>
+        </div>
 
-            <p:commandButton value="Dashboard"
-                             rendered="#{usuarioMB.usuarioLogado.idCargo == 1}"
-                             action="/pages/gestor/dashboardGestor.xhtml?faces-redirect=true" />
+<!--        <p:commandButton value="Minhas Solicitações"-->
+<!--                         rendered="#{usuarioMB.usuarioLogado.idCargo == 2}"/>-->
+
+        <h:form styleClass="header-links">
+                <div>
+                    <p:commandButton value="Dashboard"
+                                     icon="pi pi-home"
+                                     rendered="#{usuarioMB.usuarioLogado.idCargo == 1}"
+                                     action="/pages/gestor/dashboardGestor.xhtml?faces-redirect=true" />
+                </div>
+
+                <div>
+                    <p:commandButton value="Gestão De Salas"
+                                     icon="pi pi-th-large"
+                                     rendered="#{usuarioMB.usuarioLogado.idCargo == 1}"
+                                     action="/pages/gestor/salas.xhtml?faces-redirect=true" />
+                </div>
         </h:form>
 
-        <h:form id="form_update">
+
+        <h:form id="form_update" styleClass="header-utils">
             <!-- Botão que abre o modal -->
-            <p:commandButton iconPos="pi pi-wrench" value="Perfil" actionListener="#{usuarioMB.prepararEdicao()}"
+            <p:commandButton icon="pi pi-wrench" actionListener="#{usuarioMB.prepararEdicao()}" styleClass="bt-settings"
                              oncomplete="PF('popupUpdate').show()" update="popupUpdate @form" process="@this"/>
 
             <!-- Dialog que serve como popup -->
-            <p:dialog id="popupUpdate" widgetVar="popupUpdate" header="Update Perfil"
-                      modal="true" resizable="false" width="400">
+            <p:dialog id="popupUpdate"  widgetVar="popupUpdate" header="Update Perfil"
+                      modal="true" resizable="false" styleClass="header-settings">
 
-                <h:panelGrid columns="2" cellpadding="5">
+                <h:panelGrid columns="2" cellpadding="5" styleClass="header-settings-panel">
 
                     <p:outputLabel for="nome" value="Nome:" />
                     <p:inputText id="nome" value="#{usuarioMB.usuarioDTO.nomeUsuario}" required="true"/>
@@ -63,12 +213,13 @@
 
 
                     <p:messages autoUpdate="true" id="message_update"/>
-                    <p:commandButton value="Salvar" icon="pi pi-check" actionListener="#{usuarioMB.updateUser}"
-                                     oncomplete="PF('popupUpdate').show()" update="userInfo message_update"/>
+                    <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{usuarioMB.updateUser}"
+                                     oncomplete="PF('popupUpdate').show()" update="user-info message_update"
+                                     styleClass="bt-settings"/>
                 </h:panelGrid>
             </p:dialog>
 
-            <p:commandButton icon="pi pi-sign-out" value="Logout" action="#{usuarioMB.logout()}" update="@form" process="@this"/>
+            <p:commandButton icon="pi pi-sign-out" action="#{usuarioMB.logout()}" styleClass="bt-log-out" update="@form" process="@this"/>
         </h:form>
     </header>
 

@@ -14,6 +14,28 @@
 
     <p:tabView id="tabview_auth" styleClass="tabview-login">
 
+        <!--    Tab Login     -->
+        <p:tab title="Login" id="tab_login">
+            <!-- Form Cadastro          -->
+            <h:form id="form_login">
+
+                <p:messages autoUpdate="true"  id="message_login"/>
+
+                <p:panelGrid columns="2" styleClass="form-panel">
+                    <p:outputLabel value="Email"/>
+                    <p:inputText value="#{usuarioMB.usuarioDTO.email}" required="True"/>
+
+                    <p:outputLabel value="Senha"/>
+                    <p:password value="#{usuarioMB.usuarioDTO.senha}" Required="True" toggleMask="true"/>
+                </p:panelGrid>
+
+                <div class="form-container-button" >
+                    <p:commandButton icon="pi pi-sign-in" value="Entrar" action="#{usuarioMB.login()}" update="message_login"
+                                     styleClass="input-button"/>
+                </div>
+            </h:form>
+        </p:tab>
+
         <!--    Tab Cadastro     -->
         <p:tab title="Cadastro" id="tab_cadastro">
             <!-- Form Cadastro          -->
@@ -30,7 +52,7 @@
                     <p:outputLabel value="Senha"/>
                     <p:password value="#{usuarioMB.usuarioDTO.senha}" Required="True"/>
 
-                    <p:outputLabel value="Laboratório" style="padding-top: 20px;" />
+                    <p:outputLabel value="Qual é o seu cargo ?" style="padding-top: 20" />
                     <p:selectOneMenu value="#{usuarioMB.usuarioDTO.idCargo}" required="true" label="Qual é o seu cargo ?" >
                         <f:selectItem itemLabel="Selecione o Cargo" noSelectionOption="true"/>
                         <f:selectItems value="#{cargoMB.cargosList}" var="cargo" itemLabel="#{cargo.nomeCargo}" itemValue="#{cargo.idCargo}"/>
@@ -40,28 +62,6 @@
 
                 <div class="form-container-button" >
                     <p:commandButton icon="pi pi-check" value="Cadastrar" action="#{usuarioMB.adicionar()}" update="message_cadastro"
-                                     styleClass="input-button"/>
-                </div>
-            </h:form>
-        </p:tab>
-
-        <!--    Tab Login     -->
-        <p:tab title="login" id="tab_login">
-            <!-- Form Cadastro          -->
-            <h:form id="form_login">
-
-                <p:messages autoUpdate="true"  id="message_login"/>
-
-                <p:panelGrid columns="2" styleClass="form-panel">
-                    <p:outputLabel value="Email"/>
-                    <p:inputText value="#{usuarioMB.usuarioDTO.email}" required="True"/>
-
-                    <p:outputLabel value="Senha"/>
-                    <p:password value="#{usuarioMB.usuarioDTO.senha}" Required="True" toggleMask="true"/>
-                </p:panelGrid>
-
-                <div class="form-container-button" >
-                    <p:commandButton icon="pi pi-sign-in" value="Entrar" action="#{usuarioMB.login()}" update="message_login"
                                      styleClass="input-button"/>
                 </div>
             </h:form>

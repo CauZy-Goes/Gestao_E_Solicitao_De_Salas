@@ -23,7 +23,6 @@
 
         body{
             font-family: "Trebuchet MS", sans-serif;
-            background: dodgerblue;
             height: 100vh;
         }
 
@@ -89,13 +88,71 @@
         }
 
         .header-utils .bt-log-out{
-            background-color: rgba(255, 0, 0, 0.44);
+            background-color: rgba(255, 0, 0, 0.68);
             color: black;
         }
 
         .header-utils .bt-log-out:hover {
             background-color: black;
             color: white;
+        }
+
+        /*    pop pup*/
+        .header-settings {
+            width: 450px;
+            padding: 20px;
+            border-radius: 10px; /* Borda arredondada */
+        }
+
+        .ui-dialog .ui-dialog-title{
+            width: 100%;
+            text-align: center;
+            font-size: 25px;
+            font-weight: bold;
+            color: black;
+        }
+
+        .header-settings-panel {
+            width: 400px;
+        }
+
+        .header-settings-panel .ui-outputlabel {
+            font-size: 23px; !important;
+            font-weight: bold;
+        }
+
+        .header-settings-panel .form-panel input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid rgba(18, 159, 218, 0.89);
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .header-settings-panel .form-panel input:focus {
+            border-color: darkblue !important;
+            box-shadow: 0 0 5px dodgerblue !important;
+        }
+
+        .header-settings-panel input:hover {
+            border-color: darkblue !important;
+            box-shadow: 0 0 5px dodgerblue !important;
+        }
+
+        .header-settings-panel .ui-button{
+            background-color: darkblue;
+            font-size: 23px; !important;
+            font-weight: bold;
+            margin: 20px 0 0;
+            cursor: pointer;
+        }
+
+        .header-settings-panel .ui-button:hover{
+            background-color: white;
+            color: darkblue;
+            font-size: 23px; !important;
+            font-weight: bold;
         }
     </style>
 </h:head>
@@ -141,9 +198,9 @@
 
             <!-- Dialog que serve como popup -->
             <p:dialog id="popupUpdate"  widgetVar="popupUpdate" header="Update Perfil"
-                      modal="true" resizable="false" width="400">
+                      modal="true" resizable="false" styleClass="header-settings">
 
-                <h:panelGrid columns="2" cellpadding="5">
+                <h:panelGrid columns="2" cellpadding="5" styleClass="header-settings-panel">
 
                     <p:outputLabel for="nome" value="Nome:" />
                     <p:inputText id="nome" value="#{usuarioMB.usuarioDTO.nomeUsuario}" required="true"/>

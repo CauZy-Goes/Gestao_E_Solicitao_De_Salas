@@ -43,7 +43,7 @@
 
         <h:form id="form_update">
             <!-- Botão que abre o modal -->
-            <p:commandButton value="Perfil" icon="pi pi-plus" actionListener="#{usuarioMB.prepararEdicao()}"
+            <p:commandButton iconPos="pi pi-wrench" value="Perfil" actionListener="#{usuarioMB.prepararEdicao()}"
                              oncomplete="PF('popupUpdate').show()" update="popupUpdate @form" process="@this"/>
 
             <!-- Dialog que serve como popup -->
@@ -68,7 +68,7 @@
                 </h:panelGrid>
             </p:dialog>
 
-            <p:commandButton value="Logout" action="#{usuarioMB.logout()}" update="@form" process="@this"/>
+            <p:commandButton icon="pi pi-sign-out" value="Logout" action="#{usuarioMB.logout()}" update="@form" process="@this"/>
         </h:form>
     </header>
 

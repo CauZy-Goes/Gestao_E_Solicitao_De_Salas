@@ -10,6 +10,168 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <style>
 
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Trebuchet MS", sans-serif;
+            background: linear-gradient(to bottom, white, #007bff);
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        h1{
+            font-size: 70px;
+            color: darkblue;
+        }
+        h2{
+            font-size: 55px;
+            color: dodgerblue;
+        }
+
+        header {
+            border-bottom: 5px gray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-bottom: 100px;
+        }
+
+        /*Tab View*/
+        .tabview-login {
+            background: white; !important;
+            border-radius: 25px; !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 600px;
+            box-shadow: 10px 10px 10px rgba(0, 40, 255, 0.5);
+            margin-bottom: 10%;
+        }
+
+        .tabview-login .ui-tabs-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            gap: 130px;
+        }
+
+        .tabview-login .ui-tabs-nav li {
+            font-size: 35px;
+            padding: 5px 10px;
+            border: none;
+        }
+
+        .tabview-login .ui-tabs-nav li:focus {
+            border-color: darkblue;
+            box-shadow: 0 0 5px darkblue;
+        }
+
+        .tabview-login .ui-tabs-nav li:hover {
+            border-bottom: darkblue 5px solid !important;
+            cursor: pointer;
+        }
+
+        .tabview-login .ui-tabs-nav li:hover {
+            color: #00c7d9 !important;
+        }
+
+        .tabview-login .ui-tabs-nav li.ui-state-active {
+            border-bottom: 5px solid darkblue !important;
+        }
+
+        .tabview-login .ui-tabs-nav li.ui-state-active a{
+            color: darkblue !important;
+            font-weight: bold !important;
+        }
+
+        /*   form */
+
+        .form-panel{
+            width: 100%;
+            border: orange 5px;
+        }
+
+        .form-panel .ui-outputlabel {
+            font-size: 23px; !important;
+            font-weight: bold;
+        }
+
+        .form-panel input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid dodgerblue;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .form-panel input:focus {
+            border-color: darkblue !important;
+            box-shadow: 0 0 5px dodgerblue !important;
+        }
+
+        .form-panel input:hover {
+            border-color: darkblue !important;
+            box-shadow: 0 0 5px dodgerblue !important;
+        }
+
+        .form-panel .ui-selectonemenu{
+            width: 100%;
+            padding: 10px;
+            border: 2px solid dodgerblue;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .form-panel .ui-selectonemenu:focus,
+        .form-panel .ui-selectonemenu:hover,
+        .form-panel .ui-selectonemenu.ui-selectonemenu-open {
+            border-color: darkblue !important;
+            box-shadow: 0 0 5px darkblue!important;
+        }
+
+        /* Botão Do Formulário */
+
+        .form-container-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0 20px;
+        }
+        .input-button {
+            height: 50px;
+            width: 220px;
+            background-color: darkblue !important;
+            color: white !important;
+            font-weight: bold !important;
+            font-size: 20px !important;
+            border: none !important;
+            border-radius: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .input-button:hover {
+            background-color: green !important;
+            color: white !important;
+        }
+
     </style>
 </h:head>
 

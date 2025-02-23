@@ -61,10 +61,9 @@
                 <h1>DashBoard Do <span style="color: white; font-size: 40px;">#{cargoMB.getNomeCargoById(usuarioMB.usuarioLogado.idCargo)}</span></h1>
             </div>
 
-            <h:panelGroup>
+            <h:panelGroup id="user-info">
                 <h1>Bem-vindo, <span style="color: white; font-size: 40px;"> #{usuarioMB.usuarioLogado.nomeUsuario} !</span></h1>
             </h:panelGroup>
-
         </div>
 
 <!--        <p:commandButton value="Minhas Solicitações"-->
@@ -107,7 +106,7 @@
 
                     <p:messages autoUpdate="true" id="message_update"/>
                     <p:commandButton value="Salvar" icon="pi pi-check" actionListener="#{usuarioMB.updateUser}"
-                                     oncomplete="PF('popupUpdate').show()" update="userInfo message_update"/>
+                                     oncomplete="PF('popupUpdate').show()" update="user-info message_update"/>
                 </h:panelGrid>
             </p:dialog>
 

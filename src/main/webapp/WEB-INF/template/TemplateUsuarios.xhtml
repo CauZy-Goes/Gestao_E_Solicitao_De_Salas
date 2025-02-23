@@ -49,6 +49,30 @@
             font-size: 35px;
         }
 
+        .header-links{
+            display: flex;
+            justify-content: flex-start;
+            gap: 20px;
+            align-items: center ;
+            width: 20%;
+        }
+
+        .header-links .ui-button {
+            background-color: white !important;
+            color: darkblue !important;
+            font-weight: bold !important;
+            font-size: 20px !important;
+            box-shadow: 0 0 5px dodgerblue!important;
+            border-radius: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .header-links .ui-button:hover {
+            background-color: rgba(18, 159, 218, 0.89) !important;
+            color: black !important;
+        }
+
+
     </style>
 </h:head>
 
@@ -69,27 +93,30 @@
 <!--        <p:commandButton value="Minhas Solicitações"-->
 <!--                         rendered="#{usuarioMB.usuarioLogado.idCargo == 2}"/>-->
 
-        <h:form>
-            <p:commandButton value="Salas"
-                             rendered="#{usuarioMB.usuarioLogado.idCargo == 1}"
-                             action="/pages/gestor/salas.xhtml?faces-redirect=true" />
+        <h:form class="header-links">
+                <div>
+                    <p:commandButton value="Dashboard"
+                                     icon="pi pi-home"
+                                     rendered="#{usuarioMB.usuarioLogado.idCargo == 1}"
+                                     action="/pages/gestor/dashboardGestor.xhtml?faces-redirect=true" />
+                </div>
 
-            <p:commandButton value="Dashboard"
-                             rendered="#{usuarioMB.usuarioLogado.idCargo == 1}"
-                             action="/pages/gestor/dashboardGestor.xhtml?faces-redirect=true" />
+                <div>
+                    <p:commandButton value="Gestão De Salas"
+                                     icon="pi pi-th-large"
+                                     rendered="#{usuarioMB.usuarioLogado.idCargo == 1}"
+                                     action="/pages/gestor/salas.xhtml?faces-redirect=true" />
+                </div>
         </h:form>
-
-
-
 
 
         <h:form id="form_update">
             <!-- Botão que abre o modal -->
-            <p:commandButton iconPos="pi pi-wrench" value="Perfil" actionListener="#{usuarioMB.prepararEdicao()}"
+            <p:commandButton icon="pi pi-wrench" actionListener="#{usuarioMB.prepararEdicao()}"
                              oncomplete="PF('popupUpdate').show()" update="popupUpdate @form" process="@this"/>
 
             <!-- Dialog que serve como popup -->
-            <p:dialog id="popupUpdate" widgetVar="popupUpdate" header="Update Perfil"
+            <p:dialog id="popupUpdate"  widgetVar="popupUpdate" header="Update Perfil"
                       modal="true" resizable="false" width="400">
 
                 <h:panelGrid columns="2" cellpadding="5">
@@ -105,12 +132,12 @@
 
 
                     <p:messages autoUpdate="true" id="message_update"/>
-                    <p:commandButton value="Salvar" icon="pi pi-check" actionListener="#{usuarioMB.updateUser}"
+                    <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{usuarioMB.updateUser}"
                                      oncomplete="PF('popupUpdate').show()" update="user-info message_update"/>
                 </h:panelGrid>
             </p:dialog>
 
-            <p:commandButton icon="pi pi-sign-out" value="Logout" action="#{usuarioMB.logout()}" update="@form" process="@this"/>
+            <p:commandButton icon="pi pi-sign-out" action="#{usuarioMB.logout()}" update="@form" process="@this"/>
         </h:form>
     </header>
 

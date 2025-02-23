@@ -52,7 +52,7 @@
                     <p:outputLabel value="Senha"/>
                     <p:password value="#{usuarioMB.usuarioDTO.senha}" Required="True"/>
 
-                    <p:outputLabel value="Laboratório" style="padding-top: 20" />
+                    <p:outputLabel value="Qual é o seu cargo ?" style="padding-top: 20" />
                     <p:selectOneMenu value="#{usuarioMB.usuarioDTO.idCargo}" required="true" label="Qual é o seu cargo ?" >
                         <f:selectItem itemLabel="Selecione o Cargo" noSelectionOption="true"/>
                         <f:selectItems value="#{cargoMB.cargosList}" var="cargo" itemLabel="#{cargo.nomeCargo}" itemValue="#{cargo.idCargo}"/>

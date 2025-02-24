@@ -2,7 +2,7 @@
 
 Este projeto é um sistema web desenvolvido em **JSF e PrimeFaces** para **gerenciar solicitações de uso de espaços físicos** em uma instituição. Ele se comunica com uma **API REST** desenvolvida em **Spring Boot**, responsável por processar e armazenar as solicitações de reserva. O objetivo é permitir que professores agendem salas para aulas ou eventos e que gestores administrem as solicitações e os espaços disponíveis.
 
-🔗 **API REST**: [Repositório da API](https://github.com/CauZy-Goes/Gestao_Solicitacoes_Espacos_REST)
+🔗 **API REST**: [Repositório da API](https://github.com/CauZy-Goes/Gestao_Solicitacoes_Espacos_API)
 
 ## ✨ Funcionalidades
 
@@ -101,5 +101,5 @@ Este projeto está sob a licença **MIT**. Veja o arquivo `LICENSE` para mais de
 
 ---
 
-Feito com ❤️ por **Cauã Farias** 🚀
+Feito por **Cauã Farias** 🚀
 

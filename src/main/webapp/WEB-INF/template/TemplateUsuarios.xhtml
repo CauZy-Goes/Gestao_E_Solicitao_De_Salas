@@ -36,6 +36,7 @@
             align-items: center;
         }
 
+        /*apresentacao da dashboard e do usuario*/
         .header-apresentacao {
             display: flex;
             justify-content: space-around;
@@ -48,6 +49,7 @@
             font-size: 35px;
         }
 
+        /*links de navegação do gestor*/
         .header-links{
             display: flex;
             justify-content: space-around;
@@ -70,6 +72,7 @@
             color: black !important;
         }
 
+        /*area de login e update de usuario*/
         .header-utils{
             width: 10%;
             display: flex;
@@ -140,19 +143,79 @@
             box-shadow: 0 0 5px dodgerblue !important;
         }
 
-        .header-settings-panel .ui-button{
-            background-color: darkblue;
-            font-size: 23px; !important;
-            font-weight: bold;
-            margin: 20px 0 0;
-            cursor: pointer;
+        /*form de casdastro dos usuarios*/
+
+        .form-cadastro {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 100%;
+            align-items: center;
         }
 
-        .header-settings-panel .ui-button:hover{
-            background-color: white;
-            color: darkblue;
+        .form-cadastro-panel {
+            width: 700px;
+            margin: 20px 0;
+            padding: 10px;
+            box-shadow: 0 0 5px 2px darkblue !important;
+        }
+
+        .form-cadastro .ui-outputlabel {
             font-size: 23px; !important;
             font-weight: bold;
+        }
+
+        .form-cadastro-panel input {
+            width: 100% !important;
+            padding: 10px !important;
+            border: 2px solid dodgerblue;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .form-cadastro-panel  input:focus {
+            border-color: darkblue !important;
+            box-shadow: 0 0 5px darkblue!important;
+        }
+
+        .form-cadastro-panel input:hover {
+            border-color: darkblue !important;
+            box-shadow: 0 0 5px darkblue!important;
+        }
+
+        .form-cadastro .ui-selectonemenu{
+            width: 100%;
+            padding: 10px;
+            border: 2px solid dodgerblue;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .form-cadastro .ui-selectonemenu:focus,
+        .form-cadastro .ui-selectonemenu:hover,
+        .form-cadastro .ui-selectonemenu.ui-selectonemenu-open {
+            border-color: darkblue !important;
+            box-shadow: 0 0 5px darkblue!important;
+        }
+
+        /*buttons*/
+        .button-create {
+            height: 50px !important;
+            width: 220px !important;
+            background-color: darkblue !important;
+            font-weight: bold !important;
+            font-size: 20px !important;
+            border: none !important;
+            border-radius: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .button-create:hover {
+            background-color: white !important;
+            color: darkblue !important;
+            border: darkblue 3px solid !important;
         }
     </style>
 </h:head>
@@ -215,7 +278,7 @@
                     <p:messages autoUpdate="true" id="message_update"/>
                     <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{usuarioMB.updateUser}"
                                      oncomplete="PF('popupUpdate').show()" update="user-info message_update"
-                                     styleClass="bt-settings"/>
+                                     styleClass="button-create"/>
                 </h:panelGrid>
             </p:dialog>
 

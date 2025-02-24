@@ -162,7 +162,7 @@
 
         .form-cadastro .ui-outputlabel {
             font-size: 23px; !important;
-            font-weight: bold;
+            font-weight: bold !important;
         }
 
         .form-cadastro-panel input {
@@ -198,6 +198,70 @@
         .form-cadastro .ui-selectonemenu.ui-selectonemenu-open {
             border-color: darkblue !important;
             box-shadow: 0 0 5px darkblue!important;
+        }
+
+        /*datatable*/
+
+        .ui-database {
+            margin: 10px 0 15px;
+        }
+
+        /* Estilo para os cabeçalhos das colunas */
+        .ui-datatable th {
+            font-size: 30px !important;
+            color: white !important;
+            font-weight: bold !important;
+            background-color: darkblue !important;
+        }
+
+        /* Estilo para as células da tabela */
+        .ui-datatable td {
+            background-color: white !important;
+        }
+
+        /* Estilo para as células da tabela */
+        .ui-datatable td .ui-outputlabel {
+            font-size: 20px; !important;
+            font-weight: bold !important;
+        }
+
+        /* Estilo para o cabeçalho principal */
+        .ui-datatable thead {
+            background-color: darkblue !important;
+        }
+
+        .ui-datatable thead th {
+            font-size: 30px !important;
+            color: white !important;
+            font-weight: bold !important;
+        }
+
+        /* Estilo do paginator */
+        .ui-database .ui-paginator {
+            background-color: white !important; /* Cor de fundo do paginator */
+            padding: 10px !important; /* Espaçamento interno */
+        }
+
+        /* Estilo dos botões do paginator */
+        .ui-database .ui-paginator .ui-paginator-button {
+            background-color: darkblue !important; /* Cor de fundo dos botões */
+            color: white !important; /* Cor do texto dos botões */
+            border: none !important; /* Sem borda */
+            padding: 5px 10px !important; /* Espaçamento interno dos botões */
+            margin: 0 5px !important; /* Margem entre os botões */
+            transition: background-color 0.3s !important; /* Efeito de transição */
+        }
+
+        /* Estilo dos botões do paginator ao passar o mouse */
+        .ui-database .ui-paginator .ui-paginator-button:hover {
+            background-color: #ffffff !important ;/* Cor de fundo ao passar o mouse */
+            color: #00008f !important;
+        }
+
+        /* Estilo do paginator quando está desativado */
+        .ui-database .ui-paginator .ui-paginator-button.ui-state-disabled {
+            background-color: #ccc !important; /* Cor de fundo dos botões desativados */
+            color: #666 !important; /* Cor do texto dos botões desativados */
         }
 
         /*buttons*/

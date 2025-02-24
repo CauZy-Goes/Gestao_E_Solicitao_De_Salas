@@ -30,14 +30,16 @@
                                  styleClass="button-create"
                                  icon="pi pi-calendar"/>
             </p:panelGrid>
+        </h:form>
 
-            <p:dataTable value="#{solicitacoesSolicitanteMB.solicitacaoDTOList}" var="solicitacao" id="tabela_solicitacao" paginator="true" paginatorPosition="bottom" rows="5">
+        <h:form>
+            <p:dataTable value="#{solicitacoesSolicitanteMB.solicitacaoDTOList}" var="solicitacao" id="tabela_solicitacao" paginator="true" paginatorPosition="top" rows="5">
 
                 <p:column headerText="ID">
                     <p:outputLabel value="#{solicitacao.idSolicitacoes}"/>
                 </p:column>
 
-                <p:column headerText="Número Do Espaço Fisico">
+                <p:column headerText="Número Da Sala">
                     <p:outputLabel value="#{espacoFisicoMB.getNumeroEspacoFisicos(solicitacao.idEspacoFisico)}"/>
                 </p:column>
 

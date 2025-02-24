@@ -78,8 +78,13 @@ public class EspacoFisicoClient {
 
         Response response = target.request(MediaType.APPLICATION_JSON).delete();
 
+        if (response.getStatus() == 500) {
+            throw new EntityNotFoundException("Erro ao deletar Espaco Fisico: " + response.getStatus());
+        }
+
         if (response.getStatus() != 204) { // 204 significa No Content, que é o esperado ao deletar
             throw new EntityNotFoundException("Erro ao deletar Espaco Fisico: " + response.getStatus());
         }
+
     }
 }

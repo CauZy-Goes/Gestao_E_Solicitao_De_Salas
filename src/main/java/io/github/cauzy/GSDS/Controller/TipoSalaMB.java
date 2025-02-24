@@ -1,9 +1,11 @@
 package io.github.cauzy.GSDS.Controller;
 
 import io.github.cauzy.GSDS.Client.TipoSalaClient;
+import io.github.cauzy.GSDS.DTO.EspacoFisicoDTO;
 import io.github.cauzy.GSDS.DTO.TipoSalaDTO;
 import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
+import io.github.cauzy.GSDS.Utility.Exception.ForeignKeyException;
 import io.github.cauzy.GSDS.Utility.Message;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
@@ -49,11 +51,17 @@ public class TipoSalaMB implements Serializable {
         }
     }
 
-    public void excluir() throws EntityNotFoundException {
-        tipoSalaClient.deleteTipoSala(tipoSalaDTO.getIdTipoSala());
-        tipoSalaDTO = new TipoSalaDTO();
-        init();
-        Message.erro("O Tipo de Sala foi removido com sucesso!");
+    public void excluir() {
+        try {
+            tipoSalaClient.deleteTipoSala(tipoSalaDTO.getIdTipoSala());
+            tipoSalaDTO = new TipoSalaDTO();
+            init();
+            Message.warn("O Tipo de Sala foi removido com sucesso!");
+        } catch (EntityNotFoundException e){
+            Message.erro( "O tipo de Sala não existe");
+        }catch (ForeignKeyException e){
+            Message.erro( "Uma sala depende desse tipo de sala");
+        }
     }
 
 

@@ -8,14 +8,12 @@
     <ui:define name="corpo">
         <h:form id="frm_solicitacao" styleClass="form-cadastro">
 
-            <p:messages autoUpdate="true" id="message_solicitacao" />
-
             <p:panelGrid columns="2" styleClass="form-cadastro-panel">
 
                 <p:outputLabel value="Qual sala você deseja solicitar ?" />
                 <p:selectOneMenu value="#{solicitacoesSolicitanteMB.solicitacaoDTO.idEspacoFisico}" required="true" label="Numero Da Sala" >
                     <f:selectItem itemLabel="Selecione o número da sala" noSelectionOption="true"/>
-                    <f:selectItems value="#{espacoFisicoMB.espacoFisicoDTOList}" var="sala" itemLabel="#{sala.numero}" itemValue="#{sala.idEspacoFisico}"/>
+                    <f:selectItems value="#{espacoFisicoMB.espacoFisicoDTOList}" var="sala" itemLabel="#{sala.numero } (#{tipoSalaMB.getNomeSala(sala.idTipoSala)})" itemValue="#{sala.idEspacoFisico}"/>
                 </p:selectOneMenu>
 
                 <p:outputLabel for="dataHoraLocacao" value="Data e Hora da Locação:" />
@@ -29,6 +27,9 @@
                                  update="frm_solicitacao message_solicitacao tabela_solicitacao"
                                  styleClass="bt-create"
                                  icon="pi pi-calendar"/>
+
+                <p:messages autoUpdate="true" id="message_solicitacao" />
+
             </p:panelGrid>
         </h:form>
 

@@ -35,10 +35,15 @@ public class TipoSalaMB implements Serializable {
 
     public void adicionar() {
         try {
+            Boolean existe = tipoSalaDTO.getIdTipoSala() != null;
             tipoSalaClient.createTipoSala(tipoSalaDTO);
+            if (existe) {
+                Message.warn("Tipo de Sala Modificado com sucesso!");
+            } else {
+                Message.info("Tipo de Sala salvo com sucesso!");
+            }
             init();
             tipoSalaDTO = new TipoSalaDTO();
-            Message.info("Tipo de Sala salvo com sucesso!");
         } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
         }
@@ -48,7 +53,7 @@ public class TipoSalaMB implements Serializable {
         tipoSalaClient.deleteTipoSala(tipoSalaDTO.getIdTipoSala());
         tipoSalaDTO = new TipoSalaDTO();
         init();
-        Message.info("O Tipo de Sala foi removido com sucesso!");
+        Message.erro("O Tipo de Sala foi removido com sucesso!");
     }
 
 

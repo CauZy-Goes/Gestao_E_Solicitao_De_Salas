@@ -36,10 +36,15 @@ public class EspacoFisicoMB implements Serializable {
 
     public void adicionar() {
         try {
+            Boolean existe = espacoFisicoDTO.getIdTipoSala() != null;
             espacoFisicoClient.createEspacoFisico(espacoFisicoDTO);
+            if (existe) {
+                Message.warn("Tipo de Sala Modificado com sucesso!");
+            } else {
+                Message.info("Tipo de Sala salvo com sucesso!");
+            }
             init();
             espacoFisicoDTO = new EspacoFisicoDTO();
-            Message.info("Salvo Com Sucesso");
         } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
         }

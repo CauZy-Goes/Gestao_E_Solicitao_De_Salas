@@ -35,19 +35,23 @@ public class EspacoFisicoMB implements Serializable {
         }
     }
 
-    public void adicionar() {
+    public void adicionar() throws EntityCreationException {
         try {
-            Boolean existe = espacoFisicoDTO.getIdTipoSala() != null;
+            espacoFisicoClient.getEspacoFisicoById(espacoFisicoDTO.getIdEspacoFisico());
+
             espacoFisicoClient.createEspacoFisico(espacoFisicoDTO);
-            if (existe) {
-                Message.warn("Tipo de Sala Modificado com sucesso!");
-            } else {
-                Message.info("Tipo de Sala salvo com sucesso!");
-            }
+
             init();
             espacoFisicoDTO = new EspacoFisicoDTO();
+            Message.warn("Sala Modificada com sucesso!");
         } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
+
+        } catch (EntityNotFoundException e) {
+            espacoFisicoClient.createEspacoFisico(espacoFisicoDTO);
+            init();
+            espacoFisicoDTO = new EspacoFisicoDTO();
+            Message.info("Sala salva com sucesso!");
         }
     }
 

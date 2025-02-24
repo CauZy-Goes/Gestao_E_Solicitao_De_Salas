@@ -26,6 +26,15 @@
             height: 100vh;
         }
 
+        .custom-messages {
+            width: auto;
+            margin: 0 auto; /* Centraliza horizontalmente */
+            padding: 10px; /* Adiciona um pouco de espaço interno */
+            background-color: #f9f9f9; /* Cor de fundo */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+        }
+
+
         /*headder*/
         header {
             background-color: darkblue;
@@ -245,8 +254,67 @@
             color: #666 !important; /* Cor do texto dos botões desativados */
         }
 
+        /*table view*/
+        /*Tab View*/
+        .tabview-usuarios {
+            margin: 15px 0 0 !important;
+            background: white; !important;
+            border-radius: 25px; !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .tabview-usuarios .ui-tabs-nav {
+            display: flex;
+            width:  700px;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+            gap: 130px;
+        }
+
+        .tabview-usuarios .ui-tabs-nav li {
+            font-size: 35px !important;
+            padding: 5px 10px !important;
+            font-weight: bold !important;
+            color: dodgerblue !important;
+            border: none;
+        }
+
+        .tabview-usuarios .ui-tabs-nav li:focus {
+            border-color: darkblue;
+            box-shadow: 0 0 5px 5px darkblue;
+        }
+
+        .tabview-usuarios .ui-tabs-nav li:hover {
+            border-bottom: darkblue 5px solid !important;
+            cursor: pointer;
+        }
+
+        .tabview-usuarios .ui-tabs-nav li:hover {
+            color: #00c7d9 !important;
+        }
+
+        .tabview-usuarios .ui-tabs-nav li.ui-state-active {
+            border-bottom: 5px solid darkblue !important;
+        }
+
+        .tabview-usuarios .ui-tabs-nav li.ui-state-active a{
+            color: darkblue !important;
+            font-weight: bold !important;
+        }
+
         /*buttons*/
-        .button-create {
+
+        .container-bt{
+            display: flex; width: 100%; justify-content: space-around; align-items: center
+        }
+
+        .bt-create {
             height: 50px !important;
             width: 220px !important;
             background-color: darkblue !important;
@@ -257,7 +325,7 @@
             transition: background-color 0.3s ease-in-out;
         }
 
-        .button-create:hover {
+        .bt-create:hover {
             background-color: white !important;
             color: darkblue !important;
             border: darkblue 3px solid !important;
@@ -352,7 +420,7 @@
                     <p:messages autoUpdate="true" id="message_update"/>
                     <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{usuarioMB.updateUser}"
                                      oncomplete="PF('popupUpdate').show()" update="user-info message_update"
-                                     styleClass="button-create"/>
+                                     styleClass="bt-create"/>
                 </h:panelGrid>
             </p:dialog>
 

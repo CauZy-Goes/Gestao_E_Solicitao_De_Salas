@@ -7,15 +7,13 @@
 
     <ui:define name="corpo">
 
-        <p:tabView id="tabview_salas"  dynamic="true" cache="false" >
+        <p:tabView id="tabview_salas"  dynamic="true" cache="false" styleClass="tabview-usuarios">
             <!--    Tab Salas     -->
-            <p:tab title="Salas" id="tab_salas">
+            <p:tab title="Salas" id="tab_salas" style="margin: 0 !important">
                 <!-- Form Salas          -->
-                <h:form id="form_salas">
-                    <h1>Salas</h1>"
-                    <p:messages autoUpdate="true"   id="message_salas"/>
+                <h:form id="form_salas" styleClass="form-cadastro" style="margin: 0 !important">
 
-                    <p:panelGrid columns="2">
+                    <p:panelGrid columns="2" styleClass="form-cadastro-panel">
                         <p:outputLabel value="Número Da Salas"/>
                         <p:inputText value="#{espacoFisicoMB.espacoFisicoDTO.numero}" required="True"/>
 
@@ -25,56 +23,64 @@
                             <f:selectItems value="#{tipoSalaMB.tipoSalaDTOList}" var="sala" itemLabel="#{sala.nomeSala}" itemValue="#{sala.idTipoSala}"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel/>
-                        <p:commandButton value="Cadastrar" action="#{espacoFisicoMB.adicionar()}" update="message_salas form_salas tabela_salas"/>
+                        <p:commandButton value="Cadastrar" action="#{espacoFisicoMB.adicionar()}"
+                                         update="message_salas form_salas tabela_salas"
+                                         styleClass="bt-create"/>
+
+                        <p:messages autoUpdate="true"   id="message_salas" styleClass="custom-messages"/>
                     </p:panelGrid>
 
-                    <p:dataTable value="#{espacoFisicoMB.espacoFisicoDTOList}" var="s" id="tabela_salas" paginator="true" paginatorPosition="bottom" rows="5">
+                    <p:dataTable value="#{espacoFisicoMB.espacoFisicoDTOList}" var="s" id="tabela_salas" paginator="true"
+                                 paginatorPosition="top" rows="5" style="width: 60%; border: 5px solid darkblue">
 
-                        <p:column headerText="Id">
+                        <p:column headerText="Id" style="width: 15%">
                             <p:outputLabel value="#{s.idEspacoFisico}"/>
                         </p:column>
 
-                        <p:column headerText="Numero">
+                        <p:column headerText="Numero" style="width: 35%">
                             <p:outputLabel value="#{s.numero}"/>
                         </p:column>
 
-                        <p:column headerText="Tipo De Sala">
+                        <p:column headerText="Tipo De Sala" style="width: 35%">
                             <p:outputLabel value="#{tipoSalaMB.getNomeSala(s.idTipoSala)}"/>
                         </p:column>
 
-                        <p:column>
-                            <p:commandButton icon="pi pi-pencil" update="@form" process="@this">
-                                <f:setPropertyActionListener value="#{s}" target="#{espacoFisicoMB.espacoFisicoDTO}"/>
-                            </p:commandButton>
+                        <p:column style="width: 15%">
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 25px">
+                                <p:commandButton icon="pi pi-pencil" update="@form" process="@this" styleClass="bt-settings">
+                                    <f:setPropertyActionListener value="#{s}" target="#{espacoFisicoMB.espacoFisicoDTO}"/>
+                                </p:commandButton>
 
-                            <p:commandButton action="#{espacoFisicoMB.excluir()}" icon="pi pi-trash" update="@form" process="@this">
-                                <f:setPropertyActionListener value="#{s}" target="#{espacoFisicoMB.espacoFisicoDTO}"/>
-                            </p:commandButton>
+                                <p:commandButton action="#{espacoFisicoMB.excluir()}" icon="pi pi-trash" update="@form" process="@this" styleClass="bt-log-out">
+                                    <f:setPropertyActionListener value="#{s}" target="#{espacoFisicoMB.espacoFisicoDTO}"/>
+                                </p:commandButton>
+                            </div>
                         </p:column>
                     </p:dataTable>
                 </h:form>
             </p:tab>
 
             <!--    Tab Tipo Sala     -->
-            <p:tab title="Tipo Salas" id="tab_tsalas">
+            <p:tab title="Tipo Salas" id="tab_tsalas" style="margin: 0 !important">
                 <!-- Form Salas          -->
-                <h:form id="form_tsalas">
-                    <h1>Tipo Salas</h1>"
-                    <p:messages autoUpdate="true"   id="message_tsalas"/>
+                <h:form id="form_tsalas" styleClass="form-cadastro" style="margin: 0 !important">
 
-                    <p:panelGrid columns="2">
+                    <p:panelGrid columns="2" styleClass="form-cadastro-panel">
                         <p:outputLabel value="Nome Do Tipo Da Sala"/>
                         <p:inputText value="#{tipoSalaMB.tipoSalaDTO.nomeSala}" required="True"/>
 
-                        <p:outputLabel/>
-                        <p:commandButton value="Cadastrar" action="#{tipoSalaMB.adicionar()}" update="message_tsalas form_tsalas tabela_tsalas"/>
+                        <p:commandButton value="Cadastrar" action="#{tipoSalaMB.adicionar()}"
+                                         update="message_tsalas form_tsalas tabela_tsalas"
+                                         styleClass="bt-create"/>
+
+                        <p:messages autoUpdate="true"   id="message_tsalas" styleClass="custom-messages"/>
                     </p:panelGrid>
 
-                    <p:dataTable value="#{tipoSalaMB.tipoSalaDTOList}" var="ts" id="tabela_tsalas" paginator="true" paginatorPosition="bottom" rows="5">
+                    <p:dataTable value="#{tipoSalaMB.tipoSalaDTOList}" var="ts" id="tabela_tsalas" paginator="true"
+                                 paginatorPosition="top" rows="5" style="width: 700px; border: 5px solid darkblue">
 
                         <p:column headerText="Id">
-                            <p:outputLabel value="#{ts.idTipoSala}}"/>
+                            <p:outputLabel value="#{ts.idTipoSala}"/>
                         </p:column>
 
                         <p:column headerText="Nome">
@@ -82,13 +88,15 @@
                         </p:column>
 
                         <p:column>
-                            <p:commandButton icon="pi pi-pencil" update="@form" process="@this">
-                                <f:setPropertyActionListener value="#{ts}" target="#{tipoSalaMB.tipoSalaDTO}"/>
-                            </p:commandButton>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 25px">
+                                <p:commandButton icon="pi pi-pencil" update="@form message_tsalas" process="@this" styleClass="bt-settings">
+                                    <f:setPropertyActionListener value="#{ts}" target="#{tipoSalaMB.tipoSalaDTO}"/>
+                                </p:commandButton>
 
-                            <p:commandButton action="#{tipoSalaMB.excluir()}" icon="pi pi-trash" update="@form" process="@this">
-                                <f:setPropertyActionListener value="#{ts}" target="#{tipoSalaMB.tipoSalaDTO}"/>
-                            </p:commandButton>
+                                <p:commandButton action="#{tipoSalaMB.excluir()}" icon="pi pi-trash" update="@form message_tsalas" process="@this" styleClass="bt-log-out">
+                                    <f:setPropertyActionListener value="#{ts}" target="#{tipoSalaMB.tipoSalaDTO}"/>
+                                </p:commandButton>
+                            </div>
                         </p:column>
                     </p:dataTable>
                 </h:form>

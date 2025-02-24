@@ -3,6 +3,7 @@ package io.github.cauzy.GSDS.Client;
 import io.github.cauzy.GSDS.DTO.TipoSalaDTO;
 import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
+import io.github.cauzy.GSDS.Utility.Exception.ForeignKeyException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.client.Client;
@@ -69,10 +70,14 @@ public class TipoSalaClient {
         }
     }
 
-    public void deleteTipoSala(Integer id) throws EntityNotFoundException {
+    public void deleteTipoSala(Integer id) throws EntityNotFoundException, ForeignKeyException {
         WebTarget target = client.target(API_URL + "/" + id);
 
         Response response = target.request(MediaType.APPLICATION_JSON).delete();
+
+        if (response.getStatus() == 500) {
+            throw new ForeignKeyException("Erro ao deletar, uma solicitacao depende dessa sala: " + response.getStatus());
+        }
 
         if (response.getStatus() != 204) { // 204 significa No Content, esperado ao deletar
             throw new EntityNotFoundException("Erro ao deletar Tipo de Sala: " + response.getStatus());

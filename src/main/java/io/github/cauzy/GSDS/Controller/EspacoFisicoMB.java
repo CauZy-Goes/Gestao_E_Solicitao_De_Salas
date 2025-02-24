@@ -5,6 +5,7 @@ import io.github.cauzy.GSDS.DTO.EspacoFisicoDTO;
 import io.github.cauzy.GSDS.DTO.UsuarioDTO;
 import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
+import io.github.cauzy.GSDS.Utility.Exception.ForeignKeyException;
 import io.github.cauzy.GSDS.Utility.Message;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
@@ -36,20 +37,31 @@ public class EspacoFisicoMB implements Serializable {
 
     public void adicionar() {
         try {
+            Boolean existe = espacoFisicoDTO.getIdTipoSala() != null;
             espacoFisicoClient.createEspacoFisico(espacoFisicoDTO);
+            if (existe) {
+                Message.warn("Tipo de Sala Modificado com sucesso!");
+            } else {
+                Message.info("Tipo de Sala salvo com sucesso!");
+            }
             init();
             espacoFisicoDTO = new EspacoFisicoDTO();
-            Message.info("Salvo Com Sucesso");
         } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
         }
     }
 
-    public void excluir() throws EntityNotFoundException {
-        espacoFisicoClient.deleteEspacoFisico(espacoFisicoDTO.getIdEspacoFisico());
-        espacoFisicoDTO = new EspacoFisicoDTO();
-        init();
-        Message.erro( "A Sala foi removida");
+    public void excluir() {
+        try {
+            espacoFisicoClient.deleteEspacoFisico(espacoFisicoDTO.getIdEspacoFisico());
+            espacoFisicoDTO = new EspacoFisicoDTO();
+            init();
+            Message.warn( "A Sala foi removida");
+        } catch (EntityNotFoundException e){
+            Message.erro( "A Sala não existe");
+        }catch (ForeignKeyException e){
+            Message.erro( "Uma solicitacao depende dessa sala");
+        }
     }
 
     public Integer getNumeroEspacoFisicos(Integer id) throws EntityNotFoundException {

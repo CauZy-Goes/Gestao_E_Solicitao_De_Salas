@@ -7,7 +7,7 @@
 
     <ui:define name="corpo">
 
-        <p:dataTable value="#{solicitacoesAvaliadorMB.solicitacaoDTOList}" var="solicitacao" id="tabela_solicitacao" paginator="true" paginatorPosition="bottom" rows="20"
+        <p:dataTable value="#{solicitacoesAvaliadorMB.solicitacaoDTOList}" var="solicitacao" id="tabela_solicitacao" paginator="true" paginatorPosition="top" rows="20"
                      widgetVar="customersTable" filteredValue="#{solicitacoesAvaliadorMB.solicitacaoDTOList}">
 
             <p:column headerText="ID">
@@ -36,12 +36,14 @@
                 <p:outputLabel value="#{solicitacoesAvaliadorMB.dataHoraFormatada(solicitacao.dataHoraSolicitacao)}"/>
             </p:column>
 
-            <p:column styleClass="col-bt">
-                <p:commandButton value="Aceitar" action="#{solicitacoesAvaliadorMB.aceitarSolicitacao(solicitacao)}"
-                                 icon="pi pi-pencil" update="tabela_solicitacao" process="@this"/>
+            <p:column>
+                <div class="container-bt">
+                    <p:commandButton value="Aceitar" action="#{solicitacoesAvaliadorMB.aceitarSolicitacao(solicitacao)}"
+                                     icon="pi pi-check" update="tabela_solicitacao" process="@this" styleClass="bt-accept"/>
 
-                <p:commandButton value="Rejeitar" action="#{solicitacoesAvaliadorMB.rejeitarSolicitacao(solicitacao)}"
-                                 icon="pi pi-trash" update="tabela_solicitacao" process="@this"/>
+                    <p:commandButton value="Rejeitar" action="#{solicitacoesAvaliadorMB.rejeitarSolicitacao(solicitacao)}"
+                                     icon="pi pi-trash" update="tabela_solicitacao" process="@this" styleClass="bt-log-out"/>
+                </div>
             </p:column>
         </p:dataTable>
 

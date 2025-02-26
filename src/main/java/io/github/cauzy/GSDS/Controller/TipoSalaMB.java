@@ -65,8 +65,12 @@ public class TipoSalaMB implements Serializable {
     }
 
 
-    public String getNomeSala(Integer id) throws EntityNotFoundException {
-        return tipoSalaClient.getTipoSalaById(id).getNomeSala();
+    public String getNomeSala(Integer id) {
+        try {
+            return tipoSalaClient.getTipoSalaById(id).getNomeSala();
+        } catch (EntityNotFoundException e){
+            return e.getMessage();
+        }
     }
 
     public TipoSalaDTO getTipoSalaDTO() {

@@ -41,7 +41,7 @@ public class TipoSalaClient {
         if (response.getStatus() == 200) {
             return response.readEntity(TipoSalaDTO.class);
         } else {
-            throw new EntityNotFoundException("Erro ao encontrar Tipo de Sala pelo ID: " + response.getStatus());
+            throw new EntityNotFoundException("Não Classificado");
         }
     }
 

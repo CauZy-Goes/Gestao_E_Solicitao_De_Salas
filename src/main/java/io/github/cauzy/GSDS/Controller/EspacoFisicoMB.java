@@ -47,10 +47,18 @@ public class EspacoFisicoMB implements Serializable {
         } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
         } catch (EntityNotFoundException e) {
+            salvar();
+        }
+    }
+
+    public void salvar() {
+        try {
             espacoFisicoClient.createEspacoFisico(espacoFisicoDTO);
             init();
             espacoFisicoDTO = new EspacoFisicoDTO();
             Message.info("Sala salva com sucesso!");
+        } catch (EntityCreationException e) {
+            Message.erro(e.getMessage());
         }
     }
 

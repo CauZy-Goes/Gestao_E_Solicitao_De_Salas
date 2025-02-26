@@ -57,7 +57,7 @@ public class EspacoFisicoClient {
         if (response.getStatus() == 200) {
             return response.readEntity(EspacoFisicoDTO.class);
         } else {
-            throw new EntityCreationException("Erro ao criar Espaco FIsico:  " + response.getStatus());
+            throw new EntityCreationException("Já existe uma sala cadastrada com esse número");
         }
     }
 
@@ -70,7 +70,7 @@ public class EspacoFisicoClient {
         if (response.getStatus() == 200) {
             return response.readEntity(EspacoFisicoDTO.class);
         } else {
-            throw new EntityCreationException("Erro ao fazer update do espaco fisico Espaco FIsico:  " + response.getStatus());
+            throw new EntityCreationException("Já existe uma sala cadastrada com esse número");
         }
     }
 

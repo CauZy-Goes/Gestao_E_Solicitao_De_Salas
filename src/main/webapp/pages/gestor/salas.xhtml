@@ -18,8 +18,8 @@
                         <p:inputText value="#{espacoFisicoMB.espacoFisicoDTO.numero}" required="True"/>
 
                         <p:outputLabel value="Tipo De Sala" />
-                        <p:selectOneMenu value="#{espacoFisicoMB.espacoFisicoDTO.idTipoSala}" required="true" label="Qual é o tipo da sala ?" >
-                            <f:selectItem itemLabel="Selecione A Sala" noSelectionOption="true"/>
+                        <p:selectOneMenu value="#{espacoFisicoMB.espacoFisicoDTO.idTipoSala}" label="Qual é o tipo da sala ?" >
+                            <f:selectItem itemLabel="Selecione A Sala" value="#{null}" noSelectionOption="true"/>
                             <f:selectItems value="#{tipoSalaMB.tipoSalaDTOList}" var="sala" itemLabel="#{sala.nomeSala}" itemValue="#{sala.idTipoSala}"/>
                         </p:selectOneMenu>
 

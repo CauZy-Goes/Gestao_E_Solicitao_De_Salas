@@ -37,16 +37,15 @@ public class EspacoFisicoMB implements Serializable {
 
     public void adicionar() throws EntityCreationException {
         try {
+//            Verifica de é para dar update ou save
             espacoFisicoClient.getEspacoFisicoById(espacoFisicoDTO.getIdEspacoFisico());
 
-            espacoFisicoClient.createEspacoFisico(espacoFisicoDTO);
-
+            espacoFisicoClient.updateEspacoFisico(espacoFisicoDTO);
             init();
             espacoFisicoDTO = new EspacoFisicoDTO();
             Message.warn("Sala Modificada com sucesso!");
         } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
-
         } catch (EntityNotFoundException e) {
             espacoFisicoClient.createEspacoFisico(espacoFisicoDTO);
             init();

@@ -28,4 +28,13 @@ public class EspacoFisicoDTO {
     public void setIdTipoSala(Integer idTipoSala) {
         this.idTipoSala = idTipoSala;
     }
+
+    @Override
+    public String toString() {
+        return "EspacoFisicoDTO{" +
+                "idEspacoFisico=" + idEspacoFisico +
+                ", numero=" + numero +
+                ", idTipoSala=" + idTipoSala +
+                '}';
+    }
 }

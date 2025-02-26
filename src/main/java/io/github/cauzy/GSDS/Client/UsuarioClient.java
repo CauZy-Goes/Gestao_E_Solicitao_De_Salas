@@ -68,7 +68,7 @@ public class UsuarioClient {
         if (response.getStatus() == 200) {
             return response.readEntity(UsuarioDTO.class);
         } else {
-            throw new EntityCreationException("Erro ao criar usuário: " + response.getStatus());
+            throw new EntityCreationException("Esse email está em uso");
         }
     }
 

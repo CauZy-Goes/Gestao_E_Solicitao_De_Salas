@@ -48,13 +48,21 @@
                     <p:outputLabel value="#{espacoFisicoMB.getNumeroEspacoFisicos(solicitacao.idEspacoFisico)}"/>
                 </p:column>
 
-                <p:column headerText="Tipo Da Sala" style="width: 25%">
+                <p:column field="idTipoSala" filterBy="#{espacoFisicoMB.getIdTipoSala(solicitacao.idEspacoFisico)}"
+                          headerText="Tipo Da Sala"  filterMatchMode="exact" style="width: 25%">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange= "PF('tabelaSolicitacaoWV').filter()" styleClass="filter-select">
+                            <f:selectItem itemLabel="All" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{tipoSalaMB.tipoSalaDTOList}" var="tipoSala" itemLabel="#{tipoSala.nomeSala}" itemValue="#{tipoSala.idTipoSala}" />
+                        </p:selectOneMenu>
+                    </f:facet>
+
                     <p:outputLabel value="#{tipoSalaMB.getNomeSala(espacoFisicoMB.getIdTipoSala(solicitacao.idEspacoFisico))}"/>
                 </p:column>
 
-                <p:column field="idStatus" filterBy="#{solicitacao.idStatus}" headerText="Status" filterMatchMode="exact" style="width: 20%">
+                <p:column field="idStatus" headerText="Status"  filterBy="#{solicitacao.idStatus}" filterMatchMode="exact" style="width: 20%">
                     <f:facet name="filter">
-                        <p:selectOneMenu onchange= "PF('tabelaSolicitacaoWV').filter()" >
+                        <p:selectOneMenu onchange= "PF('tabelaSolicitacaoWV').filter()" styleClass="filter-select">
                             <f:selectItem itemLabel="All" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{statusMB.statusDTOList}" var="status" itemLabel="#{status.nomeStatus}" itemValue="#{status.idStatus}" />
                         </p:selectOneMenu>

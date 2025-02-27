@@ -32,25 +32,51 @@
 
             </p:panelGrid>
 
-            <p:dataTable value="#{solicitacoesSolicitanteMB.solicitacaoDTOList}" var="solicitacao" id="tabela_solicitacao" paginator="true" paginatorPosition="top" rows="5">
+            <p:dataTable value="#{solicitacoesSolicitanteMB.solicitacaoDTOList}"
+                         var="solicitacao" id="tabela_solicitacao"
+                         paginator="true" paginatorPosition="top" rows="5"
+                         widgetVar="tabelaSolicitacaoWV">
 
-                <p:column headerText="ID" style="width: 10%">
+                <p:column headerText="ID" style="width: 10%" >
                     <p:outputLabel value="#{solicitacao.idSolicitacoes}"/>
                 </p:column>
 
-                <p:column headerText="Número Da Sala" style="width: 25%">
+                <p:column headerText="Número Da Sala" style="width: 25%"
+                          sortBy="#{espacoFisicoMB.getNumeroEspacoFisicos(solicitacao.idEspacoFisico)}"
+                          filterBy="#{espacoFisicoMB.getNumeroEspacoFisicos(solicitacao.idEspacoFisico)}"
+                          filterMatchMode="contains" filterPlaceholder="Filtre Pelo Número da Sala">
                     <p:outputLabel value="#{espacoFisicoMB.getNumeroEspacoFisicos(solicitacao.idEspacoFisico)}"/>
                 </p:column>
 
-                <p:column headerText="Tipo Da Sala" style="width: 25%">
+                <p:column field="idTipoSala" filterBy="#{espacoFisicoMB.getIdTipoSala(solicitacao.idEspacoFisico)}"
+                          headerText="Tipo Da Sala"  filterMatchMode="exact" style="width: 25%">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange= "PF('tabelaSolicitacaoWV').filter()" styleClass="filter-select">
+                            <f:selectItem itemLabel="All" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{tipoSalaMB.tipoSalaDTOList}" var="tipoSala" itemLabel="#{tipoSala.nomeSala}" itemValue="#{tipoSala.idTipoSala}" />
+                        </p:selectOneMenu>
+                    </f:facet>
+
                     <p:outputLabel value="#{tipoSalaMB.getNomeSala(espacoFisicoMB.getIdTipoSala(solicitacao.idEspacoFisico))}"/>
                 </p:column>
 
-                <p:column headerText="Status" style="width: 20%">
+                <p:column field="idStatus" headerText="Status"  filterBy="#{solicitacao.idStatus}" filterMatchMode="exact" style="width: 20%">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange= "PF('tabelaSolicitacaoWV').filter()" styleClass="filter-select">
+                            <f:selectItem itemLabel="All" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{statusMB.statusDTOList}" var="status" itemLabel="#{status.nomeStatus}" itemValue="#{status.idStatus}" />
+                        </p:selectOneMenu>
+                    </f:facet>
+
                     <p:outputLabel value="#{statusMB.getStatusById(solicitacao.idStatus)}"/>
                 </p:column>
 
-                <p:column headerText="Agendamento" style="width: 20%">
+                <p:column field="dataHoraLocacao" headerText="Agendamento" style="width: 20%" filterMatchMode="between" filterBy="#{solicitacao.dataHoraLocacao}">
+                    <f:facet name="filter">
+                        <p:datePicker selectionMode="range" onchange="PF('tabelaSolicitacaoWV').filter()" pattern="dd/MM/yyyy HH:mm"
+                                      showTime="true" timeInput="true"/>
+                    </f:facet>
+
                     <p:outputLabel value="#{solicitacoesSolicitanteMB.dataHoraFormatada(solicitacao.dataHoraLocacao)}"/>
                 </p:column>
 

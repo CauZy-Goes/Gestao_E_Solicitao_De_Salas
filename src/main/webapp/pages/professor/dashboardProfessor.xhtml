@@ -71,7 +71,12 @@
                     <p:outputLabel value="#{statusMB.getStatusById(solicitacao.idStatus)}"/>
                 </p:column>
 
-                <p:column headerText="Agendamento" style="width: 20%">
+                <p:column field="dataHoraLocacao" headerText="Agendamento" style="width: 20%" filterMatchMode="between" filterBy="#{solicitacao.dataHoraLocacao}">
+                    <f:facet name="filter">
+                        <p:datePicker selectionMode="range" onchange="PF('tabelaSolicitacaoWV').filter()" pattern="dd/MM/yyyy HH:mm"
+                                      showTime="true" timeInput="true"/>
+                    </f:facet>
+
                     <p:outputLabel value="#{solicitacoesSolicitanteMB.dataHoraFormatada(solicitacao.dataHoraLocacao)}"/>
                 </p:column>
 

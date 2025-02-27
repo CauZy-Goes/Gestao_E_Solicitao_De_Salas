@@ -265,38 +265,40 @@
 
         /* Estilizar o input do filtro das colunas */
         .ui-column-filter {
-            width: 60% !important; /* Defina o tamanho desejado */
-            /*height: 25px !important; !* Ajuste a altura *!*/
-            font-size: 20px !important; /* Tamanho da fonte */
-            padding: 2px 5px !important; /* Espaçamento interno */
+            width: 60% !important;
+            font-size: 20px !important;
+            padding: 2px 5px !important;
+            border: 2px solid dodgerblue !important;
+            border-radius: 5px !important;
+            transition: border-color 0.3s ease-in-out !important;
         }
 
-        .ui-column-filter input {
-            width: 100% !important;
-            padding: 10px !important;
-            border: 2px solid dodgerblue;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border-color 0.3s ease-in-out;
-        }
+        /*.ui-column-filter input {*/
+        /*    width: 100% !important;*/
+        /*    padding: 10px !important;*/
+        /*    border: 2px solid dodgerblue;*/
+        /*    border-radius: 5px;*/
+        /*    font-size: 16px;*/
+        /*    transition: border-color 0.3s ease-in-out;*/
+        /*}*/
 
-        .ui-column-filter  input:focus {
+        .ui-column-filter:focus {
             border-color: darkblue !important;
             box-shadow: 0 0 5px darkblue!important;
         }
 
-        .ui-column-filter input:hover {
+        .ui-column-filter:hover {
             border-color: darkblue !important;
             box-shadow: 0 0 5px darkblue!important;
         }
 
         .ui-column-filter .ui-selectonemenu{
-            width: 100%;
-            padding: 10px;
-            border: 2px solid dodgerblue;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border-color 0.3s ease-in-out;
+            width: 60% !important;
+            font-size: 20px !important;
+            padding: 2px 5px !important;
+            border: 2px solid dodgerblue !important;
+            border-radius: 5px !important;
+            transition: border-color 0.3s ease-in-out !important;
         }
 
         .ui-column-filter .ui-selectonemenu:focus,

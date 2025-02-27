@@ -34,7 +34,8 @@
 
             <p:dataTable value="#{solicitacoesSolicitanteMB.solicitacaoDTOList}"
                          var="solicitacao" id="tabela_solicitacao"
-                         paginator="true" paginatorPosition="top" rows="5">
+                         paginator="true" paginatorPosition="top" rows="5"
+                         widgetVar="tabelaSolicitacaoWV">
 
                 <p:column headerText="ID" style="width: 10%" >
                     <p:outputLabel value="#{solicitacao.idSolicitacoes}"/>
@@ -51,7 +52,14 @@
                     <p:outputLabel value="#{tipoSalaMB.getNomeSala(espacoFisicoMB.getIdTipoSala(solicitacao.idEspacoFisico))}"/>
                 </p:column>
 
-                <p:column headerText="Status" style="width: 20%">
+                <p:column field="idStatus" filterBy="#{solicitacao.idStatus}" headerText="Status" filterMatchMode="exact" style="width: 20%">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange= "PF('tabelaSolicitacaoWV').filter()" >
+                            <f:selectItem itemLabel="All" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{statusMB.statusDTOList}" var="status" itemLabel="#{status.nomeStatus}" itemValue="#{status.idStatus}" />
+                        </p:selectOneMenu>
+                    </f:facet>
+
                     <p:outputLabel value="#{statusMB.getStatusById(solicitacao.idStatus)}"/>
                 </p:column>
 

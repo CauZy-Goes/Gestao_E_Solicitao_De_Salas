@@ -32,13 +32,18 @@
 
             </p:panelGrid>
 
-            <p:dataTable value="#{solicitacoesSolicitanteMB.solicitacaoDTOList}" var="solicitacao" id="tabela_solicitacao" paginator="true" paginatorPosition="top" rows="5">
+            <p:dataTable value="#{solicitacoesSolicitanteMB.solicitacaoDTOList}"
+                         var="solicitacao" id="tabela_solicitacao"
+                         paginator="true" paginatorPosition="top" rows="5">
 
-                <p:column headerText="ID" style="width: 10%">
+                <p:column headerText="ID" style="width: 10%" >
                     <p:outputLabel value="#{solicitacao.idSolicitacoes}"/>
                 </p:column>
 
-                <p:column headerText="Número Da Sala" style="width: 25%">
+                <p:column headerText="Número Da Sala" style="width: 25%"
+                          sortBy="#{espacoFisicoMB.getNumeroEspacoFisicos(solicitacao.idEspacoFisico)}"
+                          filterBy="#{espacoFisicoMB.getNumeroEspacoFisicos(solicitacao.idEspacoFisico)}"
+                          filterMatchMode="contains" filterPlaceholder="Filtre Pelo Número da Sala">
                     <p:outputLabel value="#{espacoFisicoMB.getNumeroEspacoFisicos(solicitacao.idEspacoFisico)}"/>
                 </p:column>
 

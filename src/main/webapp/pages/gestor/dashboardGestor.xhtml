@@ -36,10 +36,16 @@
                     <p:outputLabel value="#{tipoSalaMB.getNomeSala(espacoFisicoMB.getIdTipoSala(solicitacao.idEspacoFisico))}"/>
                 </p:column>
 
-                <p:column headerText="Status"  sortBy="#{solicitacao.idStatus}" style="width: 10%">
+                <p:column field="idStatus" headerText="Status"  filterBy="#{solicitacao.idStatus}" filterMatchMode="exact" style="width: 10%">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange= "PF('tabelaSolicitacaoWV').filter()" styleClass="filter-select">
+                            <f:selectItem itemLabel="All" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{statusMB.statusDTOList}" var="status" itemLabel="#{status.nomeStatus}" itemValue="#{status.idStatus}" />
+                        </p:selectOneMenu>
+                    </f:facet>
+
                     <p:outputLabel value="#{statusMB.getStatusById(solicitacao.idStatus)}"/>
                 </p:column>
-
 
                 <p:column headerText="Agendamento" style="width: 15%">
                     <p:outputLabel value="#{solicitacoesAvaliadorMB.dataHoraFormatada(solicitacao.dataHoraLocacao)}"/>

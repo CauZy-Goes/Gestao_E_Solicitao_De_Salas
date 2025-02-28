@@ -13,11 +13,11 @@
                          paginatorPosition="top" rows="20"
                          widgetVar="tabelaSolicitacaoWV">
 
-                <p:column headerText="ID">
+                <p:column headerText="ID" style="width: 5%">
                     <p:outputLabel value="#{solicitacao.idSolicitacoes}"/>
                 </p:column>
 
-                <p:column headerText="Número Da Sala"
+                <p:column headerText="N.º Sala" style="width: 15%"
                           sortBy="#{espacoFisicoMB.getNumeroEspacoFisicos(solicitacao.idEspacoFisico)}"
                           filterBy="#{espacoFisicoMB.getNumeroEspacoFisicos(solicitacao.idEspacoFisico)}"
                           filterMatchMode="contains" filterPlaceholder="Filtre Pelo Número da Sala">
@@ -25,7 +25,7 @@
                 </p:column>
 
                 <p:column field="idTipoSala" filterBy="#{espacoFisicoMB.getIdTipoSala(solicitacao.idEspacoFisico)}"
-                          headerText="Tipo Da Sala"  filterMatchMode="exact" style="width: 25%">
+                          headerText="Tipo Da Sala"  filterMatchMode="exact" style="width: 20%">
                     <f:facet name="filter">
                         <p:selectOneMenu onchange= "PF('tabelaSolicitacaoWV').filter()" styleClass="filter-select">
                             <f:selectItem itemLabel="All" itemValue="" noSelectionOption="true" />
@@ -36,20 +36,20 @@
                     <p:outputLabel value="#{tipoSalaMB.getNomeSala(espacoFisicoMB.getIdTipoSala(solicitacao.idEspacoFisico))}"/>
                 </p:column>
 
-                <p:column headerText="Status"  sortBy="#{solicitacao.idStatus}">
+                <p:column headerText="Status"  sortBy="#{solicitacao.idStatus}" style="width: 10%">
                     <p:outputLabel value="#{statusMB.getStatusById(solicitacao.idStatus)}"/>
                 </p:column>
 
 
-                <p:column headerText="Agendamento">
+                <p:column headerText="Agendamento" style="width: 15%">
                     <p:outputLabel value="#{solicitacoesAvaliadorMB.dataHoraFormatada(solicitacao.dataHoraLocacao)}"/>
                 </p:column>
 
-                <p:column headerText="Data/Hora Solicitação" sortBy="#{solicitacao.dataHoraSolicitacao}">>
+                <p:column headerText="Data/Hora Solicitação" sortBy="#{solicitacao.dataHoraSolicitacao}" style="width: 15%">>
                     <p:outputLabel value="#{solicitacoesAvaliadorMB.dataHoraFormatada(solicitacao.dataHoraSolicitacao)}"/>
                 </p:column>
 
-                <p:column>
+                <p:column style="width: 20%">
                     <div class="container-bt">
                         <p:commandButton value="Aceitar" action="#{solicitacoesAvaliadorMB.aceitarSolicitacao(solicitacao)}"
                                          icon="pi pi-check" update="tabela_solicitacao" process="@this" styleClass="bt-accept"/>

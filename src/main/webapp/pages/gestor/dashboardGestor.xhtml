@@ -7,7 +7,7 @@
 
     <ui:define name="corpo">
 
-        <h:form>
+        <h:form id="frm_solicitacao" styleClass="form-cadastro">
             <p:dataTable value="#{solicitacoesAvaliadorMB.solicitacaoDTOList}" var="solicitacao"
                          id="tabela_solicitacao" paginator="true"
                          paginatorPosition="top" rows="20"
@@ -24,10 +24,17 @@
                     <p:outputLabel value="#{espacoFisicoMB.getNumeroEspacoFisicos(solicitacao.idEspacoFisico)}"/>
                 </p:column>
 
-                <p:column headerText="Tipo Da Sala">
+                <p:column field="idTipoSala" filterBy="#{espacoFisicoMB.getIdTipoSala(solicitacao.idEspacoFisico)}"
+                          headerText="Tipo Da Sala"  filterMatchMode="exact" style="width: 25%">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange= "PF('tabelaSolicitacaoWV').filter()" styleClass="filter-select">
+                            <f:selectItem itemLabel="All" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{tipoSalaMB.tipoSalaDTOList}" var="tipoSala" itemLabel="#{tipoSala.nomeSala}" itemValue="#{tipoSala.idTipoSala}" />
+                        </p:selectOneMenu>
+                    </f:facet>
+
                     <p:outputLabel value="#{tipoSalaMB.getNomeSala(espacoFisicoMB.getIdTipoSala(solicitacao.idEspacoFisico))}"/>
                 </p:column>
-
 
                 <p:column headerText="Status"  sortBy="#{solicitacao.idStatus}">
                     <p:outputLabel value="#{statusMB.getStatusById(solicitacao.idStatus)}"/>

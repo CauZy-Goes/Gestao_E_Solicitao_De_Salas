@@ -47,12 +47,22 @@
                     <p:outputLabel value="#{statusMB.getStatusById(solicitacao.idStatus)}"/>
                 </p:column>
 
-                <p:column headerText="Agendamento" style="width: 15%">
-                    <p:outputLabel value="#{solicitacoesAvaliadorMB.dataHoraFormatada(solicitacao.dataHoraLocacao)}"/>
+                <p:column field="dataHoraSolicitacao" headerText="Agendamento"  style="width: 15%" filterMatchMode="between" filterBy="#{solicitacao.dataHoraSolicitacao}">
+                    <f:facet name="filter">
+                        <p:datePicker selectionMode="range" onchange="PF('tabelaSolicitacaoWV').filter()" pattern="dd/MM/yyyy HH:mm"
+                                      showTime="true" timeInput="true"/>
+                    </f:facet>
+
+                    <p:outputLabel value="#{solicitacoesAvaliadorMB.dataHoraFormatada(solicitacao.dataHoraSolicitacao)}"/>
                 </p:column>
 
-                <p:column headerText="Data/Hora Solicitação" sortBy="#{solicitacao.dataHoraSolicitacao}" style="width: 15%">>
-                    <p:outputLabel value="#{solicitacoesAvaliadorMB.dataHoraFormatada(solicitacao.dataHoraSolicitacao)}"/>
+                <p:column field="dataHoraLocacao" headerText="Data/Hora Solicitação"  style="width: 15%" filterMatchMode="between" filterBy="#{solicitacao.dataHoraLocacao}">
+                    <f:facet name="filter">
+                        <p:datePicker selectionMode="range" onchange="PF('tabelaSolicitacaoWV').filter()" pattern="dd/MM/yyyy HH:mm"
+                                      showTime="true" timeInput="true"/>
+                    </f:facet>
+
+                    <p:outputLabel value="#{solicitacoesAvaliadorMB.dataHoraFormatada(solicitacao.dataHoraLocacao)}"/>
                 </p:column>
 
                 <p:column style="width: 20%">

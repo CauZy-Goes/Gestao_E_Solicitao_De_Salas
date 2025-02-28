@@ -36,7 +36,7 @@
                     <p:outputLabel value="#{tipoSalaMB.getNomeSala(espacoFisicoMB.getIdTipoSala(solicitacao.idEspacoFisico))}"/>
                 </p:column>
 
-                <p:column field="idStatus" headerText="Status"  filterBy="#{solicitacao.idStatus}" filterMatchMode="exact" style="width: 10%">
+                <p:column field="idStatus" headerText="Status"  filterBy="#{solicitacao.idStatus}" filterMatchMode="exact" style="width: 15%">
                     <f:facet name="filter">
                         <p:selectOneMenu onchange= "PF('tabelaSolicitacaoWV').filter()" styleClass="filter-select">
                             <f:selectItem itemLabel="All" itemValue="" noSelectionOption="true" />
@@ -65,10 +65,13 @@
                     <p:outputLabel value="#{solicitacoesAvaliadorMB.dataHoraFormatada(solicitacao.dataHoraLocacao)}"/>
                 </p:column>
 
-                <p:column style="width: 20%">
+                <p:column style="width: 15%">
                     <div class="container-bt">
                         <p:commandButton value="Aceitar" action="#{solicitacoesAvaliadorMB.aceitarSolicitacao(solicitacao)}"
                                          icon="pi pi-check" update="tabela_solicitacao" process="@this" styleClass="bt-accept"/>
+
+                        <p:commandButton
+                                         icon="pi pi-info" update="tabela_solicitacao" process="@this" styleClass="bt-settings"/>
 
                         <p:commandButton value="Rejeitar" action="#{solicitacoesAvaliadorMB.rejeitarSolicitacao(solicitacao)}"
                                          icon="pi pi-trash" update="tabela_solicitacao" process="@this" styleClass="bt-log-out"/>

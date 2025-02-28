@@ -25,23 +25,36 @@
 
                         <p:commandButton value="Cadastrar" action="#{espacoFisicoMB.adicionar()}"
                                          update="message_salas form_salas tabela_salas"
-                                         styleClass="bt-create"/>
+                                         styleClass="bt-create" />
 
                         <p:messages autoUpdate="true"   id="message_salas" styleClass="custom-messages"/>
                     </p:panelGrid>
 
                     <p:dataTable value="#{espacoFisicoMB.espacoFisicoDTOList}" var="s" id="tabela_salas" paginator="true"
-                                 paginatorPosition="top" rows="5" style="width: 60%; border: 5px solid darkblue">
+                                 paginatorPosition="top" rows="5" style="width: 60%; border: 5px solid darkblue"
+                                 widgetVar="tabelaSolicitacaoWV">
 
                         <p:column headerText="Id" style="width: 15%">
                             <p:outputLabel value="#{s.idEspacoFisico}"/>
                         </p:column>
 
-                        <p:column headerText="Numero" style="width: 35%">
+                        <p:column headerText="Numero" style="width: 35%"
+                                  sortBy="#{s.numero}"
+                                  filterBy="#{s.numero}"
+                                  filterMatchMode="contains" filterPlaceholder="Filtre Pelo Número da Sala">
+
                             <p:outputLabel value="#{s.numero}"/>
                         </p:column>
 
-                        <p:column headerText="Tipo De Sala" style="width: 35%">
+                        <p:column field="idTipoSala" filterBy="#{s.idTipoSala}"
+                                  headerText="Tipo Da Sala"  filterMatchMode="exact" style="width: 35%">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange= "PF('tabelaSolicitacaoWV').filter()" styleClass="filter-select">
+                                    <f:selectItem itemLabel="All" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{tipoSalaMB.tipoSalaDTOList}" var="tipoSala" itemLabel="#{tipoSala.nomeSala}" itemValue="#{tipoSala.idTipoSala}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+
                             <p:outputLabel value="#{tipoSalaMB.getNomeSala(s.idTipoSala)}"/>
                         </p:column>
 

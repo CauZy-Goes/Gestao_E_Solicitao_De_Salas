@@ -23,7 +23,7 @@ public class FacesUtil {
     // Obtém a sessão atual
     public static HttpSession getCurrentSession() {
         ExternalContext externalContext = getExternalContext();
-        return (externalContext != null) ? (HttpSession) externalContext.getSession(false) : null;
+        return (externalContext != null) ? (HttpSession) externalContext.getSession(true) : null;
     }
 
     // Obtém o usuário logado

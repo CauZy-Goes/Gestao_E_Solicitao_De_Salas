@@ -6,11 +6,9 @@ import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
 import io.github.cauzy.GSDS.Utility.Message;
 
+import io.github.cauzy.GSDS.Utility.Utils.FacesUtil;
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.context.ExternalContext;
-import jakarta.faces.context.FacesContext;
-
 
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -58,16 +56,19 @@ public class UsuarioMB implements Serializable {
         try {
             usuarioClient.updateUsuario(usuarioDTO.getIdUsuario(), usuarioDTO);
 
-            HttpSession session = getCurrentSession();
-            Boolean userIsGestor = (usuarioDTO.getIdCargo() == 1);
+            updateUserSession();
 
-            String usuarioCargo = userIsGestor ? "gestor" : "professor";
-
-            session.setAttribute(usuarioCargo, usuarioDTO);
             Message.info("Usuario atualizado com sucesso!");
         } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
         }
+    }
+
+    public void updateUserSession(){
+        HttpSession session = FacesUtil.getCurrentSession();
+        Boolean userIsGestor = (usuarioDTO.getIdCargo() == 1);
+        String usuarioCargo = userIsGestor ? "gestor" : "professor";
+        session.setAttribute(usuarioCargo, usuarioDTO);
     }
 
     public void login() {
@@ -75,34 +76,39 @@ public class UsuarioMB implements Serializable {
             UsuarioDTO usuarioLogin = usuarioClient.getUsuarioByEmail(usuarioDTO.getEmail());
             if(Objects.equals(usuarioDTO.getSenha(), usuarioLogin.getSenha())) {
 
-                // Redirecinar para a pagina
-                ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-                HttpSession session = (HttpSession) externalContext.getSession(true);
+                createSession(usuarioLogin);
 
-                Boolean userIsGestor = (usuarioLogin.getIdCargo() == 1);
-
-                String dashboardURL = userIsGestor ? "/pages/gestor/dashboardGestor.xhtml" : "/pages/professor/dashboardProfessor.xhtml";
-                String usuarioCargo = userIsGestor ? "gestor" : "professor";
-
-                session.setAttribute(usuarioCargo, usuarioLogin);
-
-                externalContext.redirect(externalContext.getRequestContextPath() + dashboardURL);
             } else {
                 Message.erro("Senha incorreta");
                 }
         } catch (EntityNotFoundException e) {
             Message.erro("Esse email não está cadastrado");
         }
-        catch (IOException e) {
-            Message.erro("Erro ao redirecionar");
-        }
+    }
+
+    public void createSession(UsuarioDTO usuarioLogin) {
+        try {
+            // Redirecinar para a pagina
+            ExternalContext externalContext = FacesUtil.getExternalContext();
+            HttpSession session = FacesUtil.getCurrentSession();
+
+            Boolean userIsGestor = (usuarioLogin.getIdCargo() == 1);
+
+            String dashboardURL = userIsGestor ? "/pages/gestor/dashboardGestor.xhtml" : "/pages/professor/dashboardProfessor.xhtml";
+            String usuarioCargo = userIsGestor ? "gestor" : "professor";
+
+            session.setAttribute(usuarioCargo, usuarioLogin);
+
+            externalContext.redirect(externalContext.getRequestContextPath() + dashboardURL);
+        } catch(IOException e){
+                Message.erro("Erro ao redirecionar");
+            }
     }
 
 
     public void logout() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = facesContext.getExternalContext();
-        HttpSession session = (HttpSession) externalContext.getSession(false);
+        ExternalContext externalContext = FacesUtil.getExternalContext();
+        HttpSession session = FacesUtil.getCurrentSession();
 
         if (session != null) {
             session.invalidate();
@@ -115,12 +121,8 @@ public class UsuarioMB implements Serializable {
         }
     }
 
-    public void prepararEdicao() {
-        usuarioDTO = getUsuarioLogado();
-    }
-
     public UsuarioDTO getUsuarioLogado() {
-        HttpSession session = getCurrentSession();
+        HttpSession session = FacesUtil.getCurrentSession();
 
         if (session != null) {
             UsuarioDTO usuarioGestor = (UsuarioDTO) session.getAttribute("gestor");
@@ -135,11 +137,10 @@ public class UsuarioMB implements Serializable {
         return null; // Retorna null se não houver usuário logado
     }
 
-    private HttpSession getCurrentSession() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = facesContext.getExternalContext();
-        return (HttpSession) externalContext.getSession(false);
+    public void prepararEdicao(){
+        usuarioDTO = getUsuarioLogado();
     }
+
 
     public List<UsuarioDTO> getUsuariosList() {
         return usuariosList;

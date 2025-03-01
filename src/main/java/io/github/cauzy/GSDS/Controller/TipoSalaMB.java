@@ -23,6 +23,9 @@ public class TipoSalaMB implements Serializable {
     @Inject
     private TipoSalaClient tipoSalaClient;
 
+    @Inject
+    private LogAcoesMB logAcoesMB;
+
     private TipoSalaDTO tipoSalaDTO = new TipoSalaDTO();
 
     private List<TipoSalaDTO> tipoSalaDTOList;
@@ -44,6 +47,7 @@ public class TipoSalaMB implements Serializable {
 //            Update
             tipoSalaClient.updateTipoSala(tipoSalaDTO);
             init();
+            logAcoesMB.addLogAcoes("Tipo de sala com id: " + tipoSalaDTO.getIdTipoSala() + " foi modificada");
             tipoSalaDTO = new TipoSalaDTO();
             Message.warn("Tipo de Sala Modificado com sucesso!");
         } catch (EntityCreationException e) {
@@ -55,8 +59,9 @@ public class TipoSalaMB implements Serializable {
 
     public void salvar() {
         try {
-            tipoSalaClient.createTipoSala(tipoSalaDTO);
+            tipoSalaDTO = tipoSalaClient.createTipoSala(tipoSalaDTO);
             init();
+            logAcoesMB.addLogAcoes("Tipo de sala com id: " + tipoSalaDTO.getIdTipoSala() + " foi salva");
             tipoSalaDTO = new TipoSalaDTO();
             Message.info("Tipo Sala salvo com sucesso!");
         } catch (EntityCreationException e) {
@@ -67,6 +72,7 @@ public class TipoSalaMB implements Serializable {
     public void excluir() {
         try {
             tipoSalaClient.deleteTipoSala(tipoSalaDTO.getIdTipoSala());
+            logAcoesMB.addLogAcoes("Tipo de sala com id: " + tipoSalaDTO.getIdTipoSala() + " foi excluida");
             tipoSalaDTO = new TipoSalaDTO();
             init();
             Message.warn("O Tipo de Sala foi removido com sucesso!");

@@ -26,11 +26,14 @@ import java.util.stream.Collectors;
 public class SolicitacoesAvaliadorMB implements Serializable {
 
     @Inject
-    SolicitacaoClient solicitacaoClient;
+    private SolicitacaoClient solicitacaoClient;
 
-    SolicitacaoDTO solicitacaoDTO = new SolicitacaoDTO();
+    @Inject
+    private LogAcoesMB logAcoesMB;
 
-    List<SolicitacaoDTO> solicitacaoDTOList;
+    private SolicitacaoDTO solicitacaoDTO = new SolicitacaoDTO();
+
+    private List<SolicitacaoDTO> solicitacaoDTOList;
 
     @PostConstruct
     public void init() {
@@ -48,6 +51,7 @@ public class SolicitacoesAvaliadorMB implements Serializable {
         solicitacaoDTO.setDataHoraAprovacao(LocalDateTime.now());
         solicitacaoDTO.setIdUsuarioAvaliador(FacesUtil.getUsuarioLogado().getIdUsuario());
         solicitacaoClient.updateSolicitacao(solicitacaoDTO, solicitacaoDTO.getIdSolicitacoes() );
+        logAcoesMB.addLogAcoes("A solicitacao com o id: " + solicitacaoDTO.getIdSolicitacoes() + " Foi Aceita");
     }
 
     public void rejeitarSolicitacao(SolicitacaoDTO solicitacaoDTO) throws EntityCreationException {
@@ -55,6 +59,7 @@ public class SolicitacoesAvaliadorMB implements Serializable {
         solicitacaoDTO.setDataHoraAprovacao(LocalDateTime.now());
         solicitacaoDTO.setIdUsuarioAvaliador(FacesUtil.getUsuarioLogado().getIdUsuario());
         solicitacaoClient.updateSolicitacao(solicitacaoDTO, solicitacaoDTO.getIdSolicitacoes());
+        logAcoesMB.addLogAcoes("A solicitacao com o id: " + solicitacaoDTO.getIdSolicitacoes() + " foi Rejeitada");
     }
 
     public String dataHoraFormatada(LocalDateTime dataHora){

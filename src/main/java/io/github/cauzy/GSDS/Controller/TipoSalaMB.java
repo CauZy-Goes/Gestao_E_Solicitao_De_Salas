@@ -2,6 +2,7 @@ package io.github.cauzy.GSDS.Controller;
 
 import io.github.cauzy.GSDS.Client.TipoSalaClient;
 import io.github.cauzy.GSDS.DTO.EspacoFisicoDTO;
+import io.github.cauzy.GSDS.DTO.LogAcoesDTO;
 import io.github.cauzy.GSDS.DTO.TipoSalaDTO;
 import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
@@ -22,6 +23,9 @@ public class TipoSalaMB implements Serializable {
     @Inject
     private TipoSalaClient tipoSalaClient;
 
+    @Inject
+    private LogAcoesMB logAcoesMB;
+
     private TipoSalaDTO tipoSalaDTO = new TipoSalaDTO();
 
     private List<TipoSalaDTO> tipoSalaDTOList;
@@ -37,15 +41,29 @@ public class TipoSalaMB implements Serializable {
 
     public void adicionar() {
         try {
-            Boolean existe = tipoSalaDTO.getIdTipoSala() != null;
-            tipoSalaClient.createTipoSala(tipoSalaDTO);
-            if (existe) {
-                Message.warn("Tipo de Sala Modificado com sucesso!");
-            } else {
-                Message.info("Tipo de Sala salvo com sucesso!");
-            }
+//            Verifica se é para modificar ou salvar
+            tipoSalaClient.getTipoSalaById(tipoSalaDTO.getIdTipoSala());
+
+//            Update
+            tipoSalaClient.updateTipoSala(tipoSalaDTO);
             init();
+            logAcoesMB.addLogAcoes("Tipo de sala com id: " + tipoSalaDTO.getIdTipoSala() + " foi modificada");
             tipoSalaDTO = new TipoSalaDTO();
+            Message.warn("Tipo de Sala Modificado com sucesso!");
+        } catch (EntityCreationException e) {
+            Message.erro(e.getMessage());
+        } catch (EntityNotFoundException e) {
+            salvar();
+        }
+    }
+
+    public void salvar() {
+        try {
+            tipoSalaDTO = tipoSalaClient.createTipoSala(tipoSalaDTO);
+            init();
+            logAcoesMB.addLogAcoes("Tipo de sala com id: " + tipoSalaDTO.getIdTipoSala() + " foi salva");
+            tipoSalaDTO = new TipoSalaDTO();
+            Message.info("Tipo Sala salvo com sucesso!");
         } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
         }
@@ -54,6 +72,7 @@ public class TipoSalaMB implements Serializable {
     public void excluir() {
         try {
             tipoSalaClient.deleteTipoSala(tipoSalaDTO.getIdTipoSala());
+            logAcoesMB.addLogAcoes("Tipo de sala com id: " + tipoSalaDTO.getIdTipoSala() + " foi excluida");
             tipoSalaDTO = new TipoSalaDTO();
             init();
             Message.warn("O Tipo de Sala foi removido com sucesso!");

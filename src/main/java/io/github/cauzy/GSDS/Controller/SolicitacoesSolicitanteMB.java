@@ -2,21 +2,21 @@ package io.github.cauzy.GSDS.Controller;
 
 import io.github.cauzy.GSDS.Client.SolicitacaoClient;
 import io.github.cauzy.GSDS.DTO.SolicitacaoDTO;
-import io.github.cauzy.GSDS.DTO.UsuarioDTO;
 import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
 import io.github.cauzy.GSDS.Utility.Message;
+import io.github.cauzy.GSDS.Utility.Utils.FacesUtil;
+
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.context.ExternalContext;
-import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.Serializable;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 
 @Named
@@ -26,6 +26,9 @@ public class SolicitacoesSolicitanteMB implements Serializable {
     @Inject
     private SolicitacaoClient solicitacaoClient;
 
+    @Inject
+    private LogAcoesMB logAcoesMB;
+
     private SolicitacaoDTO solicitacaoDTO = new SolicitacaoDTO();
 
     private List<SolicitacaoDTO> solicitacaoDTOList;
@@ -33,7 +36,7 @@ public class SolicitacoesSolicitanteMB implements Serializable {
     @PostConstruct
     public void init()  {
         try {
-            Integer idProfessor = getSolicitanteId();
+            Integer idProfessor = FacesUtil.getUsuarioLogado().getIdUsuario();
             solicitacaoDTOList = solicitacaoClient.getSolicitacaoByIdSolicitante(idProfessor);
         } catch (EntityNotFoundException e) {
             Message.erro("Erro ao carregar solicitacao: " + e.getMessage());
@@ -42,13 +45,11 @@ public class SolicitacoesSolicitanteMB implements Serializable {
 
     public void adicionar() {
         try {
-//            Preenchimento Default
-            solicitacaoDTO.setDataHoraSolicitacao(LocalDateTime.now());
-            Integer idProfessor = getSolicitanteId();
-            solicitacaoDTO.setIdUsuarioSolicitante(idProfessor);
+            preencherSolicitacaoDefault();
+            solicitacaoDTO = solicitacaoClient.createSolicitacao(solicitacaoDTO);
 
-//            Salva no banco de dados
-            solicitacaoClient.createSolicitacao(solicitacaoDTO);
+            logAcoesMB.addLogAcoes("A solicitação com o id: " + solicitacaoDTO.getIdSolicitacoes() + " na sala de id: "+ solicitacaoDTO.getIdEspacoFisico() + " foi criada");
+
             init();
             solicitacaoDTO = new SolicitacaoDTO();
             Message.info("Salvo com sucesso");
@@ -57,15 +58,10 @@ public class SolicitacoesSolicitanteMB implements Serializable {
         }
     }
 
-    public Integer getSolicitanteId(){
-        UsuarioDTO professor = (UsuarioDTO) getSession().getAttribute("professor");
-        return  professor.getIdUsuario();
-    }
-
-    public HttpSession getSession(){
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = facesContext.getExternalContext();
-        return  (HttpSession) externalContext.getSession(false);
+    public void preencherSolicitacaoDefault() {
+        solicitacaoDTO.setDataHoraSolicitacao(LocalDateTime.now());
+        Integer idProfessor = FacesUtil.getUsuarioLogado().getIdUsuario();
+        solicitacaoDTO.setIdUsuarioSolicitante(idProfessor);
     }
 
     public SolicitacaoDTO getSolicitacaoDTO() {

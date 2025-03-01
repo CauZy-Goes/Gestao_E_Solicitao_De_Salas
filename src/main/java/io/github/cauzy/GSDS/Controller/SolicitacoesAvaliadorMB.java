@@ -6,6 +6,7 @@ import io.github.cauzy.GSDS.DTO.UsuarioDTO;
 import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
 import io.github.cauzy.GSDS.Utility.Message;
+import io.github.cauzy.GSDS.Utility.Utils.FacesUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
@@ -25,11 +26,14 @@ import java.util.stream.Collectors;
 public class SolicitacoesAvaliadorMB implements Serializable {
 
     @Inject
-    SolicitacaoClient solicitacaoClient;
+    private SolicitacaoClient solicitacaoClient;
 
-    SolicitacaoDTO solicitacaoDTO = new SolicitacaoDTO();
+    @Inject
+    private LogAcoesMB logAcoesMB;
 
-    List<SolicitacaoDTO> solicitacaoDTOList;
+    private SolicitacaoDTO solicitacaoDTO = new SolicitacaoDTO();
+
+    private List<SolicitacaoDTO> solicitacaoDTOList;
 
     @PostConstruct
     public void init() {
@@ -45,26 +49,17 @@ public class SolicitacoesAvaliadorMB implements Serializable {
     public void aceitarSolicitacao(SolicitacaoDTO solicitacaoDTO) throws EntityCreationException {
         solicitacaoDTO.setIdStatus(2);
         solicitacaoDTO.setDataHoraAprovacao(LocalDateTime.now());
-        solicitacaoDTO.setIdUsuarioAvaliador(getAvaliadorId());
+        solicitacaoDTO.setIdUsuarioAvaliador(FacesUtil.getUsuarioLogado().getIdUsuario());
         solicitacaoClient.updateSolicitacao(solicitacaoDTO, solicitacaoDTO.getIdSolicitacoes() );
+        logAcoesMB.addLogAcoes("A solicitacao com o id: " + solicitacaoDTO.getIdSolicitacoes() + " Foi Aceita");
     }
 
     public void rejeitarSolicitacao(SolicitacaoDTO solicitacaoDTO) throws EntityCreationException {
         solicitacaoDTO.setIdStatus(3);
         solicitacaoDTO.setDataHoraAprovacao(LocalDateTime.now());
-        solicitacaoDTO.setIdUsuarioAvaliador(getAvaliadorId());
+        solicitacaoDTO.setIdUsuarioAvaliador(FacesUtil.getUsuarioLogado().getIdUsuario());
         solicitacaoClient.updateSolicitacao(solicitacaoDTO, solicitacaoDTO.getIdSolicitacoes());
-    }
-
-    public Integer getAvaliadorId(){
-        UsuarioDTO professor = (UsuarioDTO) getSession().getAttribute("gestor");
-        return  professor.getIdUsuario();
-    }
-
-    public HttpSession getSession(){
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = facesContext.getExternalContext();
-        return  (HttpSession) externalContext.getSession(false);
+        logAcoesMB.addLogAcoes("A solicitacao com o id: " + solicitacaoDTO.getIdSolicitacoes() + " foi Rejeitada");
     }
 
     public String dataHoraFormatada(LocalDateTime dataHora){
@@ -73,10 +68,6 @@ public class SolicitacoesAvaliadorMB implements Serializable {
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm  dd/MM/yyyy");
         return dataHora.format(formatter);
-    }
-
-    public SolicitacaoClient getSolicitacaoClient() {
-        return solicitacaoClient;
     }
 
     public SolicitacaoDTO getSolicitacaoDTO() {

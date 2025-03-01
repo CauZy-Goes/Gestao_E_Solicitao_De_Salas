@@ -6,6 +6,7 @@ import io.github.cauzy.GSDS.DTO.UsuarioDTO;
 import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
 import io.github.cauzy.GSDS.Utility.Message;
+import io.github.cauzy.GSDS.Utility.Utils.FacesUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -35,8 +36,9 @@ public class LogAcoesMB implements Serializable {
         }
     }
 
-    public void addLogAcoes(UsuarioDTO usuarioDTO, String message) {
+    public void addLogAcoes(String message) {
         try {
+            UsuarioDTO usuarioDTO = FacesUtil.getUsuarioLogado();
             logAcoesClient.createLog(new LogAcoesDTO(LocalDateTime.now(), usuarioDTO.getIdUsuario(), message));
         } catch (EntityCreationException e) {
             Message.erro(e.getMessage());

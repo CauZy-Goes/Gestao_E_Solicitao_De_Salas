@@ -26,6 +26,9 @@ public class SolicitacoesSolicitanteMB implements Serializable {
     @Inject
     private SolicitacaoClient solicitacaoClient;
 
+    @Inject
+    private LogAcoesMB logAcoesMB;
+
     private SolicitacaoDTO solicitacaoDTO = new SolicitacaoDTO();
 
     private List<SolicitacaoDTO> solicitacaoDTOList;
@@ -43,7 +46,10 @@ public class SolicitacoesSolicitanteMB implements Serializable {
     public void adicionar() {
         try {
             preencherSolicitacaoDefault();
-            solicitacaoClient.createSolicitacao(solicitacaoDTO);
+            solicitacaoDTO = solicitacaoClient.createSolicitacao(solicitacaoDTO);
+
+            logAcoesMB.addLogAcoes("A solicitação com o id: " + solicitacaoDTO.getIdSolicitacoes() + " na sala de id: "+ solicitacaoDTO.getIdEspacoFisico() + " foi criada");
+
             init();
             solicitacaoDTO = new SolicitacaoDTO();
             Message.info("Salvo com sucesso");

@@ -1,6 +1,8 @@
 package io.github.cauzy.GSDS.Controller;
 
+import io.github.cauzy.GSDS.Client.LogClient;
 import io.github.cauzy.GSDS.Client.UsuarioClient;
+import io.github.cauzy.GSDS.DTO.LogAcoesDTO;
 import io.github.cauzy.GSDS.DTO.UsuarioDTO;
 import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
@@ -17,6 +19,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,6 +29,9 @@ public class UsuarioMB implements Serializable {
 
     @Inject
     private UsuarioClient usuarioClient;
+
+    @Inject
+    private LogClient logClient;
 
     private UsuarioDTO usuarioDTO = new UsuarioDTO();
 
@@ -42,7 +48,9 @@ public class UsuarioMB implements Serializable {
 
     public void adicionar() {
         try {
-            usuarioClient.createUsuario(usuarioDTO);
+            usuarioDTO = usuarioClient.createUsuario(usuarioDTO);
+            createLogUser(usuarioDTO,"O usuario com id : " + usuarioDTO.getIdUsuario() + " foi cadastrado");
+
             init();
             login();
             usuarioDTO = new UsuarioDTO();
@@ -55,6 +63,7 @@ public class UsuarioMB implements Serializable {
     public void updateUser(){
         try {
             usuarioClient.updateUsuario(usuarioDTO.getIdUsuario(), usuarioDTO);
+            createLogUser(usuarioDTO,"O usuario com id : " + usuarioDTO.getIdUsuario() + " foi modificado");
 
             updateUserSession();
 
@@ -77,6 +86,7 @@ public class UsuarioMB implements Serializable {
             if(Objects.equals(usuarioDTO.getSenha(), usuarioLogin.getSenha())) {
 
                 createSession(usuarioLogin);
+                createLogUser(usuarioLogin,"O usuario com id : " + usuarioLogin.getIdUsuario() + " fez login");
 
             } else {
                 Message.erro("Senha incorreta");
@@ -110,6 +120,9 @@ public class UsuarioMB implements Serializable {
         ExternalContext externalContext = FacesUtil.getExternalContext();
         HttpSession session = FacesUtil.getCurrentSession();
 
+        usuarioDTO = getUsuarioLogado();
+        createLogUser(usuarioDTO,"O usuario com id : " + usuarioDTO.getIdUsuario() + " fez log-out");
+
         if (session != null) {
             session.invalidate();
         }
@@ -118,6 +131,14 @@ public class UsuarioMB implements Serializable {
             externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void createLogUser(UsuarioDTO usuarioDTO, String message) {
+        try {
+            logClient.createLog(new LogAcoesDTO(LocalDateTime.now(), usuarioDTO.getIdUsuario(), message));
+        } catch (EntityCreationException e) {
+            Message.erro(e.getMessage());
         }
     }
 

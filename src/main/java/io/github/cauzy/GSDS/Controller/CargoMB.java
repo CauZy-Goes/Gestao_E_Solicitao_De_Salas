@@ -1,7 +1,6 @@
 package io.github.cauzy.GSDS.Controller;
 
 import io.github.cauzy.GSDS.Client.CargoClient;
-import io.github.cauzy.GSDS.Client.LogClient;
 import io.github.cauzy.GSDS.DTO.CargoDTO;
 import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
@@ -20,9 +19,6 @@ public class CargoMB implements Serializable {
 
     @Inject
     private CargoClient cargoClient;
-
-    @Inject
-    private LogClient logClient;
 
     private CargoDTO cargoDTO = new CargoDTO();
 

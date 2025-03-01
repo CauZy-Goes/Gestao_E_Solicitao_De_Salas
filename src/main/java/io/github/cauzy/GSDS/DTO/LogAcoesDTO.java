@@ -9,6 +9,16 @@ public class LogAcoesDTO {
     private Integer idUsuario;
     private String acao;
 
+    public LogAcoesDTO() {
+
+    }
+
+    public LogAcoesDTO(LocalDateTime dataHora, Integer idUsuario, String acao) {
+        this.dataHora = dataHora;
+        this.idUsuario = idUsuario;
+        this.acao = acao;
+    }
+
     public Integer getIdLogAcoes() {
         return idLogAcoes;
     }

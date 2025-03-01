@@ -120,7 +120,7 @@ public class UsuarioMB implements Serializable {
         ExternalContext externalContext = FacesUtil.getExternalContext();
         HttpSession session = FacesUtil.getCurrentSession();
 
-        usuarioDTO = getUsuarioLogado();
+        usuarioDTO = FacesUtil.getUsuarioLogado();
         createLogUser(usuarioDTO,"O usuario com id : " + usuarioDTO.getIdUsuario() + " fez log-out");
 
         if (session != null) {
@@ -143,25 +143,12 @@ public class UsuarioMB implements Serializable {
     }
 
     public UsuarioDTO getUsuarioLogado() {
-        HttpSession session = FacesUtil.getCurrentSession();
-
-        if (session != null) {
-            UsuarioDTO usuarioGestor = (UsuarioDTO) session.getAttribute("gestor");
-            UsuarioDTO usuarioProfessor = (UsuarioDTO) session.getAttribute("professor");
-
-            if (usuarioGestor != null) {
-                return usuarioGestor; // Retorna o usuário gestor
-            } else if (usuarioProfessor != null) {
-                return usuarioProfessor; // Retorna o usuário professor
-            }
-        }
-        return null; // Retorna null se não houver usuário logado
+        return FacesUtil.getUsuarioLogado();
     }
 
     public void prepararEdicao(){
-        usuarioDTO = getUsuarioLogado();
+        usuarioDTO = FacesUtil.getUsuarioLogado();
     }
-
 
     public List<UsuarioDTO> getUsuariosList() {
         return usuariosList;

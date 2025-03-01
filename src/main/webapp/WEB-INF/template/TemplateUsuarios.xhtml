@@ -133,6 +133,42 @@
             box-shadow: 0 0 5px dodgerblue !important;
         }
 
+        .header-log {
+            width: 60%;
+            padding: 0;
+            border-radius: 10px; /* Borda arredondada */
+        }
+
+        .header-log .ui-dialog-title{
+            width: 100%;
+            text-align: center;
+            font-size: 45px !important;
+            font-weight: bold;
+            color: white;
+        }
+
+        .header-log-panel .ui-outputlabel {
+            font-size: 23px !important;
+            font-weight: bold;
+        }
+
+        .header-log .ui-dialog-titlebar {
+            background-color: darkblue !important;
+            color: white !important;
+            text-align: center !important;
+            font-weight: bold;
+            font-size: 45px !important;
+        }
+
+        .header-log .ui-dialog-title {
+            width: 100%;
+            display: block;
+            text-align: center !important;
+            font-size: 45px !important;
+            font-weight: bold;
+            color: white;
+        }
+
         /*form de casdastro dos usuarios*/
 
         .form-cadastro {
@@ -413,6 +449,16 @@
             background-color: white !important;
             color: green !important;
         }
+
+        .bt-log {
+            background-color: white !important;
+            color: darkblue !important;
+        }
+
+        .bt-log:hover {
+            background-color: rgba(18, 159, 218, 0.89) !important;
+            color: black !important;
+        }
     </style>
 </h:head>
 
@@ -476,6 +522,38 @@
                                      oncomplete="PF('popupUpdate').show()" update="user-info message_update"
                                      styleClass="bt-create"/>
                 </h:panelGrid>
+            </p:dialog>
+
+            <!-- Botão que abre o menu de logs -->
+            <p:commandButton icon="pi pi-history" actionListener="#{logAcoesMB.init()}" styleClass="bt-log"
+                             oncomplete="PF('popupLogAcoes').show()" update="popupLogAcoes @form"
+                             process="@this"  rendered="#{usuarioMB.usuarioLogado.idCargo == 1}"/>
+
+            <p:dialog id="popupLogAcoes"  widgetVar="popupLogAcoes" header="Lista De Logs"
+                      modal="true" resizable="false" styleClass="header-log"
+                      width="80%" height="80%" style="width: 100%; border: 5px solid darkblue;">
+
+                <p:dataTable value="#{logAcoesMB.logAcoesDTOList}" var="log" id="tabela_log" paginator="true"
+                             paginatorPosition="top" rows="40" style="width: 100%;"
+                             scrollable="true" scrollHeight="600"
+                             >
+
+                    <p:column headerText="Id" sortBy="#{log.idLogAcoes}" sortOrder="desc" style="width: 5%">
+                        <p:outputLabel value="#{log.idLogAcoes}"/>
+                    </p:column>
+
+                    <p:column headerText="Nome Do Usuario">
+                        <p:outputLabel value="#{usuarioMB.getNomeUsuarioById(log.idUsuario)}"/>
+                    </p:column>
+
+                    <p:column headerText="Ação">
+                        <p:outputLabel value="#{log.acao}"/>
+                    </p:column>
+
+                    <p:column headerText="">
+                        <p:outputLabel value="#{utils.dataHoraFormatada(log.dataHora)}"/>
+                    </p:column>
+                </p:dataTable>
             </p:dialog>
 
             <p:commandButton icon="pi pi-sign-out" action="#{usuarioMB.logout()}" styleClass="bt-log-out" update="@form" process="@this"/>

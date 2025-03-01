@@ -2,6 +2,7 @@ package io.github.cauzy.GSDS.Controller;
 
 import io.github.cauzy.GSDS.Client.EspacoFisicoClient;
 import io.github.cauzy.GSDS.DTO.EspacoFisicoDTO;
+import io.github.cauzy.GSDS.DTO.LogAcoesDTO;
 import io.github.cauzy.GSDS.DTO.UsuarioDTO;
 import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
@@ -22,6 +23,9 @@ public class EspacoFisicoMB implements Serializable {
     @Inject
     private EspacoFisicoClient espacoFisicoClient;
 
+    @Inject
+    private LogAcoesMB logAcoesMB;
+
     private EspacoFisicoDTO espacoFisicoDTO = new EspacoFisicoDTO();
 
     private List<EspacoFisicoDTO> espacoFisicoDTOList;
@@ -41,6 +45,7 @@ public class EspacoFisicoMB implements Serializable {
             espacoFisicoClient.getEspacoFisicoById(espacoFisicoDTO.getIdEspacoFisico());
 
             espacoFisicoClient.updateEspacoFisico(espacoFisicoDTO);
+            logAcoesMB.addLogAcoes("A sala com id: " + espacoFisicoDTO.getIdEspacoFisico() +" foi modificada");
             init();
             espacoFisicoDTO = new EspacoFisicoDTO();
             Message.warn("Sala Modificada com sucesso!");
@@ -53,7 +58,8 @@ public class EspacoFisicoMB implements Serializable {
 
     public void salvar() {
         try {
-            espacoFisicoClient.createEspacoFisico(espacoFisicoDTO);
+            espacoFisicoDTO = espacoFisicoClient.createEspacoFisico(espacoFisicoDTO);
+            logAcoesMB.addLogAcoes("A sala com id: " + espacoFisicoDTO.getIdEspacoFisico() +" foi criada");
             init();
             espacoFisicoDTO = new EspacoFisicoDTO();
             Message.info("Sala salva com sucesso!");
@@ -65,6 +71,7 @@ public class EspacoFisicoMB implements Serializable {
     public void excluir() {
         try {
             espacoFisicoClient.deleteEspacoFisico(espacoFisicoDTO.getIdEspacoFisico());
+            logAcoesMB.addLogAcoes("A sala com id: " + espacoFisicoDTO.getIdEspacoFisico() +" foi deletada");
             espacoFisicoDTO = new EspacoFisicoDTO();
             init();
             Message.warn( "A Sala foi removida");

@@ -31,7 +31,7 @@ public class UsuarioMB implements Serializable {
     private UsuarioClient usuarioClient;
 
     @Inject
-    private LogClient logClient;
+    private LogAcoesMB logAcoesMB;
 
     private UsuarioDTO usuarioDTO = new UsuarioDTO();
 
@@ -49,7 +49,7 @@ public class UsuarioMB implements Serializable {
     public void adicionar() {
         try {
             usuarioDTO = usuarioClient.createUsuario(usuarioDTO);
-            createLogUser(usuarioDTO,"O usuario com id : " + usuarioDTO.getIdUsuario() + " foi cadastrado");
+            logAcoesMB.addLogAcoes(usuarioDTO,"O usuario com id : " + usuarioDTO.getIdUsuario() + " foi cadastrado");
 
             init();
             login();
@@ -63,7 +63,7 @@ public class UsuarioMB implements Serializable {
     public void updateUser(){
         try {
             usuarioClient.updateUsuario(usuarioDTO.getIdUsuario(), usuarioDTO);
-            createLogUser(usuarioDTO,"O usuario com id : " + usuarioDTO.getIdUsuario() + " foi modificado");
+            logAcoesMB.addLogAcoes(usuarioDTO,"O usuario com id : " + usuarioDTO.getIdUsuario() + " foi modificado");
 
             updateUserSession();
 
@@ -86,7 +86,7 @@ public class UsuarioMB implements Serializable {
             if(Objects.equals(usuarioDTO.getSenha(), usuarioLogin.getSenha())) {
 
                 createSession(usuarioLogin);
-                createLogUser(usuarioLogin,"O usuario com id : " + usuarioLogin.getIdUsuario() + " fez login");
+                logAcoesMB.addLogAcoes(usuarioLogin,"O usuario com id : " + usuarioLogin.getIdUsuario() + " fez login");
 
             } else {
                 Message.erro("Senha incorreta");
@@ -121,7 +121,7 @@ public class UsuarioMB implements Serializable {
         HttpSession session = FacesUtil.getCurrentSession();
 
         usuarioDTO = FacesUtil.getUsuarioLogado();
-        createLogUser(usuarioDTO,"O usuario com id : " + usuarioDTO.getIdUsuario() + " fez log-out");
+        logAcoesMB.addLogAcoes(usuarioDTO,"O usuario com id : " + usuarioDTO.getIdUsuario() + " fez log-out");
 
         if (session != null) {
             session.invalidate();
@@ -134,13 +134,13 @@ public class UsuarioMB implements Serializable {
         }
     }
 
-    public void createLogUser(UsuarioDTO usuarioDTO, String message) {
-        try {
-            logClient.createLog(new LogAcoesDTO(LocalDateTime.now(), usuarioDTO.getIdUsuario(), message));
-        } catch (EntityCreationException e) {
-            Message.erro(e.getMessage());
-        }
-    }
+//    public void createLogUser(UsuarioDTO usuarioDTO, String message) {
+//        try {
+//            logClient.createLog(new LogAcoesDTO(LocalDateTime.now(), usuarioDTO.getIdUsuario(), message));
+//        } catch (EntityCreationException e) {
+//            Message.erro(e.getMessage());
+//        }
+//    }
 
     public UsuarioDTO getUsuarioLogado() {
         return FacesUtil.getUsuarioLogado();

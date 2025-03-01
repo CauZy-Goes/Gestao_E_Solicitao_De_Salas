@@ -2,6 +2,7 @@ package io.github.cauzy.GSDS.Controller;
 
 import io.github.cauzy.GSDS.Client.TipoSalaClient;
 import io.github.cauzy.GSDS.DTO.EspacoFisicoDTO;
+import io.github.cauzy.GSDS.DTO.LogAcoesDTO;
 import io.github.cauzy.GSDS.DTO.TipoSalaDTO;
 import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
@@ -37,15 +38,27 @@ public class TipoSalaMB implements Serializable {
 
     public void adicionar() {
         try {
-            Boolean existe = tipoSalaDTO.getIdTipoSala() != null;
-            tipoSalaClient.createTipoSala(tipoSalaDTO);
-            if (existe) {
-                Message.warn("Tipo de Sala Modificado com sucesso!");
-            } else {
-                Message.info("Tipo de Sala salvo com sucesso!");
-            }
+//            Verifica se é para modificar ou salvar
+            tipoSalaClient.getTipoSalaById(tipoSalaDTO.getIdTipoSala());
+
+//            Update
+            tipoSalaClient.updateTipoSala(tipoSalaDTO);
             init();
             tipoSalaDTO = new TipoSalaDTO();
+            Message.warn("Tipo de Sala Modificado com sucesso!");
+        } catch (EntityCreationException e) {
+            Message.erro(e.getMessage());
+        } catch (EntityNotFoundException e) {
+            salvar();
+        }
+    }
+
+    public void salvar() {
+        try {
+            tipoSalaClient.createTipoSala(tipoSalaDTO);
+            init();
+            tipoSalaDTO = new TipoSalaDTO();
+            Message.info("Tipo Sala salvo com sucesso!");
         } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
         }

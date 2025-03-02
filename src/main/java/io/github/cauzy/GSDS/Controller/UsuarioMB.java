@@ -1,8 +1,6 @@
 package io.github.cauzy.GSDS.Controller;
 
-import io.github.cauzy.GSDS.Client.LogClient;
 import io.github.cauzy.GSDS.Client.UsuarioClient;
-import io.github.cauzy.GSDS.DTO.LogAcoesDTO;
 import io.github.cauzy.GSDS.DTO.UsuarioDTO;
 import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
@@ -12,7 +10,6 @@ import io.github.cauzy.GSDS.Utility.Utils.FacesUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.context.ExternalContext;
 
-import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -20,7 +17,6 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -50,14 +46,11 @@ public class UsuarioMB implements Serializable {
     public void adicionar() {
         try {
             usuarioDTO = usuarioClient.createUsuario(usuarioDTO);
-
             login();
             init();
             usuarioDTO = new UsuarioDTO();
         } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
-
-
         }
     }
 

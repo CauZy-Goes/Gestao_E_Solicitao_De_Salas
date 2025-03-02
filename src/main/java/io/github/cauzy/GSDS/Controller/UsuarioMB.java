@@ -12,6 +12,7 @@ import io.github.cauzy.GSDS.Utility.Utils.FacesUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.context.ExternalContext;
 
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -49,13 +50,14 @@ public class UsuarioMB implements Serializable {
     public void adicionar() {
         try {
             usuarioDTO = usuarioClient.createUsuario(usuarioDTO);
-            logAcoesMB.addLogAcoes("O usuario com id : " + usuarioDTO.getIdUsuario() + " foi cadastrado");
 
-            init();
             login();
+            init();
             usuarioDTO = new UsuarioDTO();
         } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
+
+
         }
     }
 
@@ -134,13 +136,6 @@ public class UsuarioMB implements Serializable {
         }
     }
 
-//    public void createLogUser(UsuarioDTO usuarioDTO, String message) {
-//        try {
-//            logClient.createLog(new LogAcoesDTO(LocalDateTime.now(), usuarioDTO.getIdUsuario(), message));
-//        } catch (EntityCreationException e) {
-//            Message.erro(e.getMessage());
-//        }
-//    }
 
     public UsuarioDTO getUsuarioLogado() {
         return FacesUtil.getUsuarioLogado();

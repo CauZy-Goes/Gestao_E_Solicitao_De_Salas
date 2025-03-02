@@ -41,7 +41,7 @@ public class LogAcoesMB implements Serializable {
             UsuarioDTO usuarioDTO = FacesUtil.getUsuarioLogado();
             logAcoesClient.createLog(new LogAcoesDTO(LocalDateTime.now(), usuarioDTO.getIdUsuario(), message));
         } catch (EntityCreationException e) {
-            Message.erro(e.getMessage());
+            e.printStackTrace();
         }
     }
 

@@ -1,8 +1,6 @@
 package io.github.cauzy.GSDS.Controller;
 
-import io.github.cauzy.GSDS.Client.LogClient;
 import io.github.cauzy.GSDS.Client.UsuarioClient;
-import io.github.cauzy.GSDS.DTO.LogAcoesDTO;
 import io.github.cauzy.GSDS.DTO.UsuarioDTO;
 import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
@@ -19,7 +17,6 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,10 +46,8 @@ public class UsuarioMB implements Serializable {
     public void adicionar() {
         try {
             usuarioDTO = usuarioClient.createUsuario(usuarioDTO);
-            logAcoesMB.addLogAcoes("O usuario com id : " + usuarioDTO.getIdUsuario() + " foi cadastrado");
-
-            init();
             login();
+            init();
             usuarioDTO = new UsuarioDTO();
         } catch (EntityCreationException e) {
             Message.erro(e.getMessage());
@@ -134,13 +129,6 @@ public class UsuarioMB implements Serializable {
         }
     }
 
-//    public void createLogUser(UsuarioDTO usuarioDTO, String message) {
-//        try {
-//            logClient.createLog(new LogAcoesDTO(LocalDateTime.now(), usuarioDTO.getIdUsuario(), message));
-//        } catch (EntityCreationException e) {
-//            Message.erro(e.getMessage());
-//        }
-//    }
 
     public UsuarioDTO getUsuarioLogado() {
         return FacesUtil.getUsuarioLogado();

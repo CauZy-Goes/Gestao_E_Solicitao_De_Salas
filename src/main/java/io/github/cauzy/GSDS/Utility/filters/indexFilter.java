@@ -25,7 +25,6 @@ public class indexFilter implements Filter {
         HttpSession session = req.getSession(false);
 
         // Verifica se o usuário está logado
-
         if (session != null) {
             if(session.getAttribute("gestor") != null){
                 res.sendRedirect(req.getContextPath() + "/pages/gestor/dashboardGestor.xhtml");

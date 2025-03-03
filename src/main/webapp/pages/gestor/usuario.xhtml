@@ -10,8 +10,8 @@
             <p:growl autoUpdate="true"   id="message_usuario" showDetail="true"/>
 
             <p:dataTable id="tabela_salas" value="#{usuarioMB.usuariosList}" var="usuario" editable="true"
-                          paginator="true" paginatorPosition="top" rows="10"
-                         style="width: 60%; border: 5px solid darkblue; margin-bottom:20px">
+                          paginator="true" paginatorPosition="top" rows="10" styleClass="custom-table"
+                         style="width: 80%; border: 5px solid darkblue; margin-bottom:20px">
 
                 <p:ajax event="rowEdit" listener="#{usuarioMB.onRowEdit}" update=":frm_usuarios:message_usuario"/>
                 <p:ajax event="rowEditCancel" listener="#{usuarioMB.onRowCancel}" update=":frm_usuarios:message_usuario"/>
@@ -47,14 +47,27 @@
                     </p:cellEditor>
                 </p:column>
 
+                <p:column styleClass="coluna_rowEditor">
 
-                <p:column>
-                    <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+                    <p:rowEditor editTitle="Editar" cancelTitle="Cancelar" saveTitle="Salvar"/>
 
-                    <p:commandButton action="#{usuarioMB.excluirUsuario()}" icon="pi pi-trash" update="@form message_usuario" process="@this" styleClass="bt-log-out">
+                    <p:commandButton action="#{usuarioMB.excluirUsuario()}" icon="pi pi-trash"
+                                     update="@form tabela_salas message_usuario"
+                                     process="@this" styleClass="bt-log-out">
                         <f:setPropertyActionListener value="#{usuario}" target="#{usuarioMB.usuarioDTO}"/>
                     </p:commandButton>
                 </p:column>
+
+
+
+
+                <!--                <p:column style="display: flex; align-items: center; justify-content: space-around; height: 100% !important;">-->
+<!--                    <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>-->
+
+<!--                    <p:commandButton action="#{usuarioMB.excluirUsuario()}" icon="pi pi-trash" update="@form tabela_salas message_usuario" process="@this" styleClass="bt-log-out">-->
+<!--                        <f:setPropertyActionListener value="#{usuario}" target="#{usuarioMB.usuarioDTO}"/>-->
+<!--                    </p:commandButton>-->
+<!--                </p:column>-->
             </p:dataTable>
         </h:form>
     </ui:define>

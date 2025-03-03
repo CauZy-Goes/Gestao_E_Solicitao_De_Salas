@@ -240,6 +240,7 @@
             background-color: darkblue !important;
             text-align: center !important;
             vertical-align: middle !important;
+            height: 100% !important;
         }
 
         /* Estilo para as células da tabela */
@@ -263,9 +264,11 @@
         /* Estilo para o cabeçalho principal */
         .ui-datatable thead {
             background-color: darkblue !important;
+            height: 100% !important;
         }
 
         .ui-datatable thead th {
+            height: 100% !important;
             font-size: 30px !important;
             color: white !important;
             font-weight: bold !important;
@@ -297,6 +300,82 @@
         .ui-database .ui-paginator .ui-paginator-button.ui-state-disabled {
             background-color: #ccc !important; /* Cor de fundo dos botões desativados */
             color: #666 !important; /* Cor do texto dos botões desativados */
+        }
+
+        /*.coluna_rowEditor td {*/
+        /*    display: flex;*/
+        /*    align-items: center;*/
+        /*    justify-content: space-around;*/
+        /*    height: 100% !important;*/
+        /*}*/
+
+        /* Estiliza apenas a linha da célula específica */
+        .ui-datatable tbody tr .coluna_rowEditor {
+            background-color: #f5f5f5; /* Cor de fundo para diferenciar */
+            border: 1px solid #ccc; /* Adiciona borda */
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            height: 100% !important;
+        }
+
+        /* Define o tamanho e cores dos ícones do rowEditor */
+        .custom-table .ui-row-editor {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Ícones de edição, salvar e cancelar */
+        .custom-table .ui-row-editor .ui-icon-pencil {
+            color: black !important;
+            background-color: yellow !important;
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 5px;
+            padding: 0;
+            margin: 0;
+            border: solid 1px darkblue !important;
+        }
+
+        .custom-table .ui-row-editor .ui-icon-pencil:hover {
+            color: yellow !important;
+            background-color: white !important;
+        }
+
+        .custom-table .ui-row-editor .ui-icon-check {
+            color: black !important; /* Cor do ícone de salvar */
+            background-color: green !important;
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 5px;
+            padding: 0;
+            margin: 0;
+            border: solid 1px darkblue !important;
+        }
+
+        .custom-table .ui-row-editor .ui-icon-check:hover {
+            color: green !important;
+            background-color: white !important;
+        }
+
+        .custom-table .ui-row-editor .ui-icon-close {
+            color: black !important;
+            background-color: rgba(255, 0, 0, 0.68) !important;
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 5px;
+            padding: 0;
+            margin: 0;
+            border: solid 1px darkblue !important;
+        }
+
+        .custom-table .ui-row-editor .ui-icon-close:hover {
+            background-color: white !important;
+            color: red !important;
         }
 
         /* Estilizar o input do filtro das colunas */

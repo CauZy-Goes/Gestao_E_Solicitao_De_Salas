@@ -13,7 +13,7 @@
                          paginatorPosition="top" rows="20"
                          widgetVar="tabelaSolicitacaoWV">
 
-                <p:column headerText="ID" style="width: 5%">
+                <p:column headerText="ID" style="width: 5%"  sortBy="#{solicitacao.idSolicitacoes}" sortOrder="desc">
                     <p:outputLabel value="#{solicitacao.idSolicitacoes}"/>
                 </p:column>
 

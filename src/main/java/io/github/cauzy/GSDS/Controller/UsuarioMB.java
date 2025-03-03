@@ -4,16 +4,20 @@ import io.github.cauzy.GSDS.Client.UsuarioClient;
 import io.github.cauzy.GSDS.DTO.UsuarioDTO;
 import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
+import io.github.cauzy.GSDS.Utility.Exception.ForeignKeyException;
 import io.github.cauzy.GSDS.Utility.Message;
 
 import io.github.cauzy.GSDS.Utility.Utils.FacesUtil;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.ExternalContext;
 
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpSession;
+import org.primefaces.event.RowEditEvent;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -129,6 +133,30 @@ public class UsuarioMB implements Serializable {
         }
     }
 
+    public void onRowEdit(RowEditEvent<UsuarioDTO> event) throws EntityCreationException {
+        try{
+            usuarioClient.updateUsuario(event.getObject().getIdUsuario() , event.getObject());
+            logAcoesMB.addLogAcoes("O usuario com id : " + event.getObject().getIdUsuario() + " Foi Modificado");
+            Message.warn("Usuario atualizado com sucesso");
+        } catch (EntityCreationException e){
+            Message.erro(e.getMessage());
+        }
+    }
+
+    public void excluirUsuario(){
+        try {
+            usuarioClient.deleteUsuario(usuarioDTO.getIdUsuario());
+            logAcoesMB.addLogAcoes("O usuario com id : " + usuarioDTO.getIdUsuario() + " Foi Excluido");
+            Message.info("Usuario excluido com sucesso");
+        } catch (EntityNotFoundException | ForeignKeyException e){
+            Message.erro(e.getMessage());
+        }
+    }
+
+    public void onRowCancel(RowEditEvent<UsuarioDTO> event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", String.valueOf(event.getObject().getNomeUsuario()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
 
     public UsuarioDTO getUsuarioLogado() {
         return FacesUtil.getUsuarioLogado();

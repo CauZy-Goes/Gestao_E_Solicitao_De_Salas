@@ -144,6 +144,10 @@ public class UsuarioMB implements Serializable {
         }
     }
 
+    public void excluirUsuario(){
+        usuarioClient.
+    }
+
     public void onRowCancel(RowEditEvent<UsuarioDTO> event) {
         FacesMessage msg = new FacesMessage("Edit Cancelled", String.valueOf(event.getObject().getNomeUsuario()));
         FacesContext.getCurrentInstance().addMessage(null, msg);

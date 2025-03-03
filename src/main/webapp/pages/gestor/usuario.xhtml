@@ -11,16 +11,19 @@
 
             <p:dataTable id="tabela_salas" value="#{usuarioMB.usuariosList}" var="usuario" editable="true"
                           paginator="true" paginatorPosition="top" rows="10" styleClass="custom-table"
-                         style="width: 80%; border: 5px solid darkblue; margin-bottom:20px">
+                         style="width: 80%; border: 5px solid darkblue; margin-bottom:20px" widgetVar="tabelaSolicitacaoWV">
 
                 <p:ajax event="rowEdit" listener="#{usuarioMB.onRowEdit}" update=":frm_usuarios:message_usuario"/>
                 <p:ajax event="rowEditCancel" listener="#{usuarioMB.onRowCancel}" update=":frm_usuarios:message_usuario"/>
 
-                <p:column headerText="ID">
+                <p:column headerText="ID" sortBy="#{usuario.idUsuario}" sortOrder="desc">
                         <h:outputText value="#{usuario.idUsuario}"/>
                 </p:column>
 
-                <p:column headerText="Nome">
+                <p:column headerText="Nome" sortBy="#{usuario.nomeUsuario}"
+                          filterBy="#{usuario.nomeUsuario}"
+                          filterMatchMode="contains" filterPlaceholder="Filtre Pelo Número da Sala">
+
                     <p:cellEditor>
                         <f:facet name="output">
                             <h:outputText value="#{usuario.nomeUsuario}"/>
@@ -31,13 +34,23 @@
                     </p:cellEditor>
                 </p:column>
 
-                <p:column headerText="Email">
+                <p:column headerText="Email" sortBy="#{usuario.email}"
+                          filterBy="#{usuario.email}"
+                          filterMatchMode="contains" filterPlaceholder="Filtre Pelo Número da Sala">
                         <h:outputText value="#{usuario.email}"/>
                 </p:column>
 
-                <p:column headerText="Status">
+                <p:column headerText="Status" field="idCargo">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange= "PF('tabelaSolicitacaoWV').filter()" styleClass="filter-select">
+                            <f:selectItem itemLabel="All" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{cargoMB.cargosList}" var="cargo" itemLabel="#{cargo.nomeCargo}" itemValue="#{cargo.idCargo}" />
+                        </p:selectOneMenu>
+                    </f:facet>
+
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{cargoMB.getNomeCargoById(usuario.idCargo)}"/></f:facet>
+
                         <f:facet name="input">
                             <h:selectOneMenu value="#{usuario.idCargo}" style="width:100%">
                                 <f:selectItems value="#{cargoMB.cargosList}" var="cargo"
@@ -57,17 +70,6 @@
                         <f:setPropertyActionListener value="#{usuario}" target="#{usuarioMB.usuarioDTO}"/>
                     </p:commandButton>
                 </p:column>
-
-
-
-
-                <!--                <p:column style="display: flex; align-items: center; justify-content: space-around; height: 100% !important;">-->
-<!--                    <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>-->
-
-<!--                    <p:commandButton action="#{usuarioMB.excluirUsuario()}" icon="pi pi-trash" update="@form tabela_salas message_usuario" process="@this" styleClass="bt-log-out">-->
-<!--                        <f:setPropertyActionListener value="#{usuario}" target="#{usuarioMB.usuarioDTO}"/>-->
-<!--                    </p:commandButton>-->
-<!--                </p:column>-->
             </p:dataTable>
         </h:form>
     </ui:define>

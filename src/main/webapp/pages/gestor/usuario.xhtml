@@ -51,7 +51,7 @@
                 <p:column>
                     <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
 
-                    <p:commandButton action="#{usuario.excluir()}" icon="pi pi-trash" update="@form message_usuario" process="@this" styleClass="bt-log-out">
+                    <p:commandButton action="#{usuarioMB.excluirUsuario()}" icon="pi pi-trash" update="@form message_usuario" process="@this" styleClass="bt-log-out">
                         <f:setPropertyActionListener value="#{usuario}" target="#{usuarioMB.usuarioDTO}"/>
                     </p:commandButton>
                 </p:column>

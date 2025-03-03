@@ -4,6 +4,7 @@ import io.github.cauzy.GSDS.Client.UsuarioClient;
 import io.github.cauzy.GSDS.DTO.UsuarioDTO;
 import io.github.cauzy.GSDS.Utility.Exception.EntityCreationException;
 import io.github.cauzy.GSDS.Utility.Exception.EntityNotFoundException;
+import io.github.cauzy.GSDS.Utility.Exception.ForeignKeyException;
 import io.github.cauzy.GSDS.Utility.Message;
 
 import io.github.cauzy.GSDS.Utility.Utils.FacesUtil;
@@ -136,16 +137,19 @@ public class UsuarioMB implements Serializable {
         try{
             usuarioClient.updateUsuario(event.getObject().getIdUsuario() , event.getObject());
             //            add log
-            FacesMessage msg = new FacesMessage("Product Edited", String.valueOf(event.getObject().getNomeUsuario()));
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+            Message.warn("Usuario atualizado com sucesso");
         } catch (EntityCreationException e){
-            FacesMessage msg = new FacesMessage(e.getMessage(), String.valueOf(event.getObject().getNomeUsuario()));
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+            Message.erro(e.getMessage());
         }
     }
 
     public void excluirUsuario(){
-        usuarioClient.
+        try {
+            usuarioClient.deleteUsuario(usuarioDTO.getIdUsuario());
+            Message.info("Usuario excluido com sucesso");
+        } catch (EntityNotFoundException | ForeignKeyException e){
+            Message.erro(e.getMessage());
+        }
     }
 
     public void onRowCancel(RowEditEvent<UsuarioDTO> event) {

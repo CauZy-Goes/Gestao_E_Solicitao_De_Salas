@@ -488,7 +488,14 @@
                 </div>
 
                 <div>
-                    <p:commandButton value="Gestão De Salas"
+                    <p:commandButton value="Usuários"
+                                     icon="pi pi-user-edit"
+                                     rendered="#{usuarioMB.usuarioLogado.idCargo == 1}"
+                                     action="/pages/gestor/usuario.xhtml?faces-redirect=true" />
+                </div>
+
+                <div>
+                    <p:commandButton value="Salas"
                                      icon="pi pi-th-large"
                                      rendered="#{usuarioMB.usuarioLogado.idCargo == 1}"
                                      action="/pages/gestor/salas.xhtml?faces-redirect=true" />
@@ -498,7 +505,7 @@
 
         <h:form id="form_update" styleClass="header-utils">
             <!-- Botão que abre o modal -->
-            <p:commandButton icon="pi pi-wrench" actionListener="#{usuarioMB.prepararEdicao()}" styleClass="bt-settings"
+            <p:commandButton icon="pi pi-user" actionListener="#{usuarioMB.prepararEdicao()}" styleClass="bt-settings"
                              oncomplete="PF('popupUpdate').show()" update="popupUpdate @form" process="@this"/>
 
             <!-- Dialog que serve como popup -->

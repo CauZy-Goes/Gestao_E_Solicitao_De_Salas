@@ -6,6 +6,66 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="corpo">
-        <h1>Pagina de usuarios</h1>
+        <h:form id="frm_usuarios" styleClass="form-cadastro">
+            <p:growl autoUpdate="true"   id="message_usuario" showDetail="true"/>
+
+            <p:dataTable id="tabela_salas" value="#{usuarioMB.usuariosList}" var="usuario" editable="true"
+                          paginator="true" paginatorPosition="top" rows="10"
+                         style="width: 60%; border: 5px solid darkblue; margin-bottom:20px">
+
+                <p:ajax event="rowEdit" listener="#{usuarioMB.onRowEdit}" update=":frm_usuarios:message_usuario"/>
+                <p:ajax event="rowEditCancel" listener="#{usuarioMB.onRowCancel}" update=":frm_usuarios:message_usuario"/>
+
+                <p:column headerText="ID">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{usuario.idUsuario}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText id="modelInput" value="#{usuario.idUsuario}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Nome">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{usuario.nomeUsuario}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{usuario.nomeUsuario}" style="width:100%" label="Nome"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Nome">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{usuario.email}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{usuario.email}" style="width:100%" label="Nome"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Status">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{cargoMB.getNomeCargoById(usuario.idCargo)}"/></f:facet>
+                        <f:facet name="input">
+                            <h:selectOneMenu value="#{usuario.idCargo}" style="width:100%">
+                                <f:selectItems value="#{cargoMB.cargosList}" var="cargo"
+                                               itemLabel="#{cargo.nomeCargo}" itemValue="#{cargo.idCargo}"/>
+                            </h:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+
+                <p:column>
+                    <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
     </ui:define>
 </ui:composition>

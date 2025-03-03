@@ -8,12 +8,15 @@ import io.github.cauzy.GSDS.Utility.Message;
 
 import io.github.cauzy.GSDS.Utility.Utils.FacesUtil;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.ExternalContext;
 
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpSession;
+import org.primefaces.event.RowEditEvent;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -129,6 +132,15 @@ public class UsuarioMB implements Serializable {
         }
     }
 
+    public void onRowEdit(RowEditEvent<UsuarioDTO> event) {
+        FacesMessage msg = new FacesMessage("Product Edited", String.valueOf(event.getObject().getNomeUsuario()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onRowCancel(RowEditEvent<UsuarioDTO> event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", String.valueOf(event.getObject().getNomeUsuario()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
 
     public UsuarioDTO getUsuarioLogado() {
         return FacesUtil.getUsuarioLogado();

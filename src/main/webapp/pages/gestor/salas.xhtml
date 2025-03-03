@@ -92,7 +92,7 @@
                     <p:dataTable value="#{tipoSalaMB.tipoSalaDTOList}" var="ts" id="tabela_tsalas" paginator="true"
                                  paginatorPosition="top" rows="5" style="width: 700px; border: 5px solid darkblue">
 
-                        <p:column headerText="Id">
+                        <p:column headerText="Id" sortBy="#{sala.idTipoSala}" sortOrder="desc">
                             <p:outputLabel value="#{ts.idTipoSala}"/>
                         </p:column>
 

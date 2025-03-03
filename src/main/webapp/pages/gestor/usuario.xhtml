@@ -17,7 +17,8 @@
                 <p:ajax event="rowEditCancel" listener="#{usuarioMB.onRowCancel}" update=":frm_usuarios:message_usuario"/>
 
                 <p:column headerText="ID" sortBy="#{usuario.idUsuario}" sortOrder="desc">
-                        <h:outputText value="#{usuario.idUsuario}"/>
+                        <h:outputText style="font-size: 20px; !important; font-weight: bold !important;"
+                                      value="#{usuario.idUsuario}"/>
                 </p:column>
 
                 <p:column headerText="Nome" sortBy="#{usuario.nomeUsuario}"
@@ -26,7 +27,8 @@
 
                     <p:cellEditor>
                         <f:facet name="output">
-                            <h:outputText value="#{usuario.nomeUsuario}"/>
+                            <h:outputText style="font-size: 20px; !important; font-weight: bold !important;"
+                                          value="#{usuario.nomeUsuario}"/>
                         </f:facet>
                         <f:facet name="input">
                             <p:inputText value="#{usuario.nomeUsuario}" style="width:100%" label="Nome"/>
@@ -37,7 +39,8 @@
                 <p:column headerText="Email" sortBy="#{usuario.email}"
                           filterBy="#{usuario.email}"
                           filterMatchMode="contains" filterPlaceholder="Filtre Pelo Número da Sala">
-                        <h:outputText value="#{usuario.email}"/>
+                        <h:outputText style="font-size: 20px; !important; font-weight: bold !important;"
+                                      value="#{usuario.email}"/>
                 </p:column>
 
                 <p:column headerText="Status" field="idCargo">
@@ -49,7 +52,10 @@
                     </f:facet>
 
                     <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{cargoMB.getNomeCargoById(usuario.idCargo)}"/></f:facet>
+                        <f:facet name="output">
+                            <h:outputText style="font-size: 20px; !important; font-weight: bold !important;"
+                                          value="#{cargoMB.getNomeCargoById(usuario.idCargo)}"/>
+                        </f:facet>
 
                         <f:facet name="input">
                             <h:selectOneMenu value="#{usuario.idCargo}" style="width:100%">

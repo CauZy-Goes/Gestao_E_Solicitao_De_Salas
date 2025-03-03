@@ -132,9 +132,16 @@ public class UsuarioMB implements Serializable {
         }
     }
 
-    public void onRowEdit(RowEditEvent<UsuarioDTO> event) {
-        FacesMessage msg = new FacesMessage("Product Edited", String.valueOf(event.getObject().getNomeUsuario()));
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+    public void onRowEdit(RowEditEvent<UsuarioDTO> event) throws EntityCreationException {
+        try{
+            usuarioClient.updateUsuario(event.getObject().getIdUsuario() , event.getObject());
+            //            add log
+            FacesMessage msg = new FacesMessage("Product Edited", String.valueOf(event.getObject().getNomeUsuario()));
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        } catch (EntityCreationException e){
+            FacesMessage msg = new FacesMessage(e.getMessage(), String.valueOf(event.getObject().getNomeUsuario()));
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
     }
 
     public void onRowCancel(RowEditEvent<UsuarioDTO> event) {

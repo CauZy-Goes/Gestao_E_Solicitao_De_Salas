@@ -17,14 +17,7 @@
                 <p:ajax event="rowEditCancel" listener="#{usuarioMB.onRowCancel}" update=":frm_usuarios:message_usuario"/>
 
                 <p:column headerText="ID">
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <h:outputText value="#{usuario.idUsuario}"/>
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:inputText id="modelInput" value="#{usuario.idUsuario}" style="width:100%"/>
-                        </f:facet>
-                    </p:cellEditor>
+                        <h:outputText value="#{usuario.idUsuario}"/>
                 </p:column>
 
                 <p:column headerText="Nome">
@@ -38,15 +31,8 @@
                     </p:cellEditor>
                 </p:column>
 
-                <p:column headerText="Nome">
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <h:outputText value="#{usuario.email}"/>
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:inputText value="#{usuario.email}" style="width:100%" label="Nome"/>
-                        </f:facet>
-                    </p:cellEditor>
+                <p:column headerText="Email">
+                        <h:outputText value="#{usuario.email}"/>
                 </p:column>
 
                 <p:column headerText="Status">

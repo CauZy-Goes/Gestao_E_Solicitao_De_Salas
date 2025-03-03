@@ -136,7 +136,7 @@ public class UsuarioMB implements Serializable {
     public void onRowEdit(RowEditEvent<UsuarioDTO> event) throws EntityCreationException {
         try{
             usuarioClient.updateUsuario(event.getObject().getIdUsuario() , event.getObject());
-            //            add log
+            logAcoesMB.addLogAcoes("O usuario com id : " + event.getObject().getIdUsuario() + " Foi Modificado");
             Message.warn("Usuario atualizado com sucesso");
         } catch (EntityCreationException e){
             Message.erro(e.getMessage());
@@ -146,6 +146,7 @@ public class UsuarioMB implements Serializable {
     public void excluirUsuario(){
         try {
             usuarioClient.deleteUsuario(usuarioDTO.getIdUsuario());
+            logAcoesMB.addLogAcoes("O usuario com id : " + usuarioDTO.getIdUsuario() + " Foi Excluido");
             Message.info("Usuario excluido com sucesso");
         } catch (EntityNotFoundException | ForeignKeyException e){
             Message.erro(e.getMessage());

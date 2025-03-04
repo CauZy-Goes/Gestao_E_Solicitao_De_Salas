@@ -82,15 +82,19 @@
 
             <p:dialog id="popupDescricao"  widgetVar="popupDescricao" header="Descricao solicitacao"
                       modal="true" resizable="false" styleClass="header-log"
-                      width="40%" height="40%" style="width: 100%; border: 5px solid darkblue;">
+                      width="60%" height="60%" style="width: 100%; border: 5px solid darkblue;">
 
-                    <p:panelGrid columns="1">
+                    <p:panelGrid columns="1" styleClass="header-settings-panel">
                         <p:messages autoUpdate="true" id="message_update"/>
-                        <p:inputText value="#{solicitacoesAvaliadorMB.solicitacaoDTO.descricao}"/>
+                        <p:inputText value="#{solicitacoesAvaliadorMB.solicitacaoDTO.descricao}" styleClass=""/>
+
+                        <p:outputLabel value="#{usuarioMB.getNomeUsuarioById(solicitacoesAvaliadorMB.solicitacaoDTO.idUsuarioSolicitante)}"/>
+
                         <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{solicitacoesAvaliadorMB.updateSolicitacao}"
                                          oncomplete="PF('popupDescricao').show()" update="message_update @form"
                                          styleClass="bt-create"/>
-                    </p:panelGrid>
+                        </p:panelGrid>
+
             </p:dialog>
         </h:form>
     </ui:define>

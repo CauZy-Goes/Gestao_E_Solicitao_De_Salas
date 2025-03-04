@@ -70,14 +70,33 @@
                         <p:commandButton value="Aceitar" action="#{solicitacoesAvaliadorMB.aceitarSolicitacao(solicitacao)}"
                                          icon="pi pi-check" update="tabela_solicitacao" process="@this" styleClass="bt-accept"/>
 
-                        <p:commandButton
-                                         icon="pi pi-info-circle" update="tabela_solicitacao" process="@this" styleClass="bt-settings"/>
+                        <p:commandButton oncomplete="PF('popupDescricao').show()" update="popupDescricao @form tabela_solicitacao"
+                                         process="@this" icon="pi pi-info-circle" styleClass="bt-settings"
+                                         actionListener="#{solicitacoesAvaliadorMB.preencherPopPupDescricao(solicitacao)}"/>
 
                         <p:commandButton value="Rejeitar" action="#{solicitacoesAvaliadorMB.rejeitarSolicitacao(solicitacao)}"
                                          icon="pi pi-trash" update="tabela_solicitacao" process="@this" styleClass="bt-log-out"/>
                     </div>
                 </p:column>
             </p:dataTable>
+
+            <p:dialog id="popupDescricao"  widgetVar="popupDescricao" header="Descricão da solicitacão"
+                      modal="true" resizable="false" styleClass="header-log"
+                      width="40%" height="60%" style="width: 100%; border: 5px solid darkblue;">
+
+
+                    <p:messages autoUpdate="true" id="message_update"/>
+                    <p:inputTextarea rows="8"  value="#{solicitacoesAvaliadorMB.solicitacaoDTO.descricao}" styleClass="input-descricao"/>
+
+                    <p:panelGrid columns="2" styleClass="header-settings-panel" style="height: 100px; margin-bottom: 0">
+                        <p:outputLabel value="#{usuarioMB.getNomeUsuarioById(solicitacoesAvaliadorMB.solicitacaoDTO.idUsuarioSolicitante)}
+                        Id : #{solicitacoesAvaliadorMB.solicitacaoDTO.idUsuarioSolicitante}"/>
+
+                        <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{solicitacoesAvaliadorMB.updateSolicitacao}"
+                                         oncomplete="PF('popupDescricao').show()" update="message_update @form"
+                                         styleClass="bt-create"/>
+                    </p:panelGrid>
+            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>

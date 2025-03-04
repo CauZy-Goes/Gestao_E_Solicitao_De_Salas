@@ -22,6 +22,9 @@
                               showTime="true" timeInput="true" showIcon="true">
                 </p:datePicker>
 
+                <p:outputLabel for="descricao" value="Digite uma descrição sobre a solicitação :" />
+                <p:inputTextarea id="descricao" rows="3"  value="#{solicitacoesSolicitanteMB.solicitacaoDTO.descricao}" styleClass="input-descricao"/>
+
 
                 <p:commandButton value="Agendar Sala" action="#{solicitacoesSolicitanteMB.adicionar()}"
                                  update=" @form frm_solicitacao message_solicitacao tabela_solicitacao"
@@ -35,9 +38,9 @@
             <p:dataTable value="#{solicitacoesSolicitanteMB.solicitacaoDTOList}"
                          var="solicitacao" id="tabela_solicitacao"
                          paginator="true" paginatorPosition="top" rows="5"
-                         widgetVar="tabelaSolicitacaoWV">
+                         widgetVar="tabelaSolicitacaoWV" style="margin-bottom: 30px">
 
-                <p:column headerText="ID" style="width: 10%" sortBy="#{solicitacao.idSolicitacoes}" sortOrder="desc">
+                <p:column headerText="ID" style="width: 5%" sortBy="#{solicitacao.idSolicitacoes}" sortOrder="desc">
                     <p:outputLabel value="#{solicitacao.idSolicitacoes}"/>
                 </p:column>
 
@@ -80,7 +83,30 @@
                     <p:outputLabel value="#{solicitacoesSolicitanteMB.dataHoraFormatada(solicitacao.dataHoraLocacao)}"/>
                 </p:column>
 
+                <p:column  style="width: 5%" >
+                    <p:commandButton oncomplete="PF('popupDescricao').show()" update="popupDescricao @form tabela_solicitacao frm-descricao"
+                                     process="@this" icon="pi pi-info-circle" styleClass="bt-settings"
+                                     actionListener="#{solicitacoesAvaliadorMB.preencherPopPupDescricao(solicitacao)}"/>
+                </p:column>
             </p:dataTable>
+        </h:form>
+
+        <h:form styleClass="form-cadastro" id="frm-descricao">
+            <p:dialog id="popupDescricao"  widgetVar="popupDescricao" header="Descricão da solicitacão"
+                      modal="true" resizable="false" styleClass="header-log"
+                      width="40%" height="60%" style="width: 100%; border: 5px solid darkblue;">
+
+                <div style="width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
+
+                    <p:messages autoUpdate="true" id="message_update"/>
+                    <p:inputTextarea rows="8"  value="#{solicitacoesAvaliadorMB.solicitacaoDTO.descricao}" styleClass="input-descricao"/>
+
+
+                    <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{solicitacoesAvaliadorMB.updateSolicitacao}"
+                                     oncomplete="PF('popupDescricao').show()" update="message_update @form frm_solicitacao"
+                                     styleClass="bt-create"/>
+                </div>
+            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>

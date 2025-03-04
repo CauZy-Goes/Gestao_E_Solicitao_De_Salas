@@ -92,17 +92,20 @@
         </h:form>
 
         <h:form styleClass="form-cadastro" id="frm-descricao">
-            <p:dialog id="popupDescricao"  widgetVar="popupDescricao" header="Descricao solicitacao"
+            <p:dialog id="popupDescricao"  widgetVar="popupDescricao" header="Descricão da solicitacão"
                       modal="true" resizable="false" styleClass="header-log"
-                      width="40%" height="60%" style="width: 100%; border: 5px solid darkblue; display: flex; justify-content: center; flex-direction: column;">
+                      width="40%" height="60%" style="width: 100%; border: 5px solid darkblue;">
 
-                <p:messages autoUpdate="true" id="message_update"/>
-                <p:inputTextarea rows="8"  value="#{solicitacoesAvaliadorMB.solicitacaoDTO.descricao}" styleClass="input-descricao"/>
+                <div style="width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
+
+                    <p:messages autoUpdate="true" id="message_update"/>
+                    <p:inputTextarea rows="8"  value="#{solicitacoesAvaliadorMB.solicitacaoDTO.descricao}" styleClass="input-descricao"/>
 
 
-                <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{solicitacoesAvaliadorMB.updateSolicitacao}"
-                                 oncomplete="PF('popupDescricao').show()" update="message_update @form frm_solicitacao"
-                                 styleClass="bt-create"/>
+                    <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{solicitacoesAvaliadorMB.updateSolicitacao}"
+                                     oncomplete="PF('popupDescricao').show()" update="message_update @form frm_solicitacao"
+                                     styleClass="bt-create"/>
+                </div>
             </p:dialog>
         </h:form>
     </ui:define>

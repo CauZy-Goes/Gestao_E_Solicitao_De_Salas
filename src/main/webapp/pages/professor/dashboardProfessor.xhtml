@@ -22,6 +22,9 @@
                               showTime="true" timeInput="true" showIcon="true">
                 </p:datePicker>
 
+                <p:outputLabel for="descricao" value="Digite uma descrição sobre a solicitação :" />
+                <p:inputTextarea id="descricao" rows="3"  value="#{solicitacoesSolicitanteMB.solicitacaoDTO.descricao}" styleClass="input-descricao"/>
+
 
                 <p:commandButton value="Agendar Sala" action="#{solicitacoesSolicitanteMB.adicionar()}"
                                  update=" @form frm_solicitacao message_solicitacao tabela_solicitacao"
@@ -35,7 +38,7 @@
             <p:dataTable value="#{solicitacoesSolicitanteMB.solicitacaoDTOList}"
                          var="solicitacao" id="tabela_solicitacao"
                          paginator="true" paginatorPosition="top" rows="5"
-                         widgetVar="tabelaSolicitacaoWV">
+                         widgetVar="tabelaSolicitacaoWV" style="margin-bottom: 30px">
 
                 <p:column headerText="ID" style="width: 5%" sortBy="#{solicitacao.idSolicitacoes}" sortOrder="desc">
                     <p:outputLabel value="#{solicitacao.idSolicitacoes}"/>

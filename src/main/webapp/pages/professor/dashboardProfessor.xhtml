@@ -37,7 +37,7 @@
                          paginator="true" paginatorPosition="top" rows="5"
                          widgetVar="tabelaSolicitacaoWV">
 
-                <p:column headerText="ID" style="width: 10%" sortBy="#{solicitacao.idSolicitacoes}" sortOrder="desc">
+                <p:column headerText="ID" style="width: 5%" sortBy="#{solicitacao.idSolicitacoes}" sortOrder="desc">
                     <p:outputLabel value="#{solicitacao.idSolicitacoes}"/>
                 </p:column>
 
@@ -80,7 +80,27 @@
                     <p:outputLabel value="#{solicitacoesSolicitanteMB.dataHoraFormatada(solicitacao.dataHoraLocacao)}"/>
                 </p:column>
 
+                <p:column  style="width: 5%" >
+                    <p:commandButton oncomplete="PF('popupDescricao').show()" update="popupDescricao @form tabela_solicitacao frm-descricao"
+                                     process="@this" icon="pi pi-info-circle" styleClass="bt-settings"
+                                     actionListener="#{solicitacoesAvaliadorMB.preencherPopPupDescricao(solicitacao)}"/>
+                </p:column>
             </p:dataTable>
+        </h:form>
+
+        <h:form styleClass="form-cadastro" id="frm-descricao">
+            <p:dialog id="popupDescricao"  widgetVar="popupDescricao" header="Descricao solicitacao"
+                      modal="true" resizable="false" styleClass="header-log"
+                      width="40%" height="60%" style="width: 100%; border: 5px solid darkblue; display: flex; justify-content: center; flex-direction: column;">
+
+                <p:messages autoUpdate="true" id="message_update"/>
+                <p:inputTextarea rows="8"  value="#{solicitacoesAvaliadorMB.solicitacaoDTO.descricao}" styleClass="input-descricao"/>
+
+
+                <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{solicitacoesAvaliadorMB.updateSolicitacao}"
+                                 oncomplete="PF('popupDescricao').show()" update="message_update @form frm_solicitacao"
+                                 styleClass="bt-create"/>
+            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>

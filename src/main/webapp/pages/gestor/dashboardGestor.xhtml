@@ -71,7 +71,8 @@
                                          icon="pi pi-check" update="tabela_solicitacao" process="@this" styleClass="bt-accept"/>
 
                         <p:commandButton oncomplete="PF('popupDescricao').show()" update="popupDescricao @form tabela_solicitacao"
-                                         process="@this" icon="pi pi-info-circle" styleClass="bt-settings"/>
+                                         process="@this" icon="pi pi-info-circle" styleClass="bt-settings"
+                                         actionListener="#{solicitacoesAvaliadorMB.preencherPopPupDescricao(solicitacao)}"/>
 
                         <p:commandButton value="Rejeitar" action="#{solicitacoesAvaliadorMB.rejeitarSolicitacao(solicitacao)}"
                                          icon="pi pi-trash" update="tabela_solicitacao" process="@this" styleClass="bt-log-out"/>
@@ -81,9 +82,13 @@
 
             <p:dialog id="popupDescricao"  widgetVar="popupDescricao" header="Descricao solicitacao"
                       modal="true" resizable="false" styleClass="header-log"
-                      width="60%" height="60%" style="width: 100%; border: 5px solid darkblue;">
+                      width="40%" height="40%" style="width: 100%; border: 5px solid darkblue;">
 
-                <h1>Teste</h1>
+                    <p:panelGrid columns="1">
+                        <p:inputText value="#{solicitacoesAvaliadorMB.solicitacaoDTO.descricao}"/>
+
+                    </p:panelGrid>
+
             </p:dialog>
         </h:form>
     </ui:define>

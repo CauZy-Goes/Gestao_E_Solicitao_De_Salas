@@ -62,6 +62,10 @@ public class SolicitacoesAvaliadorMB implements Serializable {
         logAcoesMB.addLogAcoes("A solicitacao com o id: " + solicitacaoDTO.getIdSolicitacoes() + " foi Rejeitada");
     }
 
+    public void preencherPopPupDescricao(SolicitacaoDTO solicitacaoDTO) {
+        this.solicitacaoDTO.setDescricao(solicitacaoDTO.getDescricao());
+    }
+
     public String dataHoraFormatada(LocalDateTime dataHora){
         if (dataHora == null) {
             return "";

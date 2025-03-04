@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class SolicitacaoDTO {
     private Integer idSolicitacoes;
+    private String descricao;
     private LocalDateTime dataHoraSolicitacao;
     private LocalDateTime dataHoraAprovacao;
     private LocalDateTime dataHoraLocacao;
@@ -11,6 +12,14 @@ public class SolicitacaoDTO {
     private Integer idUsuarioSolicitante;
     private Integer idEspacoFisico;
     private Integer idStatus;
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
     public Integer getIdSolicitacoes() {
         return idSolicitacoes;

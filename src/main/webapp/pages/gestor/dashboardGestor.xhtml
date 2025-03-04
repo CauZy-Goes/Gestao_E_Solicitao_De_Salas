@@ -85,10 +85,12 @@
                       width="40%" height="40%" style="width: 100%; border: 5px solid darkblue;">
 
                     <p:panelGrid columns="1">
+                        <p:messages autoUpdate="true" id="message_update"/>
                         <p:inputText value="#{solicitacoesAvaliadorMB.solicitacaoDTO.descricao}"/>
-
+                        <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{solicitacoesAvaliadorMB.updateSolicitacao}"
+                                         oncomplete="PF('popupDescricao').show()" update="message_update @form"
+                                         styleClass="bt-create"/>
                     </p:panelGrid>
-
             </p:dialog>
         </h:form>
     </ui:define>

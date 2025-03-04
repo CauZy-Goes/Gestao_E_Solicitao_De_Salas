@@ -63,7 +63,17 @@ public class SolicitacoesAvaliadorMB implements Serializable {
     }
 
     public void preencherPopPupDescricao(SolicitacaoDTO solicitacaoDTO) {
-        this.solicitacaoDTO.setDescricao(solicitacaoDTO.getDescricao());
+        this.solicitacaoDTO = solicitacaoDTO;
+    }
+
+    public void updateSolicitacao() {
+        try {
+            solicitacaoClient.updateSolicitacao(solicitacaoDTO, solicitacaoDTO.getIdSolicitacoes());
+            Message.info("Solicitacao atualizada com sucesso!");
+            logAcoesMB.addLogAcoes("A solicitacao com id: " + solicitacaoDTO.getIdSolicitacoes() + " foi Atualizada");
+        } catch (EntityCreationException e) {
+            Message.erro("Erro ao carregar solicitacao: " + e.getMessage());
+        }
     }
 
     public String dataHoraFormatada(LocalDateTime dataHora){

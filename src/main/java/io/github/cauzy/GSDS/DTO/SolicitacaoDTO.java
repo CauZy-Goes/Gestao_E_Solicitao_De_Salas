@@ -84,4 +84,19 @@ public class SolicitacaoDTO {
     public void setIdStatus(Integer idStatus) {
         this.idStatus = idStatus;
     }
+
+    @Override
+    public String toString() {
+        return "SolicitacaoDTO{" +
+                "idSolicitacoes=" + idSolicitacoes +
+                ", descricao='" + descricao + '\'' +
+                ", dataHoraSolicitacao=" + dataHoraSolicitacao +
+                ", dataHoraAprovacao=" + dataHoraAprovacao +
+                ", dataHoraLocacao=" + dataHoraLocacao +
+                ", idUsuarioAvaliador=" + idUsuarioAvaliador +
+                ", idUsuarioSolicitante=" + idUsuarioSolicitante +
+                ", idEspacoFisico=" + idEspacoFisico +
+                ", idStatus=" + idStatus +
+                '}';
+    }
 }

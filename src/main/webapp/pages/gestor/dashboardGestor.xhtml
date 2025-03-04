@@ -70,14 +70,21 @@
                         <p:commandButton value="Aceitar" action="#{solicitacoesAvaliadorMB.aceitarSolicitacao(solicitacao)}"
                                          icon="pi pi-check" update="tabela_solicitacao" process="@this" styleClass="bt-accept"/>
 
-                        <p:commandButton
-                                         icon="pi pi-info-circle" update="tabela_solicitacao" process="@this" styleClass="bt-settings"/>
+                        <p:commandButton oncomplete="PF('popupDescricao').show()" update="popupDescricao @form tabela_solicitacao"
+                                         process="@this" icon="pi pi-info-circle" styleClass="bt-settings"/>
 
                         <p:commandButton value="Rejeitar" action="#{solicitacoesAvaliadorMB.rejeitarSolicitacao(solicitacao)}"
                                          icon="pi pi-trash" update="tabela_solicitacao" process="@this" styleClass="bt-log-out"/>
                     </div>
                 </p:column>
             </p:dataTable>
+
+            <p:dialog id="popupDescricao"  widgetVar="popupDescricao" header="Descricao solicitacao"
+                      modal="true" resizable="false" styleClass="header-log"
+                      width="60%" height="60%" style="width: 100%; border: 5px solid darkblue;">
+
+                <h1>Teste</h1>
+            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>

@@ -42,6 +42,7 @@ public class SolicitacoesAvaliadorMB extends SolicitacoesBaseMB {
         solicitacaoClient.updateSolicitacao(solicitacaoDTO, solicitacaoDTO.getIdSolicitacoes());
         logAcoesMB.addLogAcoes("A solicitação com id: " + solicitacaoDTO.getIdSolicitacoes() + " foi aceita");
         init();
+        Message.info("A solicitação Aceita Com Sucesso !");
     }
 
     public void rejeitarSolicitacao(SolicitacaoDTO solicitacaoDTO) throws EntityCreationException {
@@ -51,6 +52,7 @@ public class SolicitacoesAvaliadorMB extends SolicitacoesBaseMB {
         solicitacaoClient.updateSolicitacao(solicitacaoDTO, solicitacaoDTO.getIdSolicitacoes());
         logAcoesMB.addLogAcoes("A solicitação com id: " + solicitacaoDTO.getIdSolicitacoes() + " foi rejeitada");
         init();
+        Message.erro("A solicitação Rejeitada Com Sucesso !");
     }
 }
 

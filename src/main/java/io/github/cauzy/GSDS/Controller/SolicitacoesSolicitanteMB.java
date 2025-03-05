@@ -76,11 +76,4 @@ public class SolicitacoesSolicitanteMB implements Serializable {
         return solicitacaoDTOList;
     }
 
-    public String dataHoraFormatada(LocalDateTime dataHora){
-        if (dataHora == null) {
-            return "";
-        }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm  dd/MM/yyyy");
-        return dataHora.format(formatter);
-    }
 }

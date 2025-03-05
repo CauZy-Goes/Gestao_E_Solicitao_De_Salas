@@ -21,25 +21,16 @@ import java.util.List;
 
 @Named
 @ViewScoped
-public class SolicitacoesSolicitanteMB implements Serializable {
-
-    @Inject
-    private SolicitacaoClient solicitacaoClient;
-
-    @Inject
-    private LogAcoesMB logAcoesMB;
-
-    private SolicitacaoDTO solicitacaoDTO = new SolicitacaoDTO();
-
-    private List<SolicitacaoDTO> solicitacaoDTOList;
+public class SolicitacoesSolicitanteMB extends SolicitacoesBaseMB {
 
     @PostConstruct
-    public void init()  {
+    @Override
+    public void init() {
         try {
             Integer idProfessor = FacesUtil.getUsuarioLogado().getIdUsuario();
             solicitacaoDTOList = solicitacaoClient.getSolicitacaoByIdSolicitante(idProfessor);
         } catch (EntityNotFoundException e) {
-            Message.erro("Erro ao carregar solicitacao: " + e.getMessage());
+            Message.erro("Erro ao carregar solicitações: " + e.getMessage());
         }
     }
 
@@ -48,7 +39,7 @@ public class SolicitacoesSolicitanteMB implements Serializable {
             preencherSolicitacaoDefault();
             solicitacaoDTO = solicitacaoClient.createSolicitacao(solicitacaoDTO);
 
-            logAcoesMB.addLogAcoes("A solicitação com o id: " + solicitacaoDTO.getIdSolicitacoes() + " na sala de id: "+ solicitacaoDTO.getIdEspacoFisico() + " foi criada");
+            logAcoesMB.addLogAcoes("A solicitação com id: " + solicitacaoDTO.getIdSolicitacoes() + " foi criada");
 
             init();
             solicitacaoDTO = new SolicitacaoDTO();
@@ -58,29 +49,10 @@ public class SolicitacoesSolicitanteMB implements Serializable {
         }
     }
 
-    public void preencherSolicitacaoDefault() {
+    private void preencherSolicitacaoDefault() {
         solicitacaoDTO.setDataHoraSolicitacao(LocalDateTime.now());
         Integer idProfessor = FacesUtil.getUsuarioLogado().getIdUsuario();
         solicitacaoDTO.setIdUsuarioSolicitante(idProfessor);
     }
-
-    public SolicitacaoDTO getSolicitacaoDTO() {
-        return solicitacaoDTO;
-    }
-
-    public void setSolicitacaoDTO(SolicitacaoDTO solicitacaoDTO) {
-        this.solicitacaoDTO = solicitacaoDTO;
-    }
-
-    public List<SolicitacaoDTO> getSolicitacaoDTOList() {
-        return solicitacaoDTOList;
-    }
-
-    public String dataHoraFormatada(LocalDateTime dataHora){
-        if (dataHora == null) {
-            return "";
-        }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm  dd/MM/yyyy");
-        return dataHora.format(formatter);
-    }
 }
+

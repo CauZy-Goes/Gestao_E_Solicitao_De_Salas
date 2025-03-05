@@ -23,35 +23,24 @@ import java.util.stream.Collectors;
 
 @Named
 @ViewScoped
-public class SolicitacoesAvaliadorMB implements Serializable {
-
-    @Inject
-    private SolicitacaoClient solicitacaoClient;
-
-    @Inject
-    private LogAcoesMB logAcoesMB;
-
-    private SolicitacaoDTO solicitacaoDTO = new SolicitacaoDTO();
-
-    private List<SolicitacaoDTO> solicitacaoDTOList;
+public class SolicitacoesAvaliadorMB extends SolicitacoesBaseMB {
 
     @PostConstruct
+    @Override
     public void init() {
         try {
             solicitacaoDTOList = solicitacaoClient.listarSolicitacoes();
         } catch (EntityNotFoundException e) {
-            Message.erro("Erro ao carregar solicitacao: " + e.getMessage());
+            Message.erro("Erro ao carregar solicitações: " + e.getMessage());
         }
     }
-
-    //    1 = pendente, 2 = Aceita, 3 = Rejeitada
 
     public void aceitarSolicitacao(SolicitacaoDTO solicitacaoDTO) throws EntityCreationException {
         solicitacaoDTO.setIdStatus(2);
         solicitacaoDTO.setDataHoraAprovacao(LocalDateTime.now());
         solicitacaoDTO.setIdUsuarioAvaliador(FacesUtil.getUsuarioLogado().getIdUsuario());
-        solicitacaoClient.updateSolicitacao(solicitacaoDTO, solicitacaoDTO.getIdSolicitacoes() );
-        logAcoesMB.addLogAcoes("A solicitacao com o id: " + solicitacaoDTO.getIdSolicitacoes() + " Foi Aceita");
+        solicitacaoClient.updateSolicitacao(solicitacaoDTO, solicitacaoDTO.getIdSolicitacoes());
+        logAcoesMB.addLogAcoes("A solicitação com id: " + solicitacaoDTO.getIdSolicitacoes() + " foi aceita");
     }
 
     public void rejeitarSolicitacao(SolicitacaoDTO solicitacaoDTO) throws EntityCreationException {
@@ -59,41 +48,7 @@ public class SolicitacoesAvaliadorMB implements Serializable {
         solicitacaoDTO.setDataHoraAprovacao(LocalDateTime.now());
         solicitacaoDTO.setIdUsuarioAvaliador(FacesUtil.getUsuarioLogado().getIdUsuario());
         solicitacaoClient.updateSolicitacao(solicitacaoDTO, solicitacaoDTO.getIdSolicitacoes());
-        logAcoesMB.addLogAcoes("A solicitacao com o id: " + solicitacaoDTO.getIdSolicitacoes() + " foi Rejeitada");
+        logAcoesMB.addLogAcoes("A solicitação com id: " + solicitacaoDTO.getIdSolicitacoes() + " foi rejeitada");
     }
-
-    public void preencherPopPupDescricao(SolicitacaoDTO solicitacaoDTO) {
-        this.solicitacaoDTO = solicitacaoDTO;
-    }
-
-    public void updateSolicitacao() {
-        try {
-            solicitacaoClient.updateSolicitacao(solicitacaoDTO, solicitacaoDTO.getIdSolicitacoes());
-            Message.info("Solicitacao atualizada com sucesso!");
-            logAcoesMB.addLogAcoes("A solicitacao com id: " + solicitacaoDTO.getIdSolicitacoes() + " foi Atualizada");
-        } catch (EntityCreationException e) {
-            Message.erro("Erro ao carregar solicitacao: " + e.getMessage());
-        }
-    }
-
-    public String dataHoraFormatada(LocalDateTime dataHora){
-        if (dataHora == null) {
-            return "";
-        }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm  dd/MM/yyyy");
-        return dataHora.format(formatter);
-    }
-
-    public SolicitacaoDTO getSolicitacaoDTO() {
-        return solicitacaoDTO;
-    }
-
-    public void setSolicitacaoDTO(SolicitacaoDTO solicitacaoDTO) {
-        this.solicitacaoDTO = solicitacaoDTO;
-    }
-
-    public List<SolicitacaoDTO> getSolicitacaoDTOList() {
-        return solicitacaoDTOList;
-    }
-
 }
+

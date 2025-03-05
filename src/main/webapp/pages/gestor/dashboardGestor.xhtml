@@ -68,14 +68,14 @@
                 <p:column style="width: 15%">
                     <div class="container-bt">
                         <p:commandButton value="Aceitar" action="#{solicitacoesAvaliadorMB.aceitarSolicitacao(solicitacao)}"
-                                         icon="pi pi-check" update="tabela_solicitacao" process="@this" styleClass="bt-accept"/>
+                                         icon="pi pi-check" update="@form" process="@this" styleClass="bt-accept"/>
 
                         <p:commandButton oncomplete="PF('popupDescricao').show()" update="popupDescricao @form tabela_solicitacao"
                                          process="@this" icon="pi pi-info-circle" styleClass="bt-settings"
                                          actionListener="#{solicitacoesAvaliadorMB.preencherPopPupDescricao(solicitacao)}"/>
 
                         <p:commandButton value="Rejeitar" action="#{solicitacoesAvaliadorMB.rejeitarSolicitacao(solicitacao)}"
-                                         icon="pi pi-trash" update="tabela_solicitacao" process="@this" styleClass="bt-log-out"/>
+                                         icon="pi pi-trash" update="@form" process="@this" styleClass="bt-log-out"/>
                     </div>
                 </p:column>
             </p:dataTable>

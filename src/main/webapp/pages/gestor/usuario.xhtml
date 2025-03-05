@@ -71,7 +71,7 @@
                     <p:rowEditor editTitle="Editar" cancelTitle="Cancelar" saveTitle="Salvar"/>
 
                     <p:commandButton action="#{usuarioMB.excluirUsuario()}" icon="pi pi-trash"
-                                     update="@form tabela_salas message_usuario"
+                                     update="@form message_usuario"
                                      process="@this" styleClass="bt-log-out">
                         <f:setPropertyActionListener value="#{usuario}" target="#{usuarioMB.usuarioDTO}"/>
                     </p:commandButton>

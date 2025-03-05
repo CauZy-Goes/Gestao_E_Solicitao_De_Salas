@@ -41,6 +41,7 @@ public class SolicitacoesAvaliadorMB extends SolicitacoesBaseMB {
         solicitacaoDTO.setIdUsuarioAvaliador(FacesUtil.getUsuarioLogado().getIdUsuario());
         solicitacaoClient.updateSolicitacao(solicitacaoDTO, solicitacaoDTO.getIdSolicitacoes());
         logAcoesMB.addLogAcoes("A solicitação com id: " + solicitacaoDTO.getIdSolicitacoes() + " foi aceita");
+        init();
     }
 
     public void rejeitarSolicitacao(SolicitacaoDTO solicitacaoDTO) throws EntityCreationException {
@@ -49,6 +50,7 @@ public class SolicitacoesAvaliadorMB extends SolicitacoesBaseMB {
         solicitacaoDTO.setIdUsuarioAvaliador(FacesUtil.getUsuarioLogado().getIdUsuario());
         solicitacaoClient.updateSolicitacao(solicitacaoDTO, solicitacaoDTO.getIdSolicitacoes());
         logAcoesMB.addLogAcoes("A solicitação com id: " + solicitacaoDTO.getIdSolicitacoes() + " foi rejeitada");
+        init();
     }
 }
 

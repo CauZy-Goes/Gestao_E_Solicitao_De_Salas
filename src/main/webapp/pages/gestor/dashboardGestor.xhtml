@@ -53,7 +53,7 @@
                                       showTime="true" timeInput="true"/>
                     </f:facet>
 
-                    <p:outputLabel value="#{solicitacoesAvaliadorMB.dataHoraFormatada(solicitacao.dataHoraSolicitacao)}"/>
+                    <p:outputLabel value="#{utils.dataHoraFormatada(solicitacao.dataHoraSolicitacao)}"/>
                 </p:column>
 
                 <p:column field="dataHoraLocacao" headerText="Data/Hora Solicitação"  style="width: 15%" filterMatchMode="between" filterBy="#{solicitacao.dataHoraLocacao}">
